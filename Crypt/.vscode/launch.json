@@ -1,0 +1,38 @@
+{
+    "configurations": [{
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "stepFilters": {
+                "classNameFilters": [
+                    "java.*",
+                    "javax.*",
+                    "com.sun.*",
+                    "sun.*",
+                    "sunw.*",
+                    "org.omg.*"
+                ],
+                "skipSynthetics": false,
+                "skipStaticInitializers": false,
+                "skipConstructors": false
+            },
+            "console": "internalConsole"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MD5",
+            "request": "launch",
+            "mainClass": "mine.project.MD5",
+            "projectName": "Crypt"
+        },
+
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "mine.project.App",
+            "projectName": "Crypt"
+        }
+    ]
+}
