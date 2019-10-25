@@ -1,0 +1,17 @@
+{
+    "configurations": [{
+            "type": "java",
+            "name": "Debug",
+            "request": "launch",
+            "mainClass": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CssProcessor",
+            "request": "launch",
+            "mainClass": "mine.learn.utils.CssProcessor",
+            "projectName": "MUtils"
+        }
+    ]
+}
