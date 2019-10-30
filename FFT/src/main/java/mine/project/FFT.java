@@ -74,7 +74,7 @@ public class FFT {
      * @param N
      * @return
      */
-    private static boolean isPower2(int N) {
+    public static boolean isPower2(int N) {
         // while (N != 1) {
         // if (N % 2 != 0)// 模运算很慢
         // return false;
