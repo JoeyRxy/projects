@@ -1,0 +1,8 @@
+{
+    "java.autobuild.enabled": true,
+    "java.completion.filteredTypes": [
+        // "java.awt.*",
+        "com.sun.*"
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic"
+}

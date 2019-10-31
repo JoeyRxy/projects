@@ -3,26 +3,19 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - Main",
-            "request": "launch",
-            "mainClass": "mine.project.gui.Main",
-            "projectName": "FFT"
-        },
-        {
+    "configurations": [{
             "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "${file}",
+            "console": "internalConsole"
         },
         {
             "type": "java",
-            "name": "Debug (Launch)-FFT<FFT>",
+            "name": "Debug (Launch)-Main<uilearn>",
             "request": "launch",
-            "mainClass": "mine.project.FFT",
-            "projectName": "FFT"
+            "mainClass": "mine.learn.ui.uilearn.Main",
+            "projectName": "uilearn"
         }
     ]
 }
