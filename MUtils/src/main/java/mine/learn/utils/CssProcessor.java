@@ -37,6 +37,7 @@ public class CssProcessor {
             txt = matcher.replaceAll(prefix + (font_size + 2) + "px");
 
             font_size--;
+
         }
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
         bufferedWriter.write(txt);
@@ -44,22 +45,25 @@ public class CssProcessor {
         bufferedReader.close();
         bufferedWriter.flush();
         bufferedWriter.close();
-        file = new File("C:/Program Files/VSCode/resources/app/out/vs/workbench/workbench.desktop.main.nls.js");
-        bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-        buffer = new StringBuffer();
-        while ((c = bufferedReader.read()) != -1) {
-            buffer.append((char) c);
-        }
-        txt = new String(buffer);
-        Pattern pattern = Pattern.compile("[Unsupported]");
-        Matcher matcher = pattern.matcher(txt);
-        txt = matcher.replaceAll("#RXY");
-        bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-        bufferedWriter.write(txt);
+        // file = new File("C:/Program
+        // Files/VSCode/resources/app/out/vs/workbench/workbench.desktop.main.nls.js");
+        // bufferedReader = new BufferedReader(new InputStreamReader(new
+        // FileInputStream(file), "UTF-8"));
+        // buffer = new StringBuffer();
+        // while ((c = bufferedReader.read()) != -1) {
+        // buffer.append((char) c);
+        // }
+        // txt = new String(buffer);
+        // Pattern pattern = Pattern.compile("[Unsupported]");
+        // Matcher matcher = pattern.matcher(txt);
+        // txt = matcher.replaceAll("#RXY");
+        // bufferedWriter = new BufferedWriter(new OutputStreamWriter(new
+        // FileOutputStream(file), "UTF-8"));
+        // bufferedWriter.write(txt);
 
-        bufferedReader.close();
-        bufferedWriter.flush();
-        bufferedWriter.close();
+        // bufferedReader.close();
+        // bufferedWriter.flush();
+        // bufferedWriter.close();
 
     }
 }

@@ -4,12 +4,17 @@ import java.awt.Color;
 // import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import java.net.URL;
 
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,6 +30,9 @@ import javax.swing.border.EmptyBorder;
 
 import mine.learn.fft.fft.Complex;
 import mine.learn.fft.fft.FFT;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.Image;
 
 public class Main extends JFrame {
 
@@ -72,7 +80,10 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-
+		URL url = Main.class.getResource("images/wsl.jpg");
+		ImageIcon icon = new ImageIcon(url);
+		setIconImage(icon.getImage());
+		setTitle("FFT");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 710, 496);
 		contentPane = new JPanel();
@@ -98,20 +109,26 @@ public class Main extends JFrame {
 			}
 
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				int code = e.getKeyCode();
+				if (code == KeyEvent.VK_ENTER) {
 					imField.requestFocus();
+				} else if (!((code >= KeyEvent.VK_0 && code <= KeyEvent.VK_9) || (code == KeyEvent.VK_DELETE)
+						|| (code == KeyEvent.VK_BACK_SPACE) || (code == KeyEvent.VK_PERIOD)
+						|| (code == KeyEvent.VK_MINUS))) {
+					JOptionPane.showInternalMessageDialog(null, "Must be number!");
+					String text = reField.getText();
+					reField.setText(text.substring(0, text.length() - 1));
 				}
 			}
 		});
 
-		JLabel lblJ = new JLabel("+ j");
+		JLabel lblJ = new JLabel("+ j ");
 
 		imField = new JTextField();
 		imField.setColumns(10);
 		imField.addKeyListener(new KeyListener() {
 
 			public void keyTyped(KeyEvent e) {
-
 			}
 
 			public void keyReleased(KeyEvent e) {
@@ -119,7 +136,8 @@ public class Main extends JFrame {
 			}
 
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				int code = e.getKeyCode();
+				if (code == KeyEvent.VK_ENTER) {
 					double re = Double.parseDouble(reField.getText());
 					double im = Double.parseDouble(imField.getText());
 					Complex c = new Complex(re, im);
@@ -132,11 +150,128 @@ public class Main extends JFrame {
 					reField.setText("");
 					imField.setText("");
 					reField.requestFocus();
+				} else if (!((code >= KeyEvent.VK_0 && code <= KeyEvent.VK_9) || (code == KeyEvent.VK_DELETE)
+						|| (code == KeyEvent.VK_BACK_SPACE) || (code == KeyEvent.VK_PERIOD)
+						|| (code == KeyEvent.VK_MINUS))) {
+					JOptionPane.showInternalMessageDialog(null, "Must be number!");
+					String text = reField.getText();
+					reField.setText(text.substring(0, text.length() - 1));
+				}
+			}
+		});
+
+		JLabel lblInput = new JLabel("Input :");
+
+		JLabel lblTheInputs = new JLabel("The Inputs");
+
+		JLabel lblTheAns = new JLabel("The Ans");
+
+		JLabel lblTotalCount = new JLabel("Sequence Length :");
+
+		nField = new JTextField();
+		nField.setForeground(Color.BLUE);
+		nField.setFont(new Font("宋体", Font.PLAIN, 15));
+		nField.setEditable(false);
+		nField.setText("0");
+		nField.setColumns(10);
+
+		Box horizontalBox = Box.createHorizontalBox();
+
+		Box horizontalBox_1 = Box.createHorizontalBox();
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+						.addGroup(
+								gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+										.addGroup(gl_contentPane.createSequentialGroup().addGap(174)
+												.addComponent(lblInput).addPreferredGap(ComponentPlacement.UNRELATED)
+												.addComponent(reField, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(lblJ))
+										.addGroup(gl_contentPane
+												.createSequentialGroup().addGap(28)
+												.addGroup(gl_contentPane
+														.createParallelGroup(Alignment.LEADING)
+														.addComponent(inputPanel, GroupLayout.PREFERRED_SIZE, 291,
+																GroupLayout.PREFERRED_SIZE)
+														.addComponent(lblTheInputs).addComponent(horizontalBox_1,
+																GroupLayout.PREFERRED_SIZE, 293,
+																GroupLayout.PREFERRED_SIZE))
+												.addPreferredGap(ComponentPlacement.RELATED)))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+										.addPreferredGap(ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+										.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+												.addComponent(ansPanel, GroupLayout.PREFERRED_SIZE, 281,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblTheAns).addComponent(horizontalBox,
+														GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE))
+										.addGap(88))
+								.addGroup(gl_contentPane.createSequentialGroup()
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(imField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.PREFERRED_SIZE)
+										.addContainerGap())))
+				.addGroup(gl_contentPane.createSequentialGroup().addContainerGap(548, Short.MAX_VALUE)
+						.addComponent(lblTotalCount).addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(nField, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE).addGap(41)));
+		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING).addGroup(gl_contentPane
+				.createSequentialGroup().addGap(17)
+				.addGroup(gl_contentPane
+						.createParallelGroup(Alignment.BASELINE).addComponent(lblTotalCount).addComponent(nField,
+								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(reField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblJ).addComponent(lblInput).addComponent(imField, GroupLayout.PREFERRED_SIZE,
+								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGap(53)
+				.addGroup(gl_contentPane
+						.createParallelGroup(Alignment.BASELINE).addComponent(lblTheInputs).addComponent(lblTheAns))
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(inputPanel, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
+						.addComponent(ansPanel, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE))
+				.addGap(19)
+				.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(horizontalBox, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+						.addComponent(horizontalBox_1, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE))
+				.addGap(21)));
+
+		JButton btn = new JButton("Edit");
+		horizontalBox_1.add(btn);
+
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		horizontalBox_1.add(horizontalStrut_1);
+
+		JButton btnClear = new JButton("Clear");
+		horizontalBox_1.add(btnClear);
+		btnClear.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				inputArea.setText("");
+				nField.setText("0");
+				ansArea.setText("");
+			}
+		});
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (btn.getText().equals("Edit")) {
+					btn.setText("Commit");
+					inputArea.setEditable(true);
+				} else {
+					btn.setText("Edit");
+					Complex[] tmp = getCArray(inputArea.getText());
+					nField.setText(Integer.toString(tmp.length));
+					inputArea.setEditable(false);
 				}
 			}
 		});
 
 		JButton btnFft = new JButton("FFT");
+		horizontalBox.add(btnFft);
 		btnFft.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -161,7 +296,11 @@ public class Main extends JFrame {
 			}
 		});
 
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		horizontalBox.add(horizontalStrut);
+
 		JButton btnIfft = new JButton("IFFT");
+		horizontalBox.add(btnIfft);
 		btnIfft.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -185,103 +324,6 @@ public class Main extends JFrame {
 				ansArea.setText(builder.toString());
 			}
 		});
-
-		JButton btn = new JButton("Edit");
-		btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (btn.getText().equals("Edit")) {
-					btn.setText("Commit");
-					inputArea.setEditable(true);
-				} else {
-					btn.setText("Edit");
-					Complex[] tmp = getCArray(inputArea.getText());
-					nField.setText(Integer.toString(tmp.length));
-					inputArea.setEditable(false);
-				}
-			}
-		});
-
-		JLabel lblInput = new JLabel("Input :");
-
-		JLabel lblTheInputs = new JLabel("The Inputs");
-
-		JLabel lblTheAns = new JLabel("The Ans");
-
-		JLabel lblTotalCount = new JLabel("Sequence Length :");
-
-		nField = new JTextField();
-		nField.setForeground(Color.BLUE);
-		nField.setFont(new Font("宋体", Font.PLAIN, 15));
-		nField.setEditable(false);
-		nField.setText("0");
-		nField.setColumns(10);
-
-		JButton btnClear = new JButton("Clear");
-		btnClear.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				inputArea.setText("");
-				nField.setText("0");
-				ansArea.setText("");
-			}
-		});
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-						.addGroup(
-								gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_contentPane.createSequentialGroup().addGap(174)
-												.addComponent(lblInput).addPreferredGap(ComponentPlacement.UNRELATED)
-												.addComponent(reField, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(lblJ))
-										.addGroup(gl_contentPane.createSequentialGroup().addGap(28)
-												.addGroup(gl_contentPane
-														.createParallelGroup(Alignment.LEADING).addComponent(btn)
-														.addComponent(inputPanel, GroupLayout.PREFERRED_SIZE, 291,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblTheInputs).addComponent(btnClear))))
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-								.createSequentialGroup()
-								.addPreferredGap(ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addComponent(btnFft)
-										.addComponent(ansPanel, GroupLayout.PREFERRED_SIZE, 281,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(btnIfft).addComponent(lblTheAns))
-								.addGap(29))
-								.addGroup(gl_contentPane.createSequentialGroup()
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(imField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap())))
-				.addGroup(gl_contentPane.createSequentialGroup().addContainerGap(495, Short.MAX_VALUE)
-						.addComponent(lblTotalCount).addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(nField, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE).addGap(41)));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING).addGroup(gl_contentPane
-				.createSequentialGroup().addGap(17)
-				.addGroup(gl_contentPane
-						.createParallelGroup(Alignment.BASELINE).addComponent(lblTotalCount).addComponent(nField,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(reField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblJ).addComponent(lblInput).addComponent(imField, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(53)
-				.addGroup(gl_contentPane
-						.createParallelGroup(Alignment.BASELINE).addComponent(lblTheInputs).addComponent(lblTheAns))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(inputPanel, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ansPanel, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup().addGap(33).addComponent(btnFft)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnIfft))
-						.addGroup(gl_contentPane.createSequentialGroup().addGap(24).addComponent(btn)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnClear)))
-				.addGap(15)));
 
 		inputArea.setToolTipText("The recognizable Complex Pattern is: a +\\- j b;\na+\\-bj is invalid");
 		inputArea.setEditable(false);

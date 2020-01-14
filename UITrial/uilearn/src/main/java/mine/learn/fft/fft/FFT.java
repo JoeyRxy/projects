@@ -1,6 +1,7 @@
 package mine.learn.fft.fft;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -233,56 +234,9 @@ public class FFT {
     }
 
     public static void main(String[] args) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Enter 0 for FFT,Enter 1 for IFFT\nEnter `quit` to quit.");
-        boolean useFFT;
-        String start = scanner.nextLine();
-        while (!start.equals("quit")) {
-            if (start.charAt(0) == '0') {
-                useFFT = true;
-            } else if (start.charAt(0) == '1') {
-                useFFT = false;
-            } else {
-                System.out.println("the input must be 0 or 1!");
-                start = scanner.nextLine();
-                continue;
-            }
-
-            System.out.println("put all in one line,delimited by comma");
-            System.out.println("example:1 + j 2.3 , -2-j, 3.1,-j6");
-            List<Complex> list = new ArrayList<>();
-            String[] s = scanner.nextLine().split(",");
-            for (var str : s) {
-                list.add(Complex.complexParser(str));
-            }
-
-            // 为什么这种方式不行？貌似已经输入了 ^Z 所以已经判定了没有下一行，所以循环的最后就无法再次获得下一个输入了？
-            // while (scanner.hasNextLine()) {
-            // list.add(Complex.complexParser(scanner.nextLine()));
-            // }
-            int len = list.size();
-            Complex[] x = new Complex[len];
-            for (int i = 0; i < len; i++)
-                x[i] = list.get(i);
-
-            Complex[] X;
-            if (useFFT) {
-                X = FFT.fft(x);
-                System.out.println("The fft result is:");
-            } else {
-                X = FFT.ifft(x);
-                System.out.println("The ifft result is:");
-            }
-
-            int count = 0;
-            for (var xval : X)
-                System.out.println((count++) + " : " + xval);
-            System.out.println();
-            System.out.println("=============Finish!===============\n\nNext Calculate:");
-            System.out.println("\nEnter 0 for FFT,Enter 1 for IFFT\nEnter `quit` for quit.");
-            start = scanner.nextLine();
+        int[] bro = FFT.bitReverseOrder(16);
+        for (int i : bro) {
+            System.out.println(i);
         }
-        scanner.close();
     }
 }
