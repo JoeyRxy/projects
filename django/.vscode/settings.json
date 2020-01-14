@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [{
+        "connectionTimeout": 30,
+        "database": "sunck",
+        "dialect": "MySQL",
+        "isActive": false,
+        "isConnected": false,
+        "mysqlOptions": {
+            "authProtocol": "xprotocol"
+        },
+        "name": "django",
+        "password": "73699rxy",
+        "port": 33060,
+        "server": "127.0.0.1",
+        "username": "root"
+    }]
+}
