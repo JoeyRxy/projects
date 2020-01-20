@@ -1,0 +1,16 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "sqltools.connections": [{
+        "database": "sunck",
+        "dialect": "MySQL",
+        "name": "local",
+        "password": "73699rxy",
+        "mysqlOptions": {
+            "authProtocol": "xprotocol"
+        },
+        "port": 33060,
+        "server": "localhost",
+        "username": "root",
+        "connectionTimeout": 300
+    }]
+}
