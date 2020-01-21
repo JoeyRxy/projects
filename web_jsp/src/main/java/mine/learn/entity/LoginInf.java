@@ -5,17 +5,9 @@ package mine.learn.entity;
  */
 public class LoginInf {
 
-    private int id;
     private String uname;
     private String upwd;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private String umobile;
 
     public String getUname() {
         return uname;
@@ -33,18 +25,21 @@ public class LoginInf {
         this.upwd = upwd;
     }
 
-    @Override
-    public String toString() {
-        return "LoginInf [id=" + id + ", uname=" + uname + ", upwd=" + upwd + "]";
+    public String getUmobile() {
+        return umobile;
     }
 
-    public LoginInf(int id, String uname, String upwd) {
-        this.id = id;
+    public void setUmobile(String umobile) {
+        this.umobile = umobile;
+    }
+
+    public LoginInf(String uname, String upwd, String umobile) {
         this.uname = uname;
         this.upwd = upwd;
+        this.umobile = umobile;
     }
 
     public LoginInf() {
-
     }
+
 }

@@ -13,7 +13,7 @@
     <%=request.getParameter("uname")%> doesn't exist OR password is WRONG
 
 <br>
-<form action="index.jsp">
+<form action="index.html">
     <input type="submit" value="OK">
 </form>
 </body>
