@@ -1,7 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "sqltools.connections": [{
-        "database": "sunck",
+        "database": "local",
         "dialect": "MySQL",
         "name": "local",
         "password": "73699rxy",

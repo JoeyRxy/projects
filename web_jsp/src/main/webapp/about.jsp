@@ -1,8 +1,9 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=utf-8" language="java" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
-	<title>主页</title>
+	<title>关于我们</title>
 	<!-- Meta tag Keywords -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8" />
@@ -43,7 +44,7 @@
 				<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
 					<!-- logo -->
 					<div id="logo">
-						<h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
+						<h1><a href="index.jsp"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
 					</div>
 					<!-- //logo -->
 					<!-- nav -->
@@ -52,9 +53,9 @@
 							<label for="drop" class="toggle">Menu</label>
 							<input type="checkbox" id="drop" />
 							<ul class="menu">
-								<li><a href="index.html" class="active">主页</a></li>
-								<li><a href="about.html">关于我们</a></li>
-								<li><a href="pricing.html">价格</a></li>
+								<li><a href="index.jsp">主页</a></li>
+								<li><a href="about.jsp" class="active">关于我们</a></li>
+								<li><a href="pricing.jsp">价格</a></li>
 								<li>
 									<!-- First Tier Drop Down -->
 									<label for="drop-2" class="toggle toogle-2">更多 <span class="fa fa-angle-down"
@@ -63,11 +64,12 @@
 									<a href="#">更多 <span class="fa fa-angle-down" aria-hidden="true"></span></a>
 									<input type="checkbox" id="drop-2" />
 									<ul>
-										<li><a href="#services" class="drop-text">服务</a></li>
-										<li><a href="faq.html" class="drop-text">疑问</a></li>
+										<li><a href="index.jsp" class="drop-text">服务</a></li>
+										<li><a href="faq.jsp" class="drop-text">疑问</a></li>
+										<li><a href="signin.jsp" class="drop-text">登录</a></li>
 										<li><a href="#stats" class="drop-text">Statistics</a></li>
-										<li><a href="about.html" class="drop-text">Why Choose Us?</a></li>
-										<li><a href="about.html" class="drop-text">Our Team</a></li>
+										<li><a href="#why" class="drop-text">Why Choose Us?</a></li>
+										<li><a href="#team" class="drop-text">Our Team</a></li>
 										<li><a href="#partners" class="drop-text">Partners</a></li>
 									</ul>
 								</li>
@@ -76,10 +78,19 @@
 					</div>
 					<!-- //nav -->
 					<div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
+
 						<nav>
 							<ul>
-								<li><a href="signup.html">注册</a></li>
-								<li><a href="signin.html" class="drop-text">登录</a></li>
+								<%
+									String name= (String) session.getAttribute("uname");
+									if(name!=null){
+										out.print("<li><a href=\"space.jsp\">"+name+"</a></li>\n");
+									}
+									else{
+										out.print("<li><a href=\"signup.jsp\">注册</a></li>\n" +
+												"<li><a href=\"signin.jsp\" class=\"drop-text\">登录</a></li>");
+									}
+								%>
 							</ul>
 						</nav>
 					</div>
@@ -89,136 +100,111 @@
 		<!-- //header -->
 
 		<!-- banner -->
-		<div class="banner_w3lspvt position-relative">
-			<div class="container">
-				<div class="d-md-flex">
-					<div class="w3ls_banner_txt">
-						<h3 class="w3ls_pvt-title">Business <br><span>Startup</span></h3>
-						<p class="text-sty-banner">Sed ut perspiciatis unde omnis iste natus doloremque
-							laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi.</p>
-						<a href="about.html" class="btn button-style mt-md-5 mt-4">Read More</a>
-					</div>
-					<div class="banner-img">
-						<img src="images/banner.png" alt="" class="img-fluid">
-					</div>
-				</div>
-			</div>
-			<!-- animations effects -->
-			<div class="icon-effects-w3l">
-				<img src="images/shape1.png" alt="" class="img-fluid shape-wthree shape-w3-one">
-				<img src="images/shape2.png" alt="" class="img-fluid shape-wthree shape-w3-two">
-				<img src="images/shape3.png" alt="" class="img-fluid shape-wthree shape-w3-three">
-				<img src="images/shape5.png" alt="" class="img-fluid shape-wthree shape-w3-four">
-				<img src="images/shape4.png" alt="" class="img-fluid shape-wthree shape-w3-five">
-				<img src="images/shape6.png" alt="" class="img-fluid shape-wthree shape-w3-six">
-			</div>
-			<!-- //animations effects -->
+		<div class="banner_w3lspvt-2">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.jsp" class="font-weight-bold">主页</a></li>
+				<li class="breadcrumb-item" aria-current="page">关于我们</li>
+			</ol>
 		</div>
 		<!-- //banner -->
 	</div>
 	<!-- //main banner -->
 
-	<!-- what we do section -->
-	<div class="what bg-li py-5" id="what">
-		<div class="container py-xl-5 py-lg-3">
-			<div class="row about-bottom-w3l text-center mt-4">
-				<div class="col-lg-4 about-grid">
-					<div class="about-grid-main">
-						<img src="images/img1.png" alt="" class="img-fluid">
-						<h4 class="my-4">Dolor Sit</h4>
-						<p> Ut enim ad minim veniam, quis nostrud.Excepteur sint occaecat cupidatat non proident</p>
-						<a href="about.html" class="button-w3ls btn mt-sm-5 mt-4">Read More</a>
-					</div>
+	<!-- about -->
+	<div class="about-inner py-5">
+		<div class="container pb-xl-5 pb-lg-3">
+			<div class="row py-xl-4">
+				<div class="col-lg-5 about-right-faq pr-5">
+					<h6>Story 关于我们</h6>
+					<h3 class="mt-2 mb-3">Welcome to our Website</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse porta erat sit.</p>
+					<p class="mt-2">Suspendisse porta erat sit amet eros sagittis, quis hendrerit libero aliquam. Fusce
+						semper augue
+						ac dolor
+						efficitur.</p>
+					<a href="about.jsp" class="btn button-style mt-sm-5 mt-4">Read More</a>
 				</div>
-				<div class="col-lg-4 about-grid my-lg-0 my-5">
-					<div class="about-grid-main">
-						<img src="images/img2.png" alt="" class="img-fluid">
-						<h4 class="my-4">Conse Tetur</h4>
-						<p>Ut enim ad minim veniam, quis nostrud.Excepteur sint occaecat cupidatat non proident</p>
-						<a href="about.html" class="button-w3ls btn mt-sm-5 mt-4">Read More</a>
-					</div>
-				</div>
-				<div class="col-lg-4 about-grid">
-					<div class="about-grid-main">
-						<img src="images/img3.png" alt="" class="img-fluid">
-						<h4 class="my-4">Adip Cing</h4>
-						<p>Ut enim ad minim veniam, quis nostrud.Excepteur sint occaecat cupidatat non proident</p>
-						<a href="about.html" class="button-w3ls btn mt-sm-5 mt-4">Read More</a>
-					</div>
+				<div class="col-lg-7 welcome-right text-center mt-lg-0 mt-5">
+					<img src="images/about.png" alt="" class="img-fluid" />
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- //what we do section -->
+	<!-- //about -->
 
-	<!-- middle -->
-	<section class="midd-w3 py-5" id="faq">
-		<div class="container py-xl-5 py-lg-3">
+	<!-- why -->
+	<section class="why bg-li py-5" id="why">
+		<div class="container py-xl-5 py-3">
 			<div class="row">
-				<div class="col-lg-6 about-right-faq">
-					<h6>Business Consultancy</h6>
-					<h3 class="text-da">25 Years of Industry Experience</h3>
-					<p class="mt-4">Integer pulvinar leo id viverra feugiat. Pellen tesque libero ut justo,
-						ultrices in ligula. Semper at tempufddfel, ultrices in ligula.</p>
-					<ul class="w3l-right-book mt-4">
-						<li>Marketing Base</li>
-						<li>Financial Consulting</li>
-						<li>Investment Advice</li>
-						<li>Business Growth</li>
-						<li>Technical Support</li>
-					</ul>
-					<a href="about.html" class="btn button-style button-style-2 mt-sm-5 mt-4">Read More</a>
-				</div>
-				<div class="col-lg-6 left-wthree-img text-right">
-					<img src="images/b1.png" alt="" class="img-fluid mt-5" />
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- //middle -->
-	<div class="tlinks">Collect from <a href="http://www.cssmoban.com/">自助建站</a></div>
-
-	<!-- services -->
-	<section class="banner-bottom-w3layouts bg-li py-5" id="services">
-		<div class="container py-xl-5 py-lg-3">
-			<h3 class="tittle text-center font-weight-bold">我们的服务</h3>
-			<p class="sub-tittle text-center mt-3 mb-sm-5 mb-4">Sed do eiusmod tempor incididunt ut labore et dolore
-				magna
-				aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-			<div class="row pt-lg-4">
-				<div class="col-lg-4 about-in text-center">
-					<div class="card">
-						<div class="card-body">
-							<div class="bg-clr-w3l">
-								<span class="fa fa-line-chart"></span>
+				<div class="col-md-4">
+					<div class="ser-grd">
+						<div class="row">
+							<div class="col-md-3 col-2 text-center services-icon icon-clr5">
+								<span class="fa fa-handshake-o"></span>
 							</div>
-							<h5 class="card-title mt-4 mb-3">Business Growth</h5>
-							<p class="card-text">Lorem ipsum dolor sit amet consectetur elit,Adipisicing elit tempor.
-							</p>
+							<div class="col-md-9 col-10 text-left services-grid">
+								<h4>Title Here</h4>
+								<p>Natus error sit voluptatem accusantium dolo remque lauda ntium.</p>
+							</div>
+						</div>
+					</div>
+					<div class="ser-grd mt-md-5 mt-4">
+						<div class="row">
+							<div class="col-md-3 col-2 text-center services-icon icon-clr6">
+								<span class="fa fa-coffee"></span>
+							</div>
+							<div class="col-md-9 col-10 text-left services-grid">
+								<h4>Title Here</h4>
+								<p>Natus error sit voluptatem accusantium dolo remque lauda ntium.</p>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 about-in text-center my-lg-0 my-3">
-					<div class="card active">
-						<div class="card-body">
-							<div class="bg-clr-w3l">
-								<span class="fa fa-usd"></span>
+				<div class="col-md-4">
+					<div class="ser-grd mt-md-0 mt-4">
+						<div class="row">
+							<div class="col-md-3 col-2 text-center services-icon icon-clr1">
+								<span class="fa fa-headphones"></span>
 							</div>
-							<h5 class="card-title mt-4 mb-3">Financial Planning</h5>
-							<p class="card-text">Lorem ipsum dolor sit amet consectetur elit,Adipisicing elit tempor.
-							</p>
+							<div class="col-md-9 col-10 text-left services-grid">
+								<h4>Title Here</h4>
+								<p>Natus error sit voluptatem accusantium dolo remque lauda ntium.</p>
+							</div>
+						</div>
+					</div>
+					<div class="ser-grd mt-md-5 mt-4">
+						<div class="row">
+							<div class="col-md-3 col-2 text-center services-icon icon-clr2">
+								<span class="fa fa fa-eye"></span>
+							</div>
+							<div class="col-md-9 col-10 text-left services-grid">
+								<h4>Title Here</h4>
+								<p>Natus error sit voluptatem accusantium dolo remque lauda ntium.</p>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 about-in text-center">
-					<div class="card">
-						<div class="card-body">
-							<div class="bg-clr-w3l">
+				<div class="col-md-4">
+					<div class="ser-grd mt-md-0 mt-4">
+						<div class="row">
+							<div class="col-md-3 col-2 text-center services-icon icon-clr3">
+								<span class="fa fa-folder-open"></span>
+							</div>
+							<div class="col-md-9 col-10 text-left services-grid">
+								<h4>Title Here</h4>
+								<p>Natus error sit voluptatem accusantium dolo remque lauda ntium.</p>
+							</div>
+						</div>
+					</div>
+					<div class="ser-grd mt-md-5 mt-4">
+						<div class="row">
+							<div class="col-md-3 col-2 text-center services-icon icon-clr4">
 								<span class="fa fa-lightbulb-o"></span>
 							</div>
-							<h5 class="card-title mt-4 mb-3">Business 服务</h5>
-							<p class="card-text">Lorem ipsum dolor sit amet consectetur elit,Adipisicing elit tempor.
-							</p>
+							<div class="col-md-9 col-10 text-left services-grid">
+								<h4>Title Here</h4>
+								<p>Natus error sit voluptatem accusantium dolo remque lauda ntium.</p>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -274,6 +260,76 @@
 		</div>
 	</section>
 	<!-- //stats -->
+
+	<!-- team -->
+	<section class="team bg-li py-5" id="team">
+		<div class="container py-xl-5 py-lg-3">
+			<h3 class="tittle text-center font-weight-bold">Our Awesome Team</h3>
+			<p class="sub-tittle text-center mt-3 mb-sm-5 mb-4">Sed do eiusmod tempor incididunt ut labore et dolore
+				magna
+				aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+			<div class="row ab-info second pt-lg-4">
+				<div class="col-lg-4 col-sm-6 ab-content text-center mt-lg-0 mt-4">
+					<div class="ab-content-inner">
+						<img src="images/t1.jpg" alt="news image" class="img-fluid">
+						<div class="ab-info-con">
+							<h4 class="text-team-w3">Petey Cruiser</h4>
+							<ul class="list-unstyled team-socil-w3pvts">
+								<li class="d-inline">
+									<a href="#"><span class="fa fa-facebook"></span></a>
+								</li>
+								<li class="d-inline">
+									<a href="#"><span class="fa fa-twitter"></span></a>
+								</li>
+								<li class="d-inline">
+									<a href="#"><span class="fa fa-google-plus"></span></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-6 ab-content text-center mt-lg-0 mt-4">
+					<div class="ab-content-inner">
+						<img src="images/t2.jpg" alt="news image" class="img-fluid">
+						<div class="ab-info-con">
+							<h4 class="text-team-w3">Mario Spe</h4>
+							<ul class="list-unstyled team-socil-w3pvts">
+								<li class="d-inline">
+									<a href="#"><span class="fa fa-facebook"></span></a>
+								</li>
+								<li class="d-inline">
+									<a href="#"><span class="fa fa-twitter"></span></a>
+								</li>
+								<li class="d-inline">
+									<a href="#"><span class="fa fa-google-plus"></span></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-6 ab-content text-center mt-lg-0 mt-4">
+					<div class="ab-content-inner">
+						<img src="images/t3.jpg" alt="news image" class="img-fluid">
+						<div class="ab-info-con">
+							<h4 class="text-team-w3">Turn Paige</h4>
+							<ul class="list-unstyled team-socil-w3pvts">
+								<li class="d-inline">
+									<a href="#"><span class="fa fa-facebook"></span></a>
+								</li>
+								<li class="d-inline">
+									<a href="#"><span class="fa fa-twitter"></span></a>
+								</li>
+								<li class="d-inline">
+									<a href="#"><span class="fa fa-google-plus"></span></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- //team -->
 
 	<!-- partners -->
 	<section class="partners py-5" id="partners">
@@ -348,6 +404,14 @@
 		</div>
 	</footer>
 	<!-- //footer -->
+
+	<!-- map -->
+	<div class="w3l-map p-4">
+		<iframe
+			src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d848295.9861393345!2d150.37152490226384!3d-33.846975938661174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b129838f39a743f%3A0x3017d681632a850!2sSydney+NSW%2C+Australia!5e0!3m2!1sen!2sin!4v1515557909959"></iframe>
+	</div>
+	<!-- //map -->
+
 	<!-- copyright bottom -->
 	<div class="copy-bottom bg-li py-4 border-top">
 		<div class="container-fluid">
@@ -378,14 +442,7 @@
 					</ul>
 				</div>
 				<!-- //footer social icons -->
-				<!-- copyright -->
-				<div class="copy_right mx-md-auto mb-md-0 mb-3">
-					<p class="text-bl let">Copyright &copy; 2019.Company name All rights reserved.More Templates <a
-							href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
-							href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
-					</p>
-				</div>
-				<!-- //copyright -->
+
 				<!-- move top icon -->
 				<a href="#home" class="move-top text-center">
 					<span class="fa fa-level-up" aria-hidden="true"></span>

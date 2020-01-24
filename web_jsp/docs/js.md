@@ -1,0 +1,1 @@
+- `document.write();`:在html中打印东西 

@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.alibaba.druid.support.logging.Log4jImpl;
 import com.mysql.cj.log.Log;
 
 import mine.learn.entity.LoginInf;
@@ -34,9 +37,9 @@ public class LogInDAO {
      * 
      * @param info
      * @return <code>true</code>插入一条数据；<code>false</code>该用户已存在
-     * @throws Exception
+     * @throws SQLException
      */
-    public static boolean insert(LoginInf info) throws Exception {
+    public static boolean insert(LoginInf info) throws SQLException {
         if (is(info.getUname())) {
             return false;
         }
@@ -68,9 +71,9 @@ public class LogInDAO {
             throw new SQLException("数据库出现错误，\"" + name + "\" 出现了 " + count + " 次！");
     }
 
-    public static boolean check(LoginInf info) throws Exception {
+    public static boolean check(LoginInf info) throws SQLException {
 
-        final String sql = "SELECT pwd FROM sunck.myapp_students where sname = ?";
+        final String sql = "SELECT pwd FROM users where name = ?";
         pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, info.getUname());
@@ -84,10 +87,26 @@ public class LogInDAO {
         resultSet.close();
         // 不要频繁关闭连接
 
-        if (pwd.equals(info.getUpwd()))
-            return true;
-        else
-            return false;
+        return pwd.equals(info.getUpwd());
 
+    }
+
+    public static List<LoginInf> queryAll() throws SQLException {
+        final String sql = "SELECT * FROM users";
+        Statement stmt = conn.createStatement();
+        ResultSet resultSet = stmt.executeQuery(sql);
+        List<LoginInf> list = new ArrayList<>();
+        while (resultSet.next()) {
+            list.add(new LoginInf(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4)));
+        }
+        resultSet.close();
+        stmt.close();
+        return list;
+    }
+
+    public static void delete(String uname) throws SQLException {
+
+        final String sql = "DELETE FROM users WHERE name = '" + uname + "'";
+        conn.createStatement().execute(sql);
     }
 }

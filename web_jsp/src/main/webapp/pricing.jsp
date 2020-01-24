@@ -1,3 +1,5 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=utf-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -43,7 +45,7 @@
 				<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
 					<!-- logo -->
 					<div id="logo">
-						<h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
+						<h1><a href="index.jsp"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
 					</div>
 					<!-- //logo -->
 					<!-- nav -->
@@ -52,9 +54,9 @@
 							<label for="drop" class="toggle">Menu</label>
 							<input type="checkbox" id="drop" />
 							<ul class="menu">
-								<li><a href="index.html">主页</a></li>
-								<li><a href="about.html">关于我们</a></li>
-								<li><a href="pricing.html" class="active">价格</a></li>
+								<li><a href="index.jsp">主页</a></li>
+								<li><a href="about.jsp">关于我们</a></li>
+								<li><a href="pricing.jsp" class="active">价格</a></li>
 								<li>
 									<!-- First Tier Drop Down -->
 									<label for="drop-2" class="toggle toogle-2">更多 <span class="fa fa-angle-down"
@@ -63,13 +65,13 @@
 									<a href="#">更多 <span class="fa fa-angle-down" aria-hidden="true"></span></a>
 									<input type="checkbox" id="drop-2" />
 									<ul>
-										<li><a href="index.html" class="drop-text">服务</a></li>
-										<li><a href="faq.html" class="drop-text">疑问</a></li>
-										<li><a href="signin.html" class="drop-text">404</a></li>
-										<li><a href="index.html" class="drop-text">Statistics</a></li>
-										<li><a href="about.html" class="drop-text">Why Choose Us?</a></li>
-										<li><a href="about.html" class="drop-text">Our Team</a></li>
-										<li><a href="index.html" class="drop-text">Partners</a></li>
+										<li><a href="index.jsp" class="drop-text">服务</a></li>
+										<li><a href="faq.jsp" class="drop-text">疑问</a></li>
+										<li><a href="signin.jsp" class="drop-text">登录</a></li>
+										<li><a href="index.jsp" class="drop-text">Statistics</a></li>
+										<li><a href="about.jsp" class="drop-text">Why Choose Us?</a></li>
+										<li><a href="about.jsp" class="drop-text">Our Team</a></li>
+										<li><a href="index.jsp" class="drop-text">Partners</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -79,8 +81,16 @@
 					<div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
 						<nav>
 							<ul>
-								<li><a href="signup.html">注册</a></li>
-								<li><a href="signin.html" class="drop-text">登录</a></li>
+								<%
+									String name= (String) session.getAttribute("uname");
+									if(name!=null){
+										out.print("<li><a href=\"space.jsp\">"+name+"</a></li>\n");
+									}
+									else{
+										out.print("<li><a href=\"signup.jsp\">注册</a></li>\n" +
+												"<li><a href=\"signin.jsp\" class=\"drop-text\">登录</a></li>");
+									}
+								%>
 							</ul>
 						</nav>
 					</div>
@@ -92,7 +102,7 @@
 		<!-- banner -->
 		<div class="banner_w3lspvt-2">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="index.html" class="font-weight-bold">主页</a></li>
+				<li class="breadcrumb-item"><a href="index.jsp" class="font-weight-bold">主页</a></li>
 				<li class="breadcrumb-item" aria-current="page">价格</li>
 			</ol>
 		</div>
@@ -241,14 +251,7 @@
 					</ul>
 				</div>
 				<!-- //footer social icons -->
-				<!-- copyright -->
-				<div class="copy_right mx-md-auto mb-md-0 mb-3">
-					<p class="text-bl let">Copyright &copy; 2019.Company name All rights reserved.More Templates <a
-							href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
-							href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
-					</p>
-				</div>
-				<!-- //copyright -->
+
 				<!-- move top icon -->
 				<a href="#home" class="move-top text-center">
 					<span class="fa fa-level-up" aria-hidden="true"></span>

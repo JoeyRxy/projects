@@ -42,4 +42,9 @@ public class LoginInf {
     public LoginInf() {
     }
 
+    @Override
+    public String toString() {
+        return "LoginInf [umobile=" + umobile + ", uname=" + uname + ", upwd=" + upwd + "]";
+    }
+
 }

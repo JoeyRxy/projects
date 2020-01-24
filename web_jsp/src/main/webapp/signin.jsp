@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=utf-8" language="java" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -7,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8" />
 	<meta name="keywords" content="" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<script>
 		addEventListener("load", function () {
 			setTimeout(hideURLbar, 0);
@@ -43,7 +45,7 @@
 				<div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
 					<!-- logo -->
 					<div id="logo">
-						<h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
+						<h1><a href="index.jsp"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
 					</div>
 					<!-- //logo -->
 					<!-- nav -->
@@ -52,9 +54,9 @@
 							<label for="drop" class="toggle">Menu</label>
 							<input type="checkbox" id="drop" />
 							<ul class="menu">
-								<li><a href="index.html">主页</a></li>
-								<li><a href="about.html">关于我们</a></li>
-								<li><a href="pricing.html">价格</a></li>
+								<li><a href="index.jsp">主页</a></li>
+								<li><a href="about.jsp">关于我们</a></li>
+								<li><a href="pricing.jsp">价格</a></li>
 								<li>
 									<!-- First Tier Drop Down -->
 									<label for="drop-2" class="toggle toogle-2">更多 <span class="fa fa-angle-down"
@@ -63,15 +65,15 @@
 									<a href="#">更多 <span class="fa fa-angle-down" aria-hidden="true"></span></a>
 									<input type="checkbox" id="drop-2" />
 									<ul>
-										<li><a href="faq.html" class="drop-text">疑问</a></li>
-										<li><a href="signin.html" class="drop-text">404</a></li>
-										<li><a href="index.html" class="drop-text">Statistics</a></li>
-										<li><a href="about.html" class="drop-text">Why Choose Us?</a></li>
-										<li><a href="about.html" class="drop-text">Our Team</a></li>
-										<li><a href="index.html" class="drop-text">Partners</a></li>
+										<li><a href="faq.jsp" class="drop-text">疑问</a></li>
+										<li><a href="signin.jsp" class="drop-text">登录</a></li>
+										<li><a href="index.jsp" class="drop-text">Statistics</a></li>
+										<li><a href="about.jsp" class="drop-text">Why Choose Us?</a></li>
+										<li><a href="about.jsp" class="drop-text">Our Team</a></li>
+										<li><a href="index.jsp" class="drop-text">Partners</a></li>
 									</ul>
 								</li>
-								<li><a href="signup.html" class="active">注册</a></li>
+								<li><a href="signup.jsp" class="active">注册</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -88,7 +90,7 @@
 		<!-- banner -->
 		<div class="banner_w3lspvt-2">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="index.html" class="font-weight-bold">主页</a></li>
+				<li class="breadcrumb-item"><a href="index.jsp" class="font-weight-bold">主页</a></li>
 				<li class="breadcrumb-item" aria-current="page">注册</li>
 			</ol>
 		</div>
@@ -106,7 +108,7 @@
 				<div class="col-lg-6 mt-lg-0 mt-5">
 					<!-- contact form grid -->
 					<div class="contact-top1">
-						<form action="signup" method="post" class="contact-wthree-do" accept-charset="UTF-8">
+						<form action="signin" method="post" class="contact-wthree-do" accept-charset="UTF-8">
 							<nav class="form-group">
 								<div class="row">
 									<div class="col-md-6">
@@ -140,25 +142,11 @@
 									</div>
 								</div>
 							</nav>
-							<nav class="form-group">
-								<div class="row">
-									<div class="col-md-6">
-										<label>
-											手机
-										</label>
-										<label>
-											<input class="form-control" type="text" placeholder="xxx xxxx xxxx"
-												name="umobile" required="">
-										</label>
-									</div>
+							<div class="row mt-3">
+								<div class="col-md-6">
+									<input type="submit" class="btn btn-cont-w3 btn-block mt-4" value="登录">
 								</div>
-
-							</nav>
-                            <div class="row mt-3">
-                                <div class="col-md-6">
-                                    <input type="submit" class="btn btn-cont-w3 btn-block mt-4" value="注册">
-                                </div>
-                            </div>
+							</div>
 						</form>
 					</div>
 					<!-- //contact form grid ends here -->
@@ -167,7 +155,6 @@
 		</div>
 	</div>
 	<!-- //contact-->
-
 
 
 	<!-- footer -->
@@ -225,14 +212,7 @@
 					</ul>
 				</div>
 				<!-- //footer social icons -->
-				<!-- copyright -->
-				<div class="copy_right mx-md-auto mb-md-0 mb-3">
-					<p class="text-bl let">Copyright &copy; 2019.Company name All rights reserved.More Templates <a
-							href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
-							href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
-					</p>
-				</div>
-				<!-- //copyright -->
+
 				<!-- move top icon -->
 				<a href="#home" class="move-top text-center">
 					<span class="fa fa-level-up" aria-hidden="true"></span>
