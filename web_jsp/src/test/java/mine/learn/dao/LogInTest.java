@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import mine.learn.entity.LoginInf;
+import mine.learn.entity.UserInf;
 
 /**
  * LogInTest
@@ -18,8 +18,8 @@ public class LogInTest {
     public void test() throws Exception {
         String uname = "rxy";
         String upwd = "123";
-        LoginInf info = new LoginInf(uname, upwd, "");
-        boolean check = LogInDAO.check(info);
+        UserInf info = new UserInf(uname, upwd, "");
+        boolean check = UserDAO.check(info);
         assertTrue(check);
         System.out.println(uname);
     }
@@ -29,23 +29,23 @@ public class LogInTest {
         String uname = "任星宇";
         String upwd = "73699rxy";
         String umobile = "15652580228";
-        LoginInf info = new LoginInf(uname, upwd, umobile);
-        boolean insert = LogInDAO.insert(info);
+        UserInf info = new UserInf(uname, upwd, umobile);
+        boolean insert = UserDAO.insert(info);
         assertTrue(insert);
     }
 
     @Test
     public void queryAllTest() throws SQLException {
-        List<LoginInf> all = LogInDAO.queryAll();
-        for (LoginInf loginInf : all) {
-            System.out.println(loginInf);
+        List<UserInf> all = UserDAO.queryAll();
+        for (UserInf userInf : all) {
+            System.out.println(userInf);
         }
     }
 
     @Test
     public void testDelete() throws SQLException {
         String uname = "rxy";
-        LogInDAO.delete(uname);
-        assertTrue("delete failed!!\n", !LogInDAO.is(uname));
+        UserDAO.delete(uname);
+        assertTrue("delete failed!!\n", !UserDAO.is(uname));
     }
 }

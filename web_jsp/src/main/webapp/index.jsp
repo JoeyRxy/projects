@@ -38,6 +38,7 @@
 </head>
 
 <body>
+
 	<!-- main banner -->
 	<div class="main-top" id="home">
 		<!-- header -->
@@ -83,19 +84,21 @@
 							<ul>
 								<%
                                     String name= (String) session.getAttribute("uname");
-                                    if(name!=null){
-                                    	if(session.getAttribute("isFirst")==null) {
-											session.setAttribute("isFirst",true);
-											out.print("<script>alert('登录成功！欢迎你" +name+
-													"')</script>");
-										}
-
-										out.print("<li><a href=\"space.jsp\">"+name+"</a></li>\n");
-                                    }
-                                    else{
-										out.print("<script>signInFailed(); </script>");
-                                        out.print("<li><a href=\"signup.jsp\">注册</a></li>\n" +
-                                                "<li><a href=\"signin.jsp\" class=\"drop-text\">登录</a></li>");
+                                    if(name!=null) {
+								%>
+								<li>
+									<a href="space.jsp"><%=name%> <span class="fa fa-angle-double-down"
+											aria-hidden="true"></span></a>
+									<ul>
+										<li><a href="signoff" class="dropdown">登出</a></li>
+									</ul>
+								</li>
+								<%
+                                    } else {
+								%>
+								<li><a href="signup.jsp">注册</a></li>
+								<li><a href="signin.jsp">登录</a></li>
+								<%
                                     }
                                 %>
 							</ul>

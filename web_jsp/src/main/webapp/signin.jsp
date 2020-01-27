@@ -3,7 +3,7 @@
 <html lang="zxx">
 
 <head>
-	<title>注册</title>
+	<title>登录</title>
 	<!-- Meta tag Keywords -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="UTF-8" />
@@ -91,7 +91,7 @@
 		<div class="banner_w3lspvt-2">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="index.jsp" class="font-weight-bold">主页</a></li>
-				<li class="breadcrumb-item" aria-current="page">注册</li>
+				<li class="breadcrumb-item" aria-current="page">登录</li>
 			</ol>
 		</div>
 		<!-- //banner -->

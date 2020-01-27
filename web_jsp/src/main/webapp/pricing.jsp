@@ -82,15 +82,24 @@
 						<nav>
 							<ul>
 								<%
-									String name= (String) session.getAttribute("uname");
-									if(name!=null){
-										out.print("<li><a href=\"space.jsp\">"+name+"</a></li>\n");
-									}
-									else{
-										out.print("<li><a href=\"signup.jsp\">注册</a></li>\n" +
-												"<li><a href=\"signin.jsp\" class=\"drop-text\">登录</a></li>");
-									}
+                                    String name= (String) session.getAttribute("uname");
+                                    if(name!=null) {
 								%>
+								<li>
+									<a href="space.jsp"><%=name%> <span class="fa fa-angle-double-down"
+											aria-hidden="true"></span></a>
+									<ul>
+										<li><a href="signoff" class="dropdown">登出</a></li>
+									</ul>
+								</li>
+								<%
+                                    } else {
+								%>
+								<li><a href="signup.jsp">注册</a></li>
+								<li><a href="signin.jsp">登录</a></li>
+								<%
+                                    }
+                                %>
 							</ul>
 						</nav>
 					</div>

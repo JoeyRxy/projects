@@ -7,9 +7,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import mine.learn.dao.LogInDAO;
-import mine.learn.entity.LoginInf;
+import mine.learn.dao.UserDAO;
+import mine.learn.entity.UserInf;
 
 /**
  * Welcome
@@ -23,19 +24,21 @@ public class SignUp extends HttpServlet {
     private static final long serialVersionUID = 6453855645464399920L;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         String uname = req.getParameter("uname");
         String upwd = req.getParameter("upwd");
         String umobile = req.getParameter("umobile");
 
         try {
-            LoginInf info = new LoginInf(uname, upwd, umobile);
-            boolean success = LogInDAO.insert(info);
+            UserInf info = new UserInf(uname, upwd, umobile);
+            boolean success = UserDAO.insert(info);
             if (success) {
-                req.getRequestDispatcher("/index.jsp").forward(req, resp);
+                resp.sendRedirect("signin.jsp");
             } else {
-                resp.sendRedirect("/fucked.jsp");
+                HttpSession session = req.getSession();
+                session.setAttribute("fucked", true);
+                resp.sendRedirect("signup.jsp");
             }
 
         } catch (Exception e) {

@@ -3,7 +3,7 @@ package mine.learn.entity;
 /**
  * LoginInf
  */
-public class LoginInf {
+public class UserInf {
 
     private String uname;
     private String upwd;
@@ -33,18 +33,15 @@ public class LoginInf {
         this.umobile = umobile;
     }
 
-    public LoginInf(String uname, String upwd, String umobile) {
+    public UserInf(String uname, String upwd, String umobile) {
         this.uname = uname;
         this.upwd = upwd;
         this.umobile = umobile;
     }
 
-    public LoginInf() {
-    }
-
     @Override
     public String toString() {
-        return "LoginInf [umobile=" + umobile + ", uname=" + uname + ", upwd=" + upwd + "]";
+        return "LoginInf [ uname=" + uname + ", upwd=" + upwd + ", umobile=" + umobile + "]";
     }
 
 }

@@ -1,16 +1,15 @@
 package mine.learn.service_let;
 
-import mine.learn.dao.LogInDAO;
-import mine.learn.entity.LoginInf;
+import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+
+import mine.learn.dao.UserDAO;
 
 @WebServlet("/delete")
 public class DeleteInf extends HttpServlet {
@@ -26,7 +25,7 @@ public class DeleteInf extends HttpServlet {
         String uname = req.getParameter("uname");
 
         try {
-            LogInDAO.delete(uname);
+            UserDAO.delete(uname);
             // String contextPath = req.getContextPath();
             // List<LoginInf> loginInfs = LogInDAO.queryAll();
             // req.setAttribute("loginfos",loginInfs);
