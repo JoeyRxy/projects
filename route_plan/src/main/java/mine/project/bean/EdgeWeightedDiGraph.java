@@ -4,6 +4,8 @@ import java.util.*;
 
 /**
  * EdgeWeightedDiGraph
+ * <p>
+ * 节点名不建议含空格！会误认为是两个节点
  */
 public class EdgeWeightedDiGraph {
 

@@ -38,7 +38,7 @@ public class DirectedEdge {
 
     @Override
     public String toString() {
-        return String.format("%s -> %s (weight : %-7.2f) ", tail, head, weight);
+        return String.format("%s -> %s (weight : %-10.5f) ", tail, head, weight);
     }
 
     @Override
