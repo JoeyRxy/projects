@@ -115,6 +115,19 @@
         <!-- //banner -->
     </div>
     <!-- //main banner -->
+    <form>
+        <table>
+            <tr>
+                <th>套餐</th>
+                <th>余额</th>
+                <th></th>
+            </tr>
+            <%
+                response.sendRedirect();
+
+            %>
+        </table>
+    </form>
 </body>
 
 </html>

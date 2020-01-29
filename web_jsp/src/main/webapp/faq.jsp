@@ -68,11 +68,6 @@
 									<ul>
 										<li><a href="index.jsp" class="drop-text">服务</a></li>
 										<li><a href="faq.jsp" class="drop-text active">疑问</a></li>
-										<li><a href="signin.jsp" class="drop-text">登录</a></li>
-										<li><a href="index.jsp" class="drop-text">Statistics</a></li>
-										<li><a href="about.jsp" class="drop-text">Why Choose Us?</a></li>
-										<li><a href="about.jsp" class="drop-text">Our Team</a></li>
-										<li><a href="index.jsp" class="drop-text">Partners</a></li>
 									</ul>
 								</li>
 							</ul>
