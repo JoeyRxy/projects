@@ -24,6 +24,11 @@ public class EdgeWeightedDiGraph {
      */
     private Map<String, Set<DirectedEdge>> adjMap;
 
+    /**
+     * @deprecated 重复记录两个图，只为一个reverse()方法太占内存，不如以时间换空间
+     */
+    private EdgeWeightedDiGraph reverseDiGraph;
+
     public EdgeWeightedDiGraph(int V) {
         this.V = V;
         vertexSet = new HashSet<>();
@@ -36,6 +41,9 @@ public class EdgeWeightedDiGraph {
         }
     }
 
+    /**
+     * 使用无参构造的图需在调用addEdge方法前调用addVertex
+     */
     public EdgeWeightedDiGraph() {
         V = 0;
         vertexSet = new HashSet<>();
@@ -43,17 +51,26 @@ public class EdgeWeightedDiGraph {
         indegree = new HashMap<>();
     }
 
+    /**
+     * 使用无参构造的图需在调用addEdge方法前调用addVertex
+     * 
+     * @param vertex
+     */
     public void addVertex(String vertex) {
-        if (vertexSet.contains(vertex)) {
-            System.err.println("节点 \"" + vertex + "\" 已存在");
+        if (vertexSet.contains(vertex))
             return;
-        }
+
         V++;
         vertexSet.add(vertex);
         adjMap.put(vertex, new HashSet<>());
         indegree.put(vertex, 0);
     }
 
+    /**
+     * 使用无参构造的图需在调用该方法前调用addVertex
+     * 
+     * @param e
+     */
     public void addEdge(DirectedEdge e) {
         String from = e.from();
         String to = e.to();
@@ -97,5 +114,23 @@ public class EdgeWeightedDiGraph {
                 builder.append("\t").append(edge).append("\n");
         }
         return builder.toString();
+    }
+
+    /**
+     * O(VE)
+     */
+    public EdgeWeightedDiGraph reverse() {
+        EdgeWeightedDiGraph reverseGraph = new EdgeWeightedDiGraph();
+        for (String v : vertexSet) {
+            Set<DirectedEdge> edgeSet = adjMap.get(v);
+            for (DirectedEdge e : edgeSet) {
+                String from = e.from();
+                reverseGraph.addVertex(from);
+                String to = e.to();
+                reverseGraph.addVertex(to);
+                reverseGraph.addEdge(new DirectedEdge(to, from, e.weight()));
+            }
+        }
+        return reverseGraph;
     }
 }

@@ -32,13 +32,21 @@ public class DirectedEdge {
         return tail;
     }
 
+    public void setFrom(String v) {
+        tail = v;
+    }
+
     public String to() {
         return head;
     }
 
+    public void setTo(String v) {
+        head = v;
+    }
+
     @Override
     public String toString() {
-        return String.format("%s -> %s (weight : %-10.5f) ", tail, head, weight);
+        return String.format("%-7s -> %-7s (weight : %-10.5f) ", tail, head, weight);
     }
 
     @Override

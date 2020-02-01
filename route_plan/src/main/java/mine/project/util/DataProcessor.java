@@ -1,11 +1,8 @@
 package mine.project.util;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 
 import mine.project.bean.DirectedEdge;
 import mine.project.bean.EdgeWeightedDiGraph;
@@ -25,11 +22,11 @@ import mine.project.bean.EdgeWeightedDiGraph;
  */
 public class DataProcessor {
 
-    public static EdgeWeightedDiGraph process(String resource) throws IOException {
+    public static EdgeWeightedDiGraph process(String resourcePath) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(DataProcessor.class.getClassLoader().getResourceAsStream(resource)));
-        String vertex_num = bufferedReader.readLine();
-        EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(Integer.parseInt(vertex_num));
+                new InputStreamReader(DataProcessor.class.getClassLoader().getResourceAsStream(resourcePath)));
+        bufferedReader.readLine();
+        EdgeWeightedDiGraph g = new EdgeWeightedDiGraph();
         Integer edge_num = Integer.parseInt(bufferedReader.readLine());
         for (int i = 0; i < edge_num; i++) {
             String line = bufferedReader.readLine() + " ";
@@ -44,6 +41,8 @@ public class DataProcessor {
                 int e = j;
                 splits[k] = line.substring(s, e);
             }
+            g.addVertex(splits[0]);
+            g.addVertex(splits[1]);
             g.addEdge(new DirectedEdge(splits[0], splits[1], Double.parseDouble(splits[2])));
         }
         return g;

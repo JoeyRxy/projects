@@ -6,8 +6,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URL;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,7 +15,6 @@ import java.util.TreeMap;
 
 import org.junit.Test;
 
-import mine.project.bean.DirectedEdge;
 import mine.project.bean.EdgeWeightedDiGraph;
 import mine.project.util.DataProcessor;
 
@@ -84,6 +83,43 @@ public class AppTest {
         File file = new File(new File(path).getParent() + "/EdgeWeightedDiGraph.txt");
         Writer writer = new FileWriter(file);
         writer.write(g.toString());
+        writer.close();
+    }
+
+    @Test
+    public void testReverseEWDG() throws IOException, CloneNotSupportedException {
+        EdgeWeightedDiGraph g = DataProcessor.process("tinyEWDAG.txt");
+        String path = getClass().getClassLoader().getResource("mediumEWD.txt").getPath();
+        File file = new File(new File(path).getParent() + "/ReverseEdgeWeightedDiGraph.txt");
+        Writer writer = new FileWriter(file);
+        writer.write(g.reverse().toString());
+        writer.close();
+    }
+
+    @Test
+    public void testDijkstra() throws IOException {
+        EdgeWeightedDiGraph g = DataProcessor.process("mediumEWD.txt");
+        URL resource = getClass().getClassLoader().getResource("");
+        String path = resource.getPath();
+        File file = new File(path + "/DijkstraShortestPath.txt");
+        Writer writer = new FileWriter(file);
+        Dijkstra dijkstra = new Dijkstra(g, 5 + "");
+        for (String vertex : g.vertexSet()) {
+            String shortestPath = dijkstra.PathPrinter(vertex);
+            writer.write(shortestPath + "\n");
+        }
+        writer.close();
+    }
+
+    @Test
+    public void testDirectedCycle() throws IOException {
+        EdgeWeightedDiGraph g = DataProcessor.process("mediumEWD.txt");
+        URL resource = getClass().getClassLoader().getResource("");
+        String path = resource.getPath();
+        File file = new File(path + "/DirectedCycle.txt");
+        DirectedCycle cycle = new DirectedCycle(g);
+        Writer writer = new FileWriter(file);
+        writer.write(cycle.toString());
         writer.close();
     }
 

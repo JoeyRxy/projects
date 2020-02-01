@@ -1,11 +1,12 @@
 package mine.project.or;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Stack;
 
 import mine.project.bean.DirectedEdge;
 import mine.project.bean.EdgeWeightedDiGraph;
-import mine.project.util.DataProcessor;
 
 /**
  * Dijkstra
@@ -26,7 +27,7 @@ public class Dijkstra {
     /**
      * records the shortest path-chain from {@code source} to {@code v}
      */
-    private Map<String, DirectedEdge> edgeMap;
+    private Map<String, DirectedEdge> edgeTo;
 
     PriorityQueue<Pair> pq;
 
@@ -99,7 +100,7 @@ public class Dijkstra {
         this.source = source;
         this.g = g;
         distTo = new HashMap<>();
-        edgeMap = new HashMap<>();
+        edgeTo = new HashMap<>();
         // IMPORTANT
         // 不加comparator而直接让其中的类继承Comparator接口（或Comparable接口）能不能自动调用其中的compare(compareTo)方法进行排序？
         pq = new PriorityQueue<>();
@@ -122,24 +123,26 @@ public class Dijkstra {
         return distTo.get(v);
     }
 
-    public Iterable<DirectedEdge> pathTo(String v) {
+    public Stack<DirectedEdge> pathTo(String v) {
         if (!hasPathTo(v))
             return null;
-        List<DirectedEdge> list = new LinkedList<>();
-        for (DirectedEdge e = edgeMap.get(source); e != null; e = edgeMap.get(e.to()))
+        Stack<DirectedEdge> list = new Stack<>();
+        for (DirectedEdge e = edgeTo.get(v); e != null; e = edgeTo.get(e.from()))
             list.add(e);
-
         return list;
     }
 
-    public String helperPrintPathTo(String v) {
+    public String PathPrinter(String v) {
         StringBuilder builder = new StringBuilder();
+        builder.append(String.format("%-10.5f", distTo(v))).append(" : ");
         builder.append(source);
-        Iterator<DirectedEdge> iter = pathTo(v).iterator();
-        while (iter.hasNext())
-            builder.append(" --> " + iter.next().to());
+        Stack<DirectedEdge> pathTo = pathTo(v);
+        if (pathTo != null)
+            while (!pathTo.isEmpty())
+                builder.append(" ==> " + pathTo.pop().to());
+        else
+            builder.append(" ==> ").append(v);
 
-        builder.append(" : " + distTo(v));
         return builder.toString();
     }
 
@@ -154,7 +157,7 @@ public class Dijkstra {
             double d = distTo(from) + e.weight();
             if (distTo(to) > d) {
                 distTo.put(to, d);
-                edgeMap.put(from, e);
+                edgeTo.put(to, e);
                 // IMPORTANT 直接add能不能够获得change的效果？不能，因为PriorityQueue是允许重复元素的！
                 Pair tmp = new Pair(to, distTo(to));
                 if (pq.contains(tmp)) {
@@ -164,12 +167,5 @@ public class Dijkstra {
                     pq.add(tmp);
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        EdgeWeightedDiGraph g = DataProcessor.process("mediumEWD.txt");
-        Dijkstra t = new Dijkstra(g, 231 + "");
-        String pathTo = t.helperPrintPathTo(92 + "");
-        System.out.println(pathTo);
     }
 }
