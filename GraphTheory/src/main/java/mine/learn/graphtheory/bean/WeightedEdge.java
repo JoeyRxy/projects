@@ -1,6 +1,8 @@
 
 package mine.learn.graphtheory.bean;
 
+import java.util.Objects;
+
 public class WeightedEdge implements Comparable<WeightedEdge> {
 
     private int v;
@@ -45,14 +47,7 @@ public class WeightedEdge implements Comparable<WeightedEdge> {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + v;
-        result = prime * result + w;
-        long temp;
-        temp = Double.doubleToLongBits(weight);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return Objects.hash(v, w, weight);
     }
 
     @Override
@@ -64,13 +59,7 @@ public class WeightedEdge implements Comparable<WeightedEdge> {
         if (getClass() != obj.getClass())
             return false;
         WeightedEdge other = (WeightedEdge) obj;
-        if (v != other.v)
-            return false;
-        if (w != other.w)
-            return false;
-        if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
-            return false;
-        return true;
+        return v == other.v && w == other.w && Double.doubleToLongBits(weight) == Double.doubleToLongBits(other.weight);
     }
 
 }

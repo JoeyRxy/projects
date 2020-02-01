@@ -1,6 +1,7 @@
 package mine.learn.graphtheory;
 
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.PriorityQueue;
 
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
@@ -34,14 +35,10 @@ public class Dijkstra {
             final int prime = 31;
             int result = 1;
             result = prime * result + getEnclosingInstance().hashCode();
-            result = prime * result + ((vertex == null) ? 0 : vertex.hashCode());
+            result = prime * result + Objects.hash(vertex);
             return result;
         }
 
-        /**
-         * IMPORTANT
-         * equals方法是针对vertex这个属性，而不是dist这个属性，这是为了在PriorityQueue中进行更换值的操作。这是将优先队列变为一种Map的关键
-         */
         @Override
         public boolean equals(Object obj) {
             if (this == obj)
@@ -53,17 +50,17 @@ public class Dijkstra {
             Pair other = (Pair) obj;
             if (!getEnclosingInstance().equals(other.getEnclosingInstance()))
                 return false;
-            if (vertex == null) {
-                if (other.vertex != null)
-                    return false;
-            } else if (!vertex.equals(other.vertex))
-                return false;
-            return true;
+            return Objects.equals(vertex, other.vertex);
         }
 
         private Dijkstra getEnclosingInstance() {
             return Dijkstra.this;
         }
+
+        /**
+         * IMPORTANT
+         * equals方法是针对vertex这个属性，而不是dist这个属性，这是为了在PriorityQueue中进行更换值的操作。这是将优先队列变为一种Map的关键
+         */
 
     }
 
@@ -96,8 +93,9 @@ public class Dijkstra {
     // relax edge e and update pq if changed
     private void relax(WeightedDirectedEdge e) {
         int v = e.from(), w = e.to();
-        if (distTo[w] > distTo[v] + e.weight()) {
-            distTo[w] = distTo[v] + e.weight();
+        double d = distTo[v] + e.weight();
+        if (distTo[w] > d) {
+            distTo[w] = d;
             edgeTo[w] = e;
             // IMPORTANT 直接add能不能够获得change的效果？不能，因为PriorityQueue是允许重复元素的！
             Pair tmp = new Pair(w, distTo[w]);

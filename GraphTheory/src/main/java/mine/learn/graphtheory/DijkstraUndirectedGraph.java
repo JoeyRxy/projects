@@ -96,8 +96,9 @@ public class DijkstraUndirectedGraph {
     // relax edge e and update pq if changed
     private void relax(WeightedEdge e, int v) {
         int w = e.other(v);
-        if (distTo[w] > distTo[v] + e.weight()) {
-            distTo[w] = distTo[v] + e.weight();
+        double d = distTo[v] + e.weight();
+        if (distTo[w] > d) {
+            distTo[w] = d;
             edgeTo[w] = e;
 
             Pair tmp = new Pair(w, distTo[w]);
