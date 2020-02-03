@@ -6,7 +6,11 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main extends  JFrame{
+public class Main extends JFrame {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3502018046302814142L;
     private JPanel panel;
     private JScrollPane ansScroll;
     private JScrollPane inputScroll;
@@ -14,12 +18,10 @@ public class Main extends  JFrame{
     private JTextField imField;
     private JLabel nField;
     private JButton submit;
-    private JButton btnFFT
-            ;
+    private JButton btnFFT;
     private JButton btnIFFT;
     private JTextArea inputArea;
     private JTextArea ansArea;
-
 
     private Main() {
         List<Complex> inputList = new ArrayList<>(8);

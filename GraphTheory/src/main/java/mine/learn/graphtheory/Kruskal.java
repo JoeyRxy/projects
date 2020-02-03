@@ -9,21 +9,22 @@ import mine.learn.graphtheory.bean.WeightedEdge;
 import mine.learn.graphtheory.bean.EdgeWeightedGraph;
 import mine.learn.graphtheory.util.UnionFind;
 
+/**
+ * 暂时还是单连通分量的最小生成树；
+ * <p>
+ * TODO 可修改为最小生成<strong>森林</strong>
+ */
 public class Kruskal {
 
     private double weight; // weight of MST
     private List<WeightedEdge> mst = new LinkedList<>(); // edges in MST
 
-    public Kruskal(EdgeWeightedGraph G) {
+    public Kruskal(EdgeWeightedGraph g) {
         // more efficient to build heap by passing array of edges
-        PriorityQueue<WeightedEdge> pq = new PriorityQueue<>();
-        for (WeightedEdge e : G.edges()) {
-            pq.add(e);
-        }
+        PriorityQueue<WeightedEdge> pq = new PriorityQueue<>(g.edges());
 
-        // run greedy algorithm
-        UnionFind uf = new UnionFind(G.V());
-        while (!pq.isEmpty() && mst.size() < G.V() - 1) {
+        UnionFind uf = new UnionFind(g.V());
+        while (!pq.isEmpty() && mst.size() < g.V() - 1) {
             WeightedEdge e = pq.poll();
             int v = e.either();
             int w = e.other(v);

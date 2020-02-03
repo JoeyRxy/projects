@@ -2,8 +2,6 @@
 package mine.learn.graphtheory.bean;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 @SuppressWarnings("unchecked")
@@ -11,14 +9,14 @@ public class EdgeWeightedGraph {
 
     private int V;
     private Set<WeightedEdge>[] adj;
-    private List<WeightedEdge> edges;
+    private Set<WeightedEdge> edges;
 
     public EdgeWeightedGraph(int V) {
         if (V <= 0)
             throw new IllegalArgumentException("节点数必须为正整数");
         this.V = V;
         adj = (Set<WeightedEdge>[]) new Set[V];
-        edges = new LinkedList<>();
+        edges = new HashSet<>();
         for (int v = 0; v < V; v++) {
             adj[v] = new HashSet<>();
         }
@@ -47,7 +45,7 @@ public class EdgeWeightedGraph {
         edges.add(e);
     }
 
-    public List<WeightedEdge> edges() {
+    public Set<WeightedEdge> edges() {
         return edges;
     }
 

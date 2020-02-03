@@ -79,7 +79,7 @@ public class DijkstraUndirectedGraph {
 
         validateVertex(s);
 
-        for (int v = 0; v < v; v++)
+        for (int v = 0; v < vn; v++)
             distTo[v] = Double.POSITIVE_INFINITY;
         distTo[s] = 0.0;
 
@@ -105,9 +105,8 @@ public class DijkstraUndirectedGraph {
 
             if (pq.contains(tmp)) {
                 pq.remove(tmp);
-                pq.add(tmp);
-            } else
-                pq.add(tmp);
+            }
+            pq.add(tmp);
         }
     }
 

@@ -3,30 +3,17 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [{
+    "configurations": [
+        {
             "type": "java",
-            "name": "CodeLens (Launch) - Trial",
+            "name": "CodeLens (Launch) - MainFrame",
             "request": "launch",
-            "mainClass": "mine.project.gui.Trial",
-            "projectName": "FFT"
+            "mainClass": "mine.learn.graphtheory.gui.MainFrame",
+            "projectName": "GraphTheory"
         },
         {
             "type": "java",
-            "name": "CodeLens (Launch) - Main",
-            "request": "launch",
-            "mainClass": "mine.project.Main",
-            "projectName": "FFT"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - Main",
-            "request": "launch",
-            "mainClass": "mine.project.gui.Main",
-            "projectName": "FFT"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch) - Current File",
+            "name": "Debug Current File",
             "request": "launch",
             "mainClass": "${file}",
             "console": "internalConsole",
@@ -43,13 +30,6 @@
                 "skipStaticInitializers": false,
                 "skipConstructors": false
             }
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-FFT<FFT>",
-            "request": "launch",
-            "mainClass": "mine.project.FFT",
-            "projectName": "FFT"
         }
     ]
 }

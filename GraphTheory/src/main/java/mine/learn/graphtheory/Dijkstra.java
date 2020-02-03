@@ -2,15 +2,15 @@ package mine.learn.graphtheory;
 
 import java.util.LinkedList;
 import java.util.Objects;
-import java.util.PriorityQueue;
 
-import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
+import mine.learn.graphtheory.bean.WeightedDirectedEdge;
+import mine.learn.graphtheory.util.PriorityQueueM;
 
 public class Dijkstra {
     private double[] distTo; // distTo[v] = distance of shortest s->v path
     private WeightedDirectedEdge[] edgeTo; // edgeTo[v] = last edge on shortest s->v path
-    private PriorityQueue<Pair> pq; // priority queue of vertices
+    private PriorityQueueM<Pair> pq; // priority queue of vertices
 
     class Pair implements Comparable<Pair> {
         Integer vertex;
@@ -65,23 +65,18 @@ public class Dijkstra {
     }
 
     public Dijkstra(EdgeWeightedDiGraph g, int s) {
-        for (WeightedDirectedEdge e : g.edges()) {
-            if (e.weight() < 0)
-                throw new IllegalArgumentException("edge " + e + " has negative weight");
-        }
-
         int vn = g.V();
         distTo = new double[vn];
         edgeTo = new WeightedDirectedEdge[vn];
 
         validateVertex(s);
 
-        for (int v = 0; v < v; v++)
+        for (int v = 0; v < vn; v++)
             distTo[v] = Double.POSITIVE_INFINITY;
         distTo[s] = 0.0;
 
         // relax vertices in order of distance from s
-        pq = new PriorityQueue<>(vn);
+        pq = new PriorityQueueM<>(vn);
         pq.add(new Pair(s, distTo[s]));
         while (!pq.isEmpty()) {
             int v = pq.poll().vertex;
@@ -101,9 +96,8 @@ public class Dijkstra {
             Pair tmp = new Pair(w, distTo[w]);
             if (pq.contains(tmp)) {
                 pq.remove(tmp);
-                pq.add(tmp);
-            } else
-                pq.add(tmp);
+            }
+            pq.add(tmp);
         }
     }
 
