@@ -1,20 +1,29 @@
 
 package mine.learn.graphtheory.bean;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
+import mine.learn.graphtheory.api.SymbolGraphAPI;
+
 @SuppressWarnings("unchecked")
-public class EdgeWeightedGraph {
+public class EdgeWeightedGraph implements SymbolGraphAPI {
 
     private int V;
     private Set<WeightedEdge>[] adj;
     private Set<WeightedEdge> edges;
 
+    private String[] nameOf;
+    private Map<String, Integer> indexOf;
+
     public EdgeWeightedGraph(int V) {
         if (V <= 0)
             throw new IllegalArgumentException("节点数必须为正整数");
         this.V = V;
+        nameOf = new String[V];
+        indexOf = new HashMap<>();
         adj = (Set<WeightedEdge>[]) new Set[V];
         edges = new HashSet<>();
         for (int v = 0; v < V; v++) {
@@ -36,6 +45,8 @@ public class EdgeWeightedGraph {
     }
 
     public void addEdge(WeightedEdge e) {
+        if (edges.contains(e))
+            return;
         int v = e.either();
         int w = e.other(v);
         validateVertex(v);
@@ -68,5 +79,22 @@ public class EdgeWeightedGraph {
                 builder.append("\t").append(edge).append("\n");
         }
         return builder.toString();
+    }
+
+    @Override
+    public int indexOf(String vertex) {
+        return indexOf.get(vertex);
+    }
+
+    @Override
+    public String nameOf(int v) {
+        return nameOf[v];
+    }
+
+    @Override
+    public void setIndexOf(String vertex, int index) {
+        validateVertex(index);
+        nameOf[index] = vertex;
+        indexOf.put(vertex, index);
     }
 }

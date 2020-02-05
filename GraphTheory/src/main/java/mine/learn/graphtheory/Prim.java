@@ -4,13 +4,14 @@ import java.util.*;
 
 import mine.learn.graphtheory.bean.EdgeWeightedGraph;
 import mine.learn.graphtheory.bean.WeightedEdge;
+import mine.learn.graphtheory.util.PriorityQueueM;
 
 /**
  * Prim
  */
 public class Prim {
 
-    private PriorityQueue<Pair> pq;
+    private PriorityQueueM<Pair> pq;
     private EdgeWeightedGraph g;
     /**
      * distTo[v] : 节点到树的最短距离
@@ -68,12 +69,10 @@ public class Prim {
             Pair pair = new Pair(other, e.weight());
             if (!marked(other)) {
                 pq.add(pair);
-
             } else if (distTo[other] > e.weight()) {
-                pq.remove(pair);
+                // pq.remove(pair);
                 pq.add(pair);
                 edgeTo[other] = e;
-
             }
         }
     }
@@ -91,7 +90,7 @@ public class Prim {
             distTo[i] = Double.POSITIVE_INFINITY;
         }
         distTo[0] = 0;
-        pq = new PriorityQueue<>(vn);
+        pq = new PriorityQueueM<>(vn);
         f(0);
         while (!pq.isEmpty()) {
             Pair min = pq.poll();

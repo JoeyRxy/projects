@@ -2,6 +2,8 @@ package mine.learn.graphtheory;
 
 import static org.junit.Assert.assertTrue;
 
+import mine.learn.graphtheory.bean.WeightedDirectedEdge;
+import mine.learn.graphtheory.bean.WeightedEdge;
 import mine.learn.graphtheory.util.PriorityQueueM;
 import org.junit.Test;
 
@@ -72,10 +74,10 @@ public class AppTest {
 
     @Test
     public void testPQM() {
-        PriorityQueueM<Pair> pq = new PriorityQueueM<>(100000);
+        PriorityQueueM<Pair> pq = new PriorityQueueM<>(105);
         Random r = new Random(System.currentTimeMillis());
-        for (int i = 0; i < 100000; i++) {
-            pq.add(new Pair(r.nextInt(1000000), randomString(r, r.nextInt(500) + 1)));
+        for (int i = 0; i < 100; i++) {
+            pq.add(new Pair(r.nextInt(1000), randomString(r, r.nextInt(50) + 1)));
         }
         String[] t = new String[pq.size()];
         int idx = 0;
@@ -97,5 +99,22 @@ public class AppTest {
             builder.append((char) (r.nextInt(26) + 65));
         }
         return builder.toString();
+    }
+
+    @Test
+    public void testHashCode() {
+        int v = 2, w = 4;
+        WeightedEdge e1 = new WeightedEdge(v, w, 1.0);
+        WeightedEdge e2 = new WeightedEdge(w, v, 1.0);
+        System.out.println(e1.hashCode() + " : " + e2.hashCode());
+        System.out.println(e1.equals(e2));
+        System.out.println(e1.compareTo(e2));
+    }
+
+    @Test
+    public void testString() {
+        String s1 = "hello";
+        String s2 = "hello";
+        System.out.println(s1 + s2);
     }
 }

@@ -47,7 +47,7 @@ public class WeightedEdge implements Comparable<WeightedEdge> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(v, w, weight);
+        return Objects.hash(v, w) + Objects.hash(w, v);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class WeightedEdge implements Comparable<WeightedEdge> {
         if (getClass() != obj.getClass())
             return false;
         WeightedEdge other = (WeightedEdge) obj;
-        return v == other.v && w == other.w && Double.doubleToLongBits(weight) == Double.doubleToLongBits(other.weight);
+        return (v == other.v && w == other.w) || (v == other.w && w == other.v);
     }
 
 }

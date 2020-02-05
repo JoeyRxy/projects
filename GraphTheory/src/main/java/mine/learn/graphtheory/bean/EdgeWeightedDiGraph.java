@@ -1,9 +1,6 @@
 
 package mine.learn.graphtheory.bean;
 
-import java.util.HashSet;
-import java.util.List;
-
 import mine.learn.graphtheory.api.SymbolGraphAPI;
 
 import java.util.*;
@@ -24,6 +21,8 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI {
             throw new IllegalArgumentException("节点数必须为正整数");
         this.V = V;
         this.indegree = new int[V];
+        nameOf = new String[V];
+        indexOf = new HashMap<>();
         edges = new LinkedList<>();
         adj = (Set<WeightedDirectedEdge>[]) new Set[V];
         for (int v = 0; v < V; v++)
@@ -50,6 +49,8 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI {
     }
 
     public void addEdge(WeightedDirectedEdge e) {
+        if (edges.contains(e))
+            return;
         int v = e.from();
         int w = e.to();
         validateVertex(v);

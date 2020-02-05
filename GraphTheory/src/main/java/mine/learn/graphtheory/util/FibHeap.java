@@ -1,25 +1,32 @@
 package mine.learn.graphtheory.util;
 
-public class FibHeap {
+import java.util.Comparator;
+
+/**
+ * TODO 需要理解
+ */
+public class FibHeap<E extends Comparable<? super E>> {
 
     private int keyNum; // 堆中节点的总数
     private FibNode min; // 最小节点(某个最小堆的根节点)
 
+    private Comparator<E> comparator;
+
     private class FibNode {
-        int key; // 关键字(键值)
+        E key; // 关键字(键值)
         int degree; // 度数
-        FibNode left; // 左兄弟
-        FibNode right; // 右兄弟
+        FibNode prev; // 左兄弟
+        FibNode next; // 右兄弟
         FibNode child; // 第一个孩子节点
         FibNode parent; // 父节点
         boolean marked; // 是否被删除第一个孩子
 
-        public FibNode(int key) {
+        public FibNode(E key) {
             this.key = key;
             this.degree = 0;
             this.marked = false;
-            this.left = this;
-            this.right = this;
+            this.prev = this;
+            this.next = this;
             this.parent = null;
             this.child = null;
         }
@@ -30,22 +37,28 @@ public class FibHeap {
         this.min = null;
     }
 
+    public FibHeap(Comparator<E> comparator) {
+        this.comparator = comparator;
+        keyNum = 0;
+        min = null;
+    }
+
     /*
      * 将node从双链表移除
      */
     private void removeNode(FibNode node) {
-        node.left.right = node.right;
-        node.right.left = node.left;
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
     }
 
     /*
      * 将node堆结点加入root结点之前(循环链表中) a …… root a …… node …… root
      */
     private void addNode(FibNode node, FibNode root) {
-        node.left = root.left;
-        root.left.right = node;
-        node.right = root;
-        root.left = node;
+        node.prev = root.prev;
+        root.prev.next = node;
+        node.next = root;
+        root.prev = node;
     }
 
     /*
@@ -56,16 +69,30 @@ public class FibHeap {
             min = node;
         else {
             addNode(node, min);
-            if (node.key < min.key)
+            if (less(node, min))
                 min = node;
         }
         keyNum++;
     }
 
+    private boolean less(FibNode node1, FibNode node2) {
+        if (comparator == null) {
+            return node1.key.compareTo(node2.key) < 0;
+        } else
+            return comparator.compare(node1.key, node2.key) < 0;
+    }
+
+    private boolean less(E e1, E e2) {
+        if (comparator == null)
+            return e1.compareTo(e2) < 0;
+        else
+            return comparator.compare(e1, e2) < 0;
+    }
+
     /*
      * 新建键值为key的节点，并将其插入到斐波那契堆中
      */
-    public void insert(int key) {
+    public void insert(E key) {
         insert(new FibNode(key));
     }
 
@@ -75,17 +102,17 @@ public class FibHeap {
     private void catList(FibNode a, FibNode b) {
         FibNode tmp;
 
-        tmp = a.right;
-        a.right = b.right;
-        b.right.left = a;
-        b.right = tmp;
-        tmp.left = b;
+        tmp = a.next;
+        a.next = b.next;
+        b.next.prev = a;
+        b.next = tmp;
+        tmp.prev = b;
     }
 
     /*
      * 将other合并到当前堆中
      */
-    public void union(FibHeap other) {
+    public void union(FibHeap<E> other) {
         if (other == null)
             return;
 
@@ -99,7 +126,7 @@ public class FibHeap {
             // 将"other中根链表"添加到"this"中
             catList(this.min, other.min);
 
-            if (this.min.key > other.min.key)
+            if (less(other.min, min))
                 this.min = other.min;
             this.keyNum += other.keyNum;
             other = null;
@@ -113,13 +140,13 @@ public class FibHeap {
     private FibNode extractMin() {
         FibNode p = min;
 
-        if (p == p.right)
+        if (p == p.next)
             min = null;
         else {
             removeNode(p);
-            min = p.right;
+            min = p.next;
         }
-        p.left = p.right = p;
+        p.prev = p.next = p;
 
         return p;
     }
@@ -149,7 +176,7 @@ public class FibHeap {
         // ex. log2(13) = 3，向上取整为4。
         int maxDegree = (int) Math.floor(Math.log(keyNum) / Math.log(2.0));
         int D = maxDegree + 1;
-        FibNode[] cons = new FibNode[D + 1];
+        FibNode[] cons = (FibNode[]) new Object[D];
 
         for (int i = 0; i < D; i++)
             cons[i] = null;
@@ -161,12 +188,11 @@ public class FibHeap {
             // cons[d] != null，意味着有两棵树(x和y)的"度数"相同。
             while (cons[d] != null) {
                 FibNode y = cons[d]; // y是"与x的度数相同的树"
-                if (x.key > y.key) { // 保证x的键值比y小
+                if (less(y, x)) { // 保证x的键值比y小
                     FibNode tmp = x;
                     x = y;
                     y = tmp;
                 }
-
                 link(y, x); // 将y链接到x中
                 cons[d] = null;
                 d++;
@@ -177,13 +203,12 @@ public class FibHeap {
 
         // 将cons中的结点重新加到根表中
         for (int i = 0; i < D; i++) {
-
             if (cons[i] != null) {
                 if (min == null)
                     min = cons[i];
                 else {
                     addNode(cons[i], min);
-                    if ((cons[i]).key < min.key)
+                    if (less(cons[i], min))
                         min = cons[i];
                 }
             }
@@ -196,18 +221,15 @@ public class FibHeap {
     public void removeMin() {
         if (min == null)
             return;
-
         FibNode m = min;
         // 将min每一个儿子(儿子和儿子的兄弟)都添加到"斐波那契堆的根链表"中
         while (m.child != null) {
             FibNode child = m.child;
-
             removeNode(child);
-            if (child.right == child)
+            if (child.next == child)
                 m.child = null;
             else
-                m.child = child.right;
-
+                m.child = child.next;
             addNode(child, min);
             child.parent = null;
         }
@@ -216,24 +238,22 @@ public class FibHeap {
         removeNode(m);
         // 若m是堆中唯一节点，则设置堆的最小节点为null；
         // 否则，设置堆的最小节点为一个非空节点(m.right)，然后再进行调节。
-        if (m.right == m)
+        if (m.next == m)
             min = null;
         else {
-            min = m.right;
+            min = m.next;
             consolidate();
         }
         keyNum--;
-
         m = null;
     }
 
     /*
      * 获取斐波那契堆中最小键值；失败返回-1
      */
-    public int minimum() {
+    public E minimum() {
         if (min == null)
-            return -1;
-
+            return null;
         return min.key;
     }
 
@@ -253,13 +273,12 @@ public class FibHeap {
         removeNode(node);
         renewDegree(parent, node.degree);
         // node没有兄弟
-        if (node == node.right)
+        if (node == node.next)
             parent.child = null;
         else
-            parent.child = node.right;
-
+            parent.child = node.next;
         node.parent = null;
-        node.left = node.right = node;
+        node.prev = node.next = node;
         node.marked = false;
         // 将"node所在树"添加到"根链表"中
         addNode(node, min);
@@ -287,36 +306,34 @@ public class FibHeap {
     /*
      * 将斐波那契堆中节点node的值减少为key
      */
-    private void decrease(FibNode node, int key) {
+    private void decrease(FibNode node, E key) {
         if (min == null || node == null)
             return;
 
-        if (key > node.key) {
+        if (less(node.key, key)) {
             System.out.printf("decrease failed: the new key(%d) is no smaller than current key(%d)\n", key, node.key);
             return;
         }
-
         FibNode parent = node.parent;
         node.key = key;
-        if (parent != null && (node.key < parent.key)) {
+        if (parent != null && (less(node, parent))) {
             // 将node从父节点parent中剥离出来，并将node添加到根链表中
             cut(node, parent);
             cascadingCut(parent);
         }
-
         // 更新最小节点
-        if (node.key < min.key)
+        if (less(node, min))
             min = node;
     }
 
     /*
      * 将斐波那契堆中节点node的值增加为key
      */
-    private void increase(FibNode node, int key) {
+    private void increase(FibNode node, E key) {
         if (min == null || node == null)
             return;
 
-        if (key <= node.key) {
+        if (!less(node.key, key)) {
             System.out.printf("increase failed: the new key(%d) is no greater than current key(%d)\n", key, node.key);
             return;
         }
@@ -325,10 +342,10 @@ public class FibHeap {
         while (node.child != null) {
             FibNode child = node.child;
             removeNode(child); // 将child从node的子链表中删除
-            if (child.right == child)
+            if (child.next == child)
                 node.child = null;
             else
-                node.child = child.right;
+                node.child = child.next;
 
             addNode(child, min); // 将child添加到根链表中
             child.parent = null;
@@ -346,11 +363,11 @@ public class FibHeap {
             cut(node, parent);
             cascadingCut(parent);
         } else if (min == node) {
-            FibNode right = node.right;
+            FibNode right = node.next;
             while (right != node) {
-                if (node.key > right.key)
+                if (less(right, node))
                     min = right;
-                right = right.right;
+                right = right.next;
             }
         }
     }
@@ -358,19 +375,17 @@ public class FibHeap {
     /*
      * 更新斐波那契堆的节点node的键值为key
      */
-    private void update(FibNode node, int key) {
-        if (key < node.key)
+    private void update(FibNode node, E key) {
+        if (less(key, node.key))
             decrease(node, key);
-        else if (key > node.key)
+        else if (less(node.key, key))
             increase(node, key);
         else
             System.out.printf("No need to update!!!\n");
     }
 
-    public void update(int oldkey, int newkey) {
-        FibNode node;
-
-        node = search(oldkey);
+    public void update(E oldkey, E newkey) {
+        FibNode node = search(oldkey);
         if (node != null)
             update(node, newkey);
     }
@@ -378,7 +393,7 @@ public class FibHeap {
     /*
      * 在最小堆root中查找键值为key的节点
      */
-    private FibNode search(FibNode root, int key) {
+    private FibNode search(FibNode root, E key) {
         FibNode t = root; // 临时节点
         FibNode p = null; // 要查找的节点
 
@@ -393,7 +408,7 @@ public class FibHeap {
                 if ((p = search(t.child, key)) != null)
                     break;
             }
-            t = t.right;
+            t = t.next;
         } while (t != root);
 
         return p;
@@ -402,7 +417,7 @@ public class FibHeap {
     /*
      * 在斐波那契堆中查找键值为key的节点
      */
-    private FibNode search(int key) {
+    private FibNode search(E key) {
         if (min == null)
             return null;
 
@@ -412,7 +427,7 @@ public class FibHeap {
     /*
      * 在斐波那契堆中是否存在键值为key的节点。 存在返回true，否则返回false。
      */
-    public boolean contains(int key) {
+    public boolean contains(E key) {
         return search(key) != null ? true : false;
     }
 
@@ -420,12 +435,12 @@ public class FibHeap {
      * 删除结点node
      */
     private void remove(FibNode node) {
-        int m = min.key;
-        decrease(node, m - 1);
+        E m = min.key;
+        decrease(node, m);
         removeMin();
     }
 
-    public void remove(int key) {
+    public void remove(E key) {
         if (min == null)
             return;
 
@@ -447,8 +462,8 @@ public class FibHeap {
         do {
             destroyNode(node.child);
             // 销毁node，并将node指向下一个
-            node = node.right;
-            node.left = null;
+            node = node.next;
+            node.prev = null;
         } while (node != start);
     }
 
@@ -478,7 +493,7 @@ public class FibHeap {
 
             // 兄弟节点
             prev = node;
-            node = node.right;
+            node = node.next;
             direction = 2;
         } while (node != start);
     }
@@ -495,7 +510,7 @@ public class FibHeap {
             System.out.printf("%2d. %4d(%d) is root\n", i, p.key, p.degree);
 
             print(p.child, p, 1);
-            p = p.right;
+            p = p.next;
         } while (p != min);
         System.out.printf("\n");
     }
