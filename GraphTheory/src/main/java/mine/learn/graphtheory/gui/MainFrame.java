@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
             @Override
             public void run() {
                 MainFrame frame = new MainFrame();
-                frame.setTitle("FFT");
+                frame.setTitle("MainFrame");
                 frame.setSize(800, 1000);
                 frame.setLayout(new FlowLayout());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

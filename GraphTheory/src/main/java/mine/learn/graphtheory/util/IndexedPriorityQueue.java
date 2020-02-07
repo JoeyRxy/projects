@@ -152,6 +152,13 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
         return n == 0;
     }
 
+    public E get(int idx) {
+        if (!contains(idx))
+            return null;
+
+        return keys[idx];
+    }
+
     // helpers
 
     /**

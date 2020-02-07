@@ -109,7 +109,7 @@ class PriorityQueue:
     def put(self, item, priority):
         heapq.heappush(self.elements, (priority, item))
     
-    def get(self):
+    def poll(self):
         return heapq.heappop(self.elements)[1]
 
 def dijkstra_search(graph, start, goal):
@@ -121,7 +121,7 @@ def dijkstra_search(graph, start, goal):
     cost_so_far[start] = 0
     
     while not frontier.empty():
-        current = frontier.get()
+        current = frontier.poll()
         
         if current == goal:
             break
@@ -163,7 +163,7 @@ def a_star_search(graph, start, goal):
     cost_so_far[start] = 0
     
     while not frontier.empty():
-        current = frontier.get()
+        current = frontier.poll()
         
         if current == goal:
             break
