@@ -1,7 +1,6 @@
 package mine.learn.graphtheory.util;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 
@@ -44,12 +43,8 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
     }
 
     public IndexedPriorityQueue(int maxCapacity, Comparator<E> comparator) {
+        this(maxCapacity);
         this.comparator = comparator;
-        keys = (E[]) new Comparable[maxCapacity + 1];
-        pq = new int[maxCapacity + 1];
-        qp = new int[maxCapacity + 1];
-        for (int i = 0; i < maxCapacity + 1; i++)
-            qp[i] = -1;
     }
 
     /**
@@ -65,9 +60,10 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
      * @param e
      */
     public void add(int k, E e) {
-        if (contains(k))
+        if (contains(k)) {
             changeKey(k, e);
-
+            return;
+        }
         n++;
         pq[n] = k;
         qp[k] = n;
@@ -75,17 +71,21 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
         siftUp(n);
     }
 
-    public E peek() {
+    public int peek() {
+        return pq[1];
+    }
+
+    public E peekKey() {
         return keys[pq[1]];
     }
 
     public int poll() {
-        int k = pq[1];
+        int min = pq[1];
         exch(1, n--);
         siftDown(1);
-        keys[k] = null;
-        qp[k] = -1;
-        return k;
+        keys[min] = null;
+        qp[min] = -1;
+        return min;
     }
 
     /**
@@ -112,13 +112,14 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
     public E remove(int k) {
         if (!contains(k))
             return null;
-        int x = pq[k];
-        E e = keys[x];
-        exch(k, n--);
-        siftDown(k);
+        int i = qp[k];
+        E e = keys[k];
+        exch(i, n--);
+        siftUp(i);
+        siftDown(i);
 
         qp[k] = -1;// IMPORTANT 这一行的位置很关键，要保证qp具有如下性质：qp[pq[i]]=i/-1(当pq[i]指示的元素keys[pq[i]]不存在的时候)
-        keys[x] = null;
+        keys[k] = null;
         return e;
     }
 
@@ -133,6 +134,7 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
             return;
         if (keys[k].equals(key))
             return;
+
         keys[k] = key;
         siftUp(qp[k]);
         siftDown(qp[k]);
@@ -152,11 +154,8 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
         return n == 0;
     }
 
-    public E get(int idx) {
-        if (!contains(idx))
-            return null;
-
-        return keys[idx];
+    public int size() {
+        return n;
     }
 
     // helpers
@@ -165,11 +164,9 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
      * @param k
      */
     private void siftUp(int k) {
-        while (less(k, k >> 1)) {
+        while (k > 1 && less(k, k >> 1)) {
             exch(k, k >> 1);
             k >>= 1;
-            if (k == 1)
-                return;
         }
     }
 
@@ -179,8 +176,8 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
      * @param k
      */
     private void siftDown(int k) {
-        while ((k << 1) <= n) {
-            int j = k << 1;
+        int j;
+        while ((j = k << 1) <= n) {
             if (j < n && less(j + 1, j))
                 j++;
             if (less(k, j))

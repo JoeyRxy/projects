@@ -23,8 +23,9 @@ public class Kruskal {
         // more efficient to build heap by passing array of edges
         PriorityQueue<WeightedEdge> pq = new PriorityQueue<>(g.edges());
 
-        UnionFind uf = new UnionFind(g.V());
-        while (!pq.isEmpty() && mst.size() < g.V() - 1) {
+        int vn = g.V();
+        UnionFind uf = new UnionFind(vn);
+        while (!pq.isEmpty() && mst.size() < vn - 1) {
             WeightedEdge e = pq.poll();
             int v = e.either();
             int w = e.other(v);

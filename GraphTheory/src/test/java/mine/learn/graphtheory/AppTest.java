@@ -2,15 +2,21 @@ package mine.learn.graphtheory;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.Random;
+
+import org.junit.Test;
+
+import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 import mine.learn.graphtheory.bean.WeightedEdge;
 import mine.learn.graphtheory.util.PriorityQueueM;
-import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Objects;
-import java.util.Random;
 
 public class AppTest {
 
@@ -67,13 +73,7 @@ public class AppTest {
     }
 
     @Test
-    public void testTopological() {
-        assertTrue(true);
-        LinkedList<Integer> list = new LinkedList<>();
-    }
-
-    @Test
-    public void testPQM() {
+    public void testPriorityQueueM() {
         PriorityQueueM<Pair> pq = new PriorityQueueM<>(105);
         Random r = new Random(System.currentTimeMillis());
         for (int i = 0; i < 100; i++) {
@@ -118,4 +118,131 @@ public class AppTest {
         System.out.println(s1 + s2);
     }
 
+    @Test
+    public void testDijkstra() throws IOException {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(getClass().getClassLoader().getResourceAsStream("mediumEWD.txt")));
+        EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(Integer.parseInt(reader.readLine()));
+        reader.readLine();
+        String line = reader.readLine();
+        while (line != null) {
+            String[] split = (" " + line).split(" +");
+            g.addEdge(new WeightedDirectedEdge(Integer.parseInt(split[1]), Integer.parseInt(split[2]),
+                    Double.parseDouble(split[3])));
+            line = reader.readLine();
+        }
+
+        Dijkstra dijkstra = new Dijkstra(g, 0);
+        System.out.println(dijkstra.stringPathTo(2));
+    }
+
+    @Test
+    public void testEWDn() throws NumberFormatException, IOException {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(getClass().getClassLoader().getResourceAsStream("tinyEWDn.txt")));
+        EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(Integer.parseInt(reader.readLine()));
+        reader.readLine();
+        String line = reader.readLine();
+        while (line != null) {
+            String[] split = line.split(" +");
+            g.addEdge(new WeightedDirectedEdge(Integer.parseInt(split[0]), Integer.parseInt(split[1]),
+                    Double.parseDouble(split[2])));
+            line = reader.readLine();
+        }
+
+        EdgeWeightedDiGraph g2 = new EdgeWeightedDiGraph(g.V());
+        double min = Double.POSITIVE_INFINITY;
+        for (WeightedDirectedEdge e : g.edges()) {
+            if (min > e.weight())
+                min = e.weight();
+        }
+        for (WeightedDirectedEdge e : g.edges()) {
+            g2.addEdge(new WeightedDirectedEdge(e.from(), e.to(), e.weight() - min));
+        }
+
+        Dijkstra dijkstra1 = new Dijkstra(g, 0);
+        for (int i = 1; i < g.V(); i++) {
+            System.out.println("0 -> " + i + " || " + dijkstra1.stringPathTo(i));
+        }
+        System.out.println("====================");
+        Dijkstra dijkstra2 = new Dijkstra(g2, 0);
+        for (int i = 1; i < g2.V(); i++) {
+            System.out.println("0 -> " + i + " || " + dijkstra2.stringPathTo(i));
+        }
+    }
+
+    @Test
+    public void testEquals() {
+        Double d1 = 3.2;
+        Double d2 = 3.2;
+        System.out.println(d1.equals(d2));
+        System.out.println(d1 == d2);
+    }
+
+    @Test
+    public void testGraph() throws IOException {
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(getClass().getClassLoader().getResourceAsStream("tinyEWDn.txt")));
+        EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(Integer.parseInt(reader.readLine()));
+        reader.readLine();
+        String line = reader.readLine();
+        while (line != null) {
+            String[] split = line.split(" +");
+            g.addEdge(new WeightedDirectedEdge(Integer.parseInt(split[0]), Integer.parseInt(split[1]),
+                    Double.parseDouble(split[2])));
+            line = reader.readLine();
+        }
+        System.out.println(g);
+    }
+
+    @Test
+    public void testSort() {
+        class Data {
+            int x;
+            int y;
+
+            public Data(int x, int y) {
+                this.x = x;
+                this.y = y;
+            }
+
+            @Override
+            public String toString() {
+                return "Data [x=" + x + ", y=" + y + "]";
+            }
+
+        }
+        class DataCmp implements Comparator<Data> {
+
+            @Override
+            public int compare(Data o1, Data o2) {
+                if (o1.x > o2.x)
+                    return 1;
+                else if (o1.x < o2.x)
+                    return -1;
+                else {
+                    if (o1.y > o2.y)
+                        return -1;
+                    else if (o1.y < o2.y)
+                        return 1;
+                    else
+                        return 0;
+                }
+            }
+
+        }
+        Random r = new Random(System.currentTimeMillis() % 997);
+        Data[] datas = new Data[100];
+        for (int i = 0; i < datas.length; i++) {
+            datas[i] = new Data(r.nextInt(10), r.nextInt(50));
+        }
+        for (Data data : datas) {
+            System.out.println(data);
+        }
+        Arrays.sort(datas, new DataCmp());
+        System.out.println("========After Sort==========");
+        for (Data data : datas) {
+            System.out.println(data);
+        }
+    }
 }

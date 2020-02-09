@@ -10,7 +10,7 @@ import mine.learn.graphtheory.util.IndexedPriorityQueue;
 @Deprecated
 public class Astar {
 
-    public Astar(UAVGraph g, Coordination start, Coordination goal) {
+    public Astar(@org.jetbrains.annotations.NotNull UAVGraph g, Coordination start, Coordination goal) {
 
         int vn = g.size();
         Coordination[] edgeTo = new Coordination[vn];
@@ -38,7 +38,7 @@ public class Astar {
         }
     }
 
-    private double weight(Coordination from, Coordination to) {
+    private double weight(@org.jetbrains.annotations.NotNull Coordination from, Coordination to) {
         int abs = Math.abs(to.getX() - from.getX()) + Math.abs(to.getY() - from.getY())
                 + Math.abs(to.getZ() - from.getZ());
         if (abs == 1)
