@@ -10,12 +10,17 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Count extends HttpServlet {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7735318263832033385L;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             int count = UserDAO.queryCount();
-            req.setAttribute("count",count);
-            req.getRequestDispatcher("/trial.jsp").forward(req,resp);
+            req.setAttribute("count", count);
+            req.getRequestDispatcher("/trial.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -24,6 +29,6 @@ public class Count extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
+        doPost(req, resp);
     }
 }

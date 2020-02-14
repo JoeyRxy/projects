@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial</title>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script>
+        function register() {
+            const name = $("#nameid").val();
+            const pwd = $("#pwdid").val();
+            alert(name + " : " + pwd);
+        }
+    </script>
+</head>
+
+<body>
+
+    name : <label for="nameid"></label><input type="text" name="name" id="nameid"><br>
+    pwd : <label for="pwdid"></label><input type="text" name="pwd" id="pwdid"><br>
+    <input type="button" value="submit" onclick="register()">
+</body>
+
+</html>

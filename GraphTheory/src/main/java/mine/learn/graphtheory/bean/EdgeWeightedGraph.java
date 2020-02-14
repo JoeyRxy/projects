@@ -6,10 +6,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import mine.learn.graphtheory.api.RealMapGraph;
 import mine.learn.graphtheory.api.SymbolGraphAPI;
 
 @SuppressWarnings("unchecked")
-public class EdgeWeightedGraph implements SymbolGraphAPI {
+public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
 
     private int V;
     private Set<WeightedEdge>[] adj;
@@ -17,6 +18,8 @@ public class EdgeWeightedGraph implements SymbolGraphAPI {
 
     private String[] nameOf;
     private Map<String, Integer> indexOf;
+
+    private Coordination[] coordinations;
 
     public EdgeWeightedGraph(int V) {
         if (V <= 0)
@@ -26,9 +29,29 @@ public class EdgeWeightedGraph implements SymbolGraphAPI {
         indexOf = new HashMap<>();
         adj = (Set<WeightedEdge>[]) new Set[V];
         edges = new HashSet<>();
+        coordinations = new Coordination[V];
         for (int v = 0; v < V; v++) {
             adj[v] = new HashSet<>();
         }
+    }
+
+    @Override
+    public void setCoordinationOf(int v, Coordination coordination) {
+        coordinations[v] = coordination;
+    }
+
+    @Override
+    public Coordination coordinationOf(int v) {
+        return coordinations[v];
+    }
+
+    @Override
+    public int vertexOf(Coordination coordination) {
+        for (int i = 0; i < coordinations.length; i++) {
+            if (coordinations[i].equals(coordination))
+                return i;
+        }
+        return -1;
     }
 
     public int V() {
@@ -96,5 +119,10 @@ public class EdgeWeightedGraph implements SymbolGraphAPI {
         validateVertex(index);
         nameOf[index] = vertex;
         indexOf.put(vertex, index);
+    }
+
+    @Override
+    public double dist(int v, int w) {
+        return coordinations[v].dist(coordinations[w]);
     }
 }

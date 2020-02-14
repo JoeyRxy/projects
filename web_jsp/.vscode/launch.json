@@ -3,24 +3,35 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [{
-        "type": "java",
-        "name": "Debug Current File",
-        "request": "launch",
-        "console": "internalConsole",
-        "mainClass": "${file}",
-        "stepFilters": {
-            "classNameFilters": [
-                "java.*",
-                "javax.*",
-                "com.sun.*",
-                "sun.*",
-                "sunw.*",
-                "org.omg.*"
-            ],
-            "skipSynthetics": false,
-            "skipStaticInitializers": false,
-            "skipConstructors": false
+    "configurations": [
+
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}",
+            "file": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug Current File",
+            "request": "launch",
+            "console": "internalConsole",
+            "mainClass": "${file}",
+            "stepFilters": {
+                "classNameFilters": [
+                    "java.*",
+                    "javax.*",
+                    "com.sun.*",
+                    "sun.*",
+                    "sunw.*",
+                    "org.omg.*"
+                ],
+                "skipSynthetics": false,
+                "skipStaticInitializers": false,
+                "skipConstructors": false
+            }
         }
-    }]
+    ]
 }

@@ -1,12 +1,13 @@
 
 package mine.learn.graphtheory.bean;
 
+import mine.learn.graphtheory.api.RealMapGraph;
 import mine.learn.graphtheory.api.SymbolGraphAPI;
 
 import java.util.*;
 
 @SuppressWarnings("unchecked")
-public class EdgeWeightedDiGraph implements SymbolGraphAPI {
+public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
 
     private int V; // number of vertices in this digraph
     private Set<WeightedDirectedEdge>[] adj; // adj[v] = adjacency list for vertex v
@@ -16,18 +17,42 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI {
     private String[] nameOf;
     private Map<String, Integer> indexOf;
 
+    private Coordination[] coordinations;
+
     public EdgeWeightedDiGraph(int V) {
         if (V <= 0)
             throw new IllegalArgumentException("节点数必须为正整数");
         this.V = V;
         this.indegree = new int[V];
+
         nameOf = new String[V];
         indexOf = new HashMap<>();
         edges = new LinkedList<>();
         adj = (Set<WeightedDirectedEdge>[]) new Set[V];
+        coordinations = new Coordination[V];
+
         for (int v = 0; v < V; v++)
             adj[v] = new HashSet<>();
 
+    }
+
+    @Override
+    public void setCoordinationOf(int v, Coordination coordination) {
+        coordinations[v] = coordination;
+    }
+
+    @Override
+    public Coordination coordinationOf(int v) {
+        return coordinations[v];
+    }
+
+    @Override
+    public int vertexOf(Coordination coordination) {
+        for (int i = 0; i < coordinations.length; i++) {
+            if (coordinations[i].equals(coordination))
+                return i;
+        }
+        return -1;
     }
 
     public List<WeightedDirectedEdge> edges() {
@@ -116,6 +141,11 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI {
     @Override
     public int indexOf(String vertex) {
         return indexOf.get(vertex);
+    }
+
+    @Override
+    public double dist(int v, int w) {
+        return coordinations[v].dist(coordinations[w]);
     }
 
 }

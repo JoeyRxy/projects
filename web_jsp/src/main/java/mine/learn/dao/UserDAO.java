@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
-import mine.learn.entity.Page;
 import mine.learn.entity.UserInf;
 
 public class UserDAO {
@@ -86,7 +85,7 @@ public class UserDAO {
      * @throws SQLException
      */
     public static boolean check(final UserInf info) throws SQLException {
-        if(!is(info.getUname()))
+        if (!is(info.getUname()))
             return false;
 
         final String sql = "SELECT pwd FROM users where name = ?";
@@ -98,7 +97,7 @@ public class UserDAO {
         if (resultSet.next()) {
             pwd = resultSet.getString("pwd");
         }
-        assert pwd!=null;
+        assert pwd != null;
 
         resultSet.close();
         pstmt.close();
@@ -143,12 +142,12 @@ public class UserDAO {
     public static List<UserInf> queryByPage(int curPage, int pageSize) throws SQLException {
         final String sql = "SELECT * FROM users limit ?,?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1,curPage * pageSize);
-        pstmt.setInt(2,pageSize);
+        pstmt.setInt(1, curPage * pageSize);
+        pstmt.setInt(2, pageSize);
         ResultSet rs = pstmt.executeQuery();
         List<UserInf> list = new ArrayList<>();
-        while (rs.next()){
-            list.add(new UserInf(rs.getString("name"),rs.getString("pwd"),rs.getString("mobile")));
+        while (rs.next()) {
+            list.add(new UserInf(rs.getString("name"), rs.getString("pwd"), rs.getString("mobile")));
         }
         rs.close();
         pstmt.close();
@@ -160,7 +159,7 @@ public class UserDAO {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
         int count = -1;
-        if (rs.next()){
+        if (rs.next()) {
             count = rs.getInt(1);
         }
 

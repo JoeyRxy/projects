@@ -48,4 +48,9 @@ public class LogInTest {
         UserDAO.delete(uname);
         assertTrue("delete failed!!\n", !UserDAO.is(uname));
     }
+
+    @Test
+    public void testCount() throws SQLException {
+        System.out.println(UserDAO.queryCount());
+    }
 }

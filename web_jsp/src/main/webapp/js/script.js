@@ -10,21 +10,71 @@ $(document).ready(function () {
     $("#tr:odd").css("background-color", "lightgrey");
 })
 
-document.getElementById("s-10").onselect=function () {
+document.getElementById("s-10").onselect = function () {
     $.ajax({
-        url:"page?pageSize=10",
+        url: "page?pageSize=10",
         type: "POST",
     })
 }
-document.getElementById("s-20").onselect=function () {
+document.getElementById("s-20").onselect = function () {
     $.ajax({
-        url:"page?pageSize=20",
+        url: "page?pageSize=20",
         type: "POST",
     })
 }
-document.getElementById("s-30").onselect=function () {
+document.getElementById("s-30").onselect = function () {
     $.ajax({
-        url:"page?pageSize=30",
+        url: "page?pageSize=30",
         type: "POST",
+    })
+}
+
+function register() {
+    const xmlHttpRequest = new XMLHttpRequest();
+    const name = $("#nameid").val();
+    const pwd = $("#pwdid").val();
+    console.log(name + " : " + pwd);
+    xmlHttpRequest.open("post", "trial", true);
+    xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xmlHttpRequest.send({
+        name: name,
+        pwd: pwd
+    });
+    xmlHttpRequest.onreadystatechange = function () {
+        console.log("readystatechanged");
+        console.log("ready state : " + xmlHttpRequest.readyState);
+        console.log("status : " + xmlHttpRequest.status);
+        if (xmlHttpRequest.readyState === XMLHttpRequest.DONE && xmlHttpRequest.status === 200) {
+            console.log("success");
+
+            let text = xmlHttpRequest.responseText;
+            if (text === "true") {
+                alert("welcome " + name);
+            } else {
+                alert("wrong!");
+            }
+        }
+    }
+}
+
+function reg() {
+    const name = $("#nameid").val();
+    const pwd = $("#pwdid").val();
+    $.ajax({
+        url: "trial",
+        method: "post",
+        dataType: "json",
+        data: {
+            "name": name,
+            "pwd": pwd
+        },
+        success: (res) => {
+            console.log(res);
+            var txt = eval(res);
+            console.log(txt);
+
+            $("#res").val("ans" + txt);
+        }
     })
 }

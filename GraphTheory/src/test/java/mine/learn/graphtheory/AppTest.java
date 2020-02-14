@@ -16,6 +16,7 @@ import org.junit.Test;
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 import mine.learn.graphtheory.bean.WeightedEdge;
+import mine.learn.graphtheory.util.IndexedPriorityQueue;
 import mine.learn.graphtheory.util.PriorityQueueM;
 
 public class AppTest {
@@ -72,24 +73,82 @@ public class AppTest {
 
     }
 
+    /**
+     * test res :
+     * <p>
+     * duration : 5034 ms.
+     * <p>
+     * duration : 7581 ms.
+     * <p>
+     * pq size : 864834
+     */
     @Test
     public void testPriorityQueueM() {
-        PriorityQueueM<Pair> pq = new PriorityQueueM<>(105);
+        int n = 1000000;
+        PriorityQueueM<Pair> pq = new PriorityQueueM<>(n);
         Random r = new Random(System.currentTimeMillis());
-        for (int i = 0; i < 100; i++) {
-            pq.add(new Pair(r.nextInt(1000), randomString(r, r.nextInt(50) + 1)));
+        int len = 2 * n;
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < len; i++) {
+            pq.add(new Pair(r.nextInt(n), randomString(r, r.nextInt(80) + 1)));
         }
+        long end = System.currentTimeMillis();
+        System.out.println("duration : " + (end - start) + " ms.");
         String[] t = new String[pq.size()];
         int idx = 0;
+        start = System.currentTimeMillis();
         while (!pq.isEmpty()) {
             String tmp = pq.poll().val;
             t[idx] = tmp;
-            System.out.println(idx + " : " + tmp);
             idx++;
         }
-        for (int i = 1; i < t.length; i++) {
-            assertTrue("问题出在第 " + i + " 行", t[i].compareTo(t[i - 1]) >= 0);
+        end = System.currentTimeMillis();
+        System.out.println("duration : " + (end - start) + " ms.");
+        System.out.println("pq size : " + t.length);
+        // for (int i = 1; i < t.length; i++) {
+        // assertTrue("问题出在第 " + i + " 行", t[i].compareTo(t[i - 1]) >= 0);
+        // }
+    }
+
+    /**
+     * test res :
+     * <p>
+     * duration : 3265 ms.
+     * <p>
+     * duration : 1835 ms.
+     * <p>
+     * pq size : 864395
+     */
+    @Test
+    public void testIndexedPriorityQueue() {
+        int n = 1000000;
+        IndexedPriorityQueue<String> pq = new IndexedPriorityQueue<>(n);
+        String[] keys = new String[n];
+        Random r = new Random(System.currentTimeMillis());
+        int len = 2 * n;
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < len; i++) {
+            int idx = r.nextInt(n);
+            String val = randomString(r, r.nextInt(80) + 1);
+            pq.add(idx, val);
+            keys[idx] = val;
         }
+        long end = System.currentTimeMillis();
+        System.out.println("duration : " + (end - start) + " ms.");
+        String[] t = new String[pq.size()];
+        int idx = 0;
+        start = System.currentTimeMillis();
+        while (!pq.isEmpty()) {
+            int tmp = pq.poll();
+            t[idx] = keys[tmp];
+            idx++;
+        }
+        end = System.currentTimeMillis();
+        System.out.println("duration : " + (end - start) + " ms.");
+        System.out.println("pq size : " + t.length);
+        // for (int i = 1; i < t.length; i++) {
+        // assertTrue("问题出在第 " + i + " 行", t[i].compareTo(t[i - 1]) >= 0);
+        // }
     }
 
     private String randomString(Random r, int len) {

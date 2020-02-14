@@ -5,12 +5,10 @@
         "dialect": "MySQL",
         "name": "local",
         "password": "73699rxy",
-        "mysqlOptions": {
-            "authProtocol": "xprotocol"
-        },
-        "port": 33060,
+        "port": 3306,
         "server": "localhost",
         "username": "root",
         "connectionTimeout": 300
-    }]
+    }],
+    "sqltools.autoOpenSessionFiles": false
 }

@@ -123,7 +123,7 @@
                 <th></th>
             </tr>
             <%
-                response.sendRedirect();
+                response.sendRedirect("info");
 
             %>
         </table>

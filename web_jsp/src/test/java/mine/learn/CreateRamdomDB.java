@@ -55,4 +55,13 @@ public class CreateRamdomDB {
         System.out.println(s);
         System.out.println(builder);
     }
+
+    public void create() throws SQLException {
+        CreateRamdomDB db = new CreateRamdomDB();
+        Random r = new Random(System.currentTimeMillis());
+        for (int i = 0; i < 20000; i++) {
+            UserDAO.insert(
+                    new UserInf(db.randomString(r.nextInt(20) + 4), db.randomString(10), db.randomMobileString(11)));
+        }
+    }
 }

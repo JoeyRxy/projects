@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Coordination
  */
-public class Coordination {
+public class Coordination implements Comparable<Coordination> {
 
     private int x;
     private int y;
@@ -61,4 +61,25 @@ public class Coordination {
         Coordination other = (Coordination) obj;
         return x == other.x && y == other.y && z == other.z;
     }
+
+    @Override
+    public int compareTo(Coordination o) {
+        if (x > o.x)
+            return 1;
+        else if (x == o.x) {
+            if (y > o.y)
+                return 1;
+            else if (y == o.y) {
+                if (z > o.z)
+                    return 1;
+                else if (z == o.z)
+                    return 0;
+                else
+                    return -1;
+            } else
+                return -1;
+        } else
+            return -1;
+    }
+
 }
