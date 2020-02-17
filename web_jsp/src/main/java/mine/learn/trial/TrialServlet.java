@@ -35,7 +35,6 @@ public class TrialServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("tex/html; charset=utf-8");
         // BufferedReader reader = req.getReader();
         // StringBuilder builder = new StringBuilder();
         // int c;
@@ -46,22 +45,17 @@ public class TrialServlet extends HttpServlet {
         String name = req.getParameter("name");
         String pwd = req.getParameter("pwd");
         PrintWriter writer = resp.getWriter();
-
+        JSONObject jsonObject = new JSONObject();
         try {
-            JSONObject object = new JSONObject();
-            List<UserInf> allList = UserDAO.queryAll();
-            UserInf user1 = allList.get(100);
-            UserInf user2 = allList.get(102);
-            UserInf user3 = allList.get(104);
-            UserInf user4 = allList.get(1);
-            UserInf user5 = allList.get(10);
-            object.put("user1", user1);
-            object.put("user2", user2);
-            object.put("user3", user3);
-            object.put("user4", user4);
-            object.put("user5", user5);
-            writer.write(object.toString());
+            if (UserDAO.check(new UserInf(name, pwd, ""))) {
+                jsonObject.put("ans", true);
+                writer.write(jsonObject.toString());
+            } else {
+                jsonObject.put("ans", false);
+                writer.write(jsonObject.toString());
+            }
         } catch (SQLException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

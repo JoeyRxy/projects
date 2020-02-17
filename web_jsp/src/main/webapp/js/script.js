@@ -61,8 +61,10 @@ function register() {
 function reg() {
     const name = $("#nameid").val();
     const pwd = $("#pwdid").val();
+    console.log(name + " : " + pwd);
+
     $.ajax({
-        url: "trial",
+        url: "/web_jsp/trial",
         method: "post",
         dataType: "json",
         data: {
@@ -71,10 +73,28 @@ function reg() {
         },
         success: (res) => {
             console.log(res);
-            var txt = eval(res);
-            console.log(txt);
+            $("#res").text("ans :" + res.ans);
+        }
+    })
+}
 
-            $("#res").val("ans" + txt);
+function check() {
+    const name = $("#nameid").val();
+    console.log(name);
+    $.ajax({
+        url: "name",
+        data: {
+            "name": name
+        },
+        method: "post",
+        dataType: "json",
+        success: function (res) {
+            var ans = res.ans;
+            console.log(ans);
+
+            if (!ans) {
+                $("#back").text("用户名已存在")
+            }
         }
     })
 }

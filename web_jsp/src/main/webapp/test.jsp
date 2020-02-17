@@ -13,11 +13,7 @@
     pwd : <label for="pwdid"></label><input type="text" name="pwd" id="pwdid"><br>
     <input type="button" value="submit" onclick="reg()">
 
-    <p>
-        <ul>
-            <li id="res"></li>
-        </ul>
-    </p>
+    <div id="res"></div>
 </body>
 
 </html>

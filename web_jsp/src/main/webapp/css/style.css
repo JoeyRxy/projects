@@ -95,7 +95,14 @@ ol {
 }
 
 /* //colors code */
-.tlinks{text-indent:-9999px;height:0;line-height:0;font-size:0;overflow:hidden;}
+.tlinks {
+    text-indent: -9999px;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
+
 /* header */
 header {
     -webkit-box-shadow: 0.33333rem 0 1.33333rem rgba(87, 87, 87, .1);
@@ -1617,6 +1624,11 @@ button.btn-cont-w3 {
     .prices-top {
         left: 35%;
     }
+}
+
+#back {
+    font-weight: bold;
+    color: red;
 }
 
 /* //responsive */
