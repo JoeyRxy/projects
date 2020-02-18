@@ -27,4 +27,9 @@ public class UsersHandler {
         return repo.findAll();
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "hello fuck";
+    }
+
 }

@@ -26,4 +26,14 @@ public class Users {
         return "User [id=" + id + ", name=" + name + ", pwd=" + pwd + ", mobile=" + mobile + "balance=" + balance + "]";
     }
 
+    public Users(String name, String pwd, String mobile) {
+        this.name = name;
+        this.pwd = pwd;
+        this.mobile = mobile;
+    }
+
+    public Users() {
+
+    }
+
 }

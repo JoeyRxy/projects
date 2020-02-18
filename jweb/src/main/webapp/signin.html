@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>登录</title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Custom-Files -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Bootstrap-Core-CSS -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <!-- Style-CSS -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Font-Awesome-Icons-CSS -->
+    <!-- //Custom-Files -->
+
+    <!-- Web-Fonts -->
+    <link
+        href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
+        rel="stylesheet">
+    <!-- //Web-Fonts -->
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script>
+        $(() => {
+            let failed = $.cookie("failed");
+            if (failed) alert("用户名或密码错误！");
+            $.removeCookie("failed");
+            let uname = $.cookie("name");
+            let upwd = $.cookie("pwd");
+            console.log(uname);
+            console.log(upwd);
+            $("#nameid").val(uname);
+            $("#pwdid").val(upwd);
+            $.removeCookie("name");
+            $.removeCookie("pwd");
+        })
+    </script>
+</head>
+
+<body>
+    <div class="main-top" id="home">
+        <!-- header -->
+        <header>
+            <div class="container-fluid">
+                <div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
+                    <!-- logo -->
+                    <div id="logo">
+                        <h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
+                    </div>
+                    <!-- //logo -->
+                    <!-- nav -->
+                    <div class="nav_w3ls">
+                        <nav>
+                            <label for="drop" class="toggle">Menu</label>
+                            <input type="checkbox" id="drop" />
+                            <ul class="menu">
+                                <li><a href="index.html" class="active">主页</a></li>
+                                <li><a href="about.html">关于</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="d-flex mt-lg-1 mt-sm-2 mt-3"></div>
+                </div>
+            </div>
+        </header>
+        <!-- //header -->
+
+        <!-- //banner -->
+    </div>
+
+    <div class="contact py-5" id="contact">
+        <div class="container pb-xl-5 pb-lg-3">
+            <div class="row">
+                <div class="col-lg-6 mt-lg-0 mt-5">
+                    <!-- contact form grid -->
+                    <div class="contact-top1">
+                        <form action="signin" method="post" class="contact-wthree-do" accept-charset="UTF-8">
+                            <nav class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                    </div>
+                                </div>
+                            </nav>
+                            <nav class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>
+                                            姓名
+                                        </label>
+                                        <label>
+                                            <input id="nameid" class="form-control" type="text" placeholder="某某某"
+                                                name="uname" required="">
+                                        </label>
+                                    </div>
+                                </div>
+                            </nav>
+                            <nav class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>
+                                            密码
+                                        </label>
+                                        <label>
+                                            <input id="pwdid" class="form-control" type="password" name="upwd"
+                                                placeholder="********" required="">
+                                        </label>
+                                    </div>
+                                </div>
+                            </nav>
+                            <div class="row mt-3">
+                                <div class="col-md-3">
+                                    <input type="submit" class="btn btn-cont-w3 btn-block mt-4" value="登录">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="button" class="btn btn-cont-w3 btn-block mt-4" value="注册"
+                                        onclick="window.location.href='signup.html'">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- //contact form grid ends here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

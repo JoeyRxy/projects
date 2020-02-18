@@ -1,0 +1,43 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="jweb:war exploded">
+    <output-path>$PROJECT_DIR$/target/web_jsp</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>jweb</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="jweb" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-catalina:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-servlet-api:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jsp-api:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-el-api:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-juli:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-annotations-api:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-api:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jni:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-coyote:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-util:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-util-scan:9.0.30" />
+          <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jaspic-api:9.0.30" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.62" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.19" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.1.19" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.4" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.2" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/web_jsp/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="jweb/web/Web" />
+    </root>
+  </artifact>
+</component>

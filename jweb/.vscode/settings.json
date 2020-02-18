@@ -1,0 +1,14 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "sqltools.connections": [{
+        "database": "local",
+        "dialect": "MySQL",
+        "name": "local",
+        "password": "73699rxy",
+        "port": 3306,
+        "server": "localhost",
+        "username": "root",
+        "connectionTimeout": 300
+    }],
+    "sqltools.autoOpenSessionFiles": false
+}
