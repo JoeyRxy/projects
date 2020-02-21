@@ -25,15 +25,24 @@
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/jquery.cookie.js"></script>
     <script>
-        $(space);
-
-        function space(e) {
+        $(() => {
+            var $space = $("#spaceid");
+            var $btn = $("#btn");
             if ($.cookie('name') === undefined) {
-                $(e).attr('href', 'signin.html');
+                $space.attr('href', 'signin.html');
+                $btn.hide();
             } else {
-                $(e).attr('href', "space.html");
+                $space.attr('href', "space.html");
+                $space.text($.cookie('name'));
+                $btn.show();
+                $btn.click(() => {
+                    $.removeCookie('name');
+                    $.removeCookie('pwd');
+                    window.location.reload();
+                })
             }
-        }
+            
+        });
     </script>
 
 </head>
@@ -65,9 +74,8 @@
                     <div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
                         <nav>
                             <ul>
-
                                 <li>
-                                    <a href="" onmouseover="space(this)">个人空间</a>
+                                    <a id="spaceid" href="">个人空间</a><button id="btn" class="btn">注销</button>
                                 </li>
                             </ul>
                         </nav>

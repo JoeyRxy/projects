@@ -33,25 +33,16 @@ public class SignIn extends HttpServlet {
             User info = new User(uname, upwd, "");
             boolean check = UserDAO.check(info);
             if (check) {
-                HttpSession session = req.getSession();
-                Iterator<String> iter = session.getAttributeNames().asIterator();
-                System.out.println("====== sessions =======");
-                while (iter.hasNext()) {
-                    String next = iter.next();
-                    System.out.println(next + " : " + session.getAttribute(next));
-                }
                 resp.addCookie(new Cookie("name", uname));
                 resp.addCookie(new Cookie("pwd", upwd));
-                System.out.println("========== cookies ============");
-                Cookie[] cookies = req.getCookies();
-                for (Cookie cookie : cookies) {
-                    System.out.println(cookie.getName() + ": " + cookie.getValue());
-                }
+                HttpSession session = req.getSession();
+                session.setAttribute("signin", true);
+                session.setMaxInactiveInterval(3600);
                 resp.sendRedirect("space.html");
             } else {
                 Cookie cookie = new Cookie("failed", "true");
                 resp.addCookie(cookie);
-                resp.sendRedirect("signin.html");
+                resp.sendRedirect("login.html");
             }
 
         } catch (Exception e) {

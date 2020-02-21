@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONObject;
+
 import mine.learn.jweb.dao.UserDAO;
 import mine.learn.jweb.entity.User;
 
@@ -34,16 +36,15 @@ public class SignUp extends HttpServlet {
         try {
             User info = new User(uname, upwd, umobile);
             boolean success = UserDAO.insert(info);
+            JSONObject object = new JSONObject();
             if (success) {
+                object.put("signup", true);
                 resp.addCookie(new Cookie("name", uname));
                 resp.addCookie(new Cookie("pwd", upwd));
-                resp.sendRedirect("signin.html");
             } else {
-                HttpSession session = req.getSession();
-                session.setAttribute("fucked", true);
-                resp.sendRedirect("signup.html");
+                object.put("signup", false);
             }
-
+            resp.getWriter().write(object.toJSONString());
         } catch (Exception e) {
             e.printStackTrace();
         }
