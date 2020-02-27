@@ -17,7 +17,7 @@ public class SignOff extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (Helper.isSignIn(req))
+        if (!(boolean) req.getSession().getAttribute("signin"))
             return;
         HttpSession session = req.getSession();
         session.setAttribute("signin", false);

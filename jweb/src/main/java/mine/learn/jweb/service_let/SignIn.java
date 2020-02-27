@@ -1,8 +1,6 @@
 package mine.learn.jweb.service_let;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +25,8 @@ public class SignIn extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        String uname = req.getParameter("uname");
-        String upwd = req.getParameter("upwd");
+        String uname = req.getParameter("name");
+        String upwd = req.getParameter("pwd");
         try {
             User info = new User(uname, upwd, "");
             boolean check = UserDAO.check(info);
