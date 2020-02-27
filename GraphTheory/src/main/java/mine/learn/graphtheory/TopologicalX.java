@@ -8,23 +8,20 @@ import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 
 public class TopologicalX {
-    private Queue<Integer> order; // vertices in topological order
-    private int[] ranks; // ranks[v] = order where vertex v appers in order
+    private Queue<Integer> order;
+    private int[] ranks;
 
     public TopologicalX(EdgeWeightedDiGraph G) {
 
-        // indegrees of remaining vertices
         int[] indegree = new int[G.V()];
         for (int v = 0; v < G.V(); v++) {
             indegree[v] = G.indegree(v);
         }
 
-        // initialize
         ranks = new int[G.V()];
         order = new LinkedList<Integer>();
         int count = 0;
 
-        // initialize queue to contain all vertices with indegree = 0
         Queue<Integer> queue = new LinkedList<Integer>();
         for (int v = 0; v < G.V(); v++)
             if (indegree[v] == 0)
@@ -42,7 +39,6 @@ public class TopologicalX {
             }
         }
 
-        // there is a directed cycle in subgraph of vertices with indegree >= 1.
         if (count != G.V()) {
             order = null;
         }
@@ -64,7 +60,6 @@ public class TopologicalX {
             return -1;
     }
 
-    // throw an IllegalArgumentException unless {@code 0 <= v < V}
     private void validateVertex(int v) {
         int V = ranks.length;
         if (v < 0 || v >= V)

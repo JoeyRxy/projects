@@ -11,7 +11,7 @@ public class AppTest2 {
 
     @Test
     public void testDirectedCycles() throws NumberFormatException, IOException {
-        EdgeWeightedDiGraph g = (EdgeWeightedDiGraph) Helpers.getGraph("mediumEWD.txt", EdgeWeightedDiGraph.class);
+        EdgeWeightedDiGraph g = (EdgeWeightedDiGraph) Helpers.getGraph("EWD.txt", EdgeWeightedDiGraph.class);
         DirectedCycles cycles = new DirectedCycles(g);
         System.out.println(cycles);
     }

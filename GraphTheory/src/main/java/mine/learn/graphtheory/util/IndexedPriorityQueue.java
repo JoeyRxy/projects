@@ -54,6 +54,8 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
      * to quick-find</li>
      * <li>you should remember which index <code>i</code> bind with which element
      * <code>e</code></li>
+     * <li>if <code>k</code> exists, change the key to <code>e</code>, else add the
+     * <code>k</code> with element <code>e</code>.</li>
      * </ul>
      *
      * @param k bind index <code>i</code> with element <code>e</code>
@@ -140,6 +142,12 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
         siftDown(qp[k]);
     }
 
+    public void decreaseKey(int k, E key) {
+        assert less(key, keys[k]);
+        keys[k] = key;
+        siftUp(qp[k]);
+    }
+
     /**
      * 是否存在索引<code>i</code>
      *
@@ -192,6 +200,13 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
             return comparator.compare(keys[pq[i]], keys[pq[j]]) < 0;
         else
             return keys[pq[i]].compareTo(keys[pq[j]]) < 0;
+    }
+
+    private boolean less(E e1, E e2) {
+        if (comparator == null)
+            return e1.compareTo(e2) < 0;
+        else
+            return comparator.compare(e1, e2) < 0;
     }
 
     private void exch(int i, int j) {

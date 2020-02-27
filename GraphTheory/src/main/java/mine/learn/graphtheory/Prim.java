@@ -9,6 +9,7 @@ import mine.learn.graphtheory.util.PriorityQueueM;
 /**
  * Prim
  */
+@Deprecated
 public class Prim {
 
     private PriorityQueueM<Pair> pq;

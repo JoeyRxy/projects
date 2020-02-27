@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mine.learn.jweb.util.StateHelper;
+
 /**
  * SignOff
  */
@@ -17,10 +19,9 @@ public class SignOff extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (Helper.isSignIn(req))
+        if (!StateHelper.isLogIn(req))
             return;
         HttpSession session = req.getSession();
         session.setAttribute("signin", false);
-
     }
 }

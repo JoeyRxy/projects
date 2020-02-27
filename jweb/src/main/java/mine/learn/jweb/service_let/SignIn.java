@@ -1,8 +1,6 @@
 package mine.learn.jweb.service_let;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,10 +8,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import mine.learn.jweb.dao.UserDAO;
 import mine.learn.jweb.entity.User;
+import mine.learn.jweb.util.StateHelper;
 
 /**
  * Welcome
@@ -25,6 +23,11 @@ public class SignIn extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (StateHelper.isLogIn(req)) {
+            resp.getWriter().write("您已经登录");
+            resp.sendRedirect("index.html");
+            return;
+        }
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         String uname = req.getParameter("uname");
@@ -35,10 +38,8 @@ public class SignIn extends HttpServlet {
             if (check) {
                 resp.addCookie(new Cookie("name", uname));
                 resp.addCookie(new Cookie("pwd", upwd));
-                HttpSession session = req.getSession();
-                session.setAttribute("signin", true);
-                session.setMaxInactiveInterval(3600);
-                resp.sendRedirect("space.html");
+                StateHelper.setLogInTrue(req);
+                resp.sendRedirect("index.html");
             } else {
                 Cookie cookie = new Cookie("failed", "true");
                 resp.addCookie(cookie);

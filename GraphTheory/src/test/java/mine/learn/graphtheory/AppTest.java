@@ -1,10 +1,7 @@
 package mine.learn.graphtheory;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -180,7 +177,7 @@ public class AppTest {
     @Test
     public void testDijkstra() throws IOException {
         BufferedReader reader = new BufferedReader(
-                new InputStreamReader(getClass().getClassLoader().getResourceAsStream("mediumEWD.txt")));
+                new InputStreamReader(getClass().getClassLoader().getResourceAsStream("EWD.txt")));
         EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(Integer.parseInt(reader.readLine()));
         reader.readLine();
         String line = reader.readLine();
