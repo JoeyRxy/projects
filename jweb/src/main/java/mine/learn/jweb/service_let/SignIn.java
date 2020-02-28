@@ -30,8 +30,8 @@ public class SignIn extends HttpServlet {
         }
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        String uname = req.getParameter("uname");
-        String upwd = req.getParameter("upwd");
+        String uname = req.getParameter("name");
+        String upwd = req.getParameter("pwd");
         try {
             User info = new User(uname, upwd, "");
             boolean check = UserDAO.check(info);

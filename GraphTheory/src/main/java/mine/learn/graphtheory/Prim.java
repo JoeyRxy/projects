@@ -87,12 +87,15 @@ public class Prim {
         int vn = g.V();
         distTo = new double[vn];
         edgeTo = new WeightedEdge[vn];
+        pq = new PriorityQueueM<>(vn);
         for (int i = 0; i < vn; i++) {
             distTo[i] = Double.POSITIVE_INFINITY;
         }
-        distTo[0] = 0;
-        pq = new PriorityQueueM<>(vn);
-        f(0);
+    }
+
+    public void prim(int s) {
+        distTo[s] = 0;
+        f(s);
         while (!pq.isEmpty()) {
             Pair min = pq.poll();
             f(min.vertex);

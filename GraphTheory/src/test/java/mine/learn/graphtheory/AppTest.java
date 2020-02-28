@@ -11,8 +11,10 @@ import java.util.Random;
 import org.junit.Test;
 
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
+import mine.learn.graphtheory.bean.EdgeWeightedGraph;
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 import mine.learn.graphtheory.bean.WeightedEdge;
+import mine.learn.graphtheory.util.Helpers;
 import mine.learn.graphtheory.util.IndexedPriorityQueue;
 import mine.learn.graphtheory.util.PriorityQueueM;
 
@@ -237,18 +239,7 @@ public class AppTest {
 
     @Test
     public void testGraph() throws IOException {
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(getClass().getClassLoader().getResourceAsStream("tinyEWDn.txt")));
-        EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(Integer.parseInt(reader.readLine()));
-        reader.readLine();
-        String line = reader.readLine();
-        while (line != null) {
-            String[] split = line.split(" +");
-            g.addEdge(new WeightedDirectedEdge(Integer.parseInt(split[0]), Integer.parseInt(split[1]),
-                    Double.parseDouble(split[2])));
-            line = reader.readLine();
-        }
-        System.out.println(g);
+        System.out.println((EdgeWeightedGraph) Helpers.getGraph("mediumEWG.txt", EdgeWeightedGraph.class));
     }
 
     @Test
@@ -301,4 +292,5 @@ public class AppTest {
             System.out.println(data);
         }
     }
+
 }

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Components",
+            "request": "launch",
+            "mainClass": "mine.learn.graphtheory.Components",
+            "projectName": "GraphTheory"
+        },
+        {
+            "name": "Python: 当前文件",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "internalConsole"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Dijkstra",
             "request": "launch",
             "mainClass": "mine.learn.graphtheory.Dijkstra",
