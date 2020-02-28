@@ -1,4 +1,4 @@
-package mine.learn.graphtheory;
+package mine.learn.graphtheory.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class Helpers {
                             Double.parseDouble(split[3])));
                     line = reader.readLine();
                 }
-                assert g.E() == E;
+                // assert g.E() == E;
                 return g;
             } else if (instance instanceof EdgeWeightedDiGraph) {
                 EdgeWeightedDiGraph g = (EdgeWeightedDiGraph) instance;
@@ -49,7 +49,7 @@ public class Helpers {
                             Double.parseDouble(split[3])));
                     line = reader.readLine();
                 }
-                assert g.E() == E;
+                // assert g.E() == E;
                 return g;
             } else
                 throw new IllegalArgumentException("Type " + graph.getName() + " is not allowed.");
