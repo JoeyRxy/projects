@@ -1,6 +1,8 @@
 package mine.learn.graphtheory;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import mine.learn.graphtheory.bean.EdgeWeightedGraph;
 import mine.learn.graphtheory.bean.WeightedEdge;
@@ -14,26 +16,32 @@ public class Components {
     private int count;
     private int[] id;
     private boolean[] marked;
-    private int[] size;
+    private ArrayList<List<Integer>> sets;
 
     public Components(EdgeWeightedGraph g) {
         this.g = g;
         int V = g.V();
         id = new int[V];
+        sets = new ArrayList<>();
         marked = new boolean[V];
-        size = new int[V];
         for (int i = 0; i < V; i++) {
             if (!marked[i]) {
-                count++;
                 dfs(i);
+                count++;
             }
         }
     }
 
     private void dfs(int v) {
         id[v] = count;
+        if (count == sets.size()) {
+            List<Integer> _t = new ArrayList<>();
+            _t.add(v);
+            sets.add(_t);
+        } else {
+            sets.get(count).add(v);
+        }
         marked[v] = true;
-        size[count]++;
         for (WeightedEdge e : g.adj(v)) {
             int other = e.other(v);
             if (!marked[other])
@@ -53,10 +61,15 @@ public class Components {
         return count;
     }
 
-    public int sizeOf(int id) {
-        return size[id];
+    public List<Integer> allVertexOf(int id) {
+        return sets.get(id);
     }
 
+    public int sizeOf(int id) {
+        return sets.get(id).size();
+    }
+
+    @Deprecated
     public EdgeWeightedGraph[] inducedSubGraphs() {
         EdgeWeightedGraph[] subGraphs = new EdgeWeightedGraph[count];
         for (int i = 0; i < count; i++) {
@@ -67,9 +80,8 @@ public class Components {
 
     public static void main(String[] args) throws NumberFormatException, IOException {
         Components cc = new Components((EdgeWeightedGraph) Helpers.getGraph("mediumEWG.txt", EdgeWeightedGraph.class));
-        int[] id = cc.id;
-        for (int i = 0; i < id.length; i++) {
-            System.out.println(i + " : " + id[i]);
-        }
+        System.out.println(cc.count());
+        List<Integer> allVertexOf0 = cc.allVertexOf(cc.id(0));
+        System.out.println(cc.id(0) + " : \n" + allVertexOf0 + "\nsize : " + allVertexOf0.size());
     }
 }

@@ -38,3 +38,9 @@ function check() {
         }
     })
 }
+
+function isLogIn() {
+    $.post("logstate", null, res => {
+
+    })
+}

@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * LogState
@@ -15,8 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/logstate")
 public class LogState extends HttpServlet {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4137826287887638693L;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession();
+        HttpSession session = req.getSession();
+        session.getAttribute("logstate");
     }
 }

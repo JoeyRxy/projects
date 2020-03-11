@@ -1,8 +1,10 @@
 package mine.learn.graphtheory.computational_optimization;
 
 /**
- * IntegerLinearProgramming
+ * Combination
  */
-public class IntegerLinearProgramming {
+public class Combination {
+
+    private int[] set;
 
 }

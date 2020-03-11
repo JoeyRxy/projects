@@ -116,7 +116,7 @@ public class UserDAO {
         final String sql = "SELECT * FROM users";
         final Statement stmt = conn.createStatement();
         final ResultSet resultSet = stmt.executeQuery(sql);
-        final List<User> list = new ArrayList<>();
+        List<User> list = new ArrayList<>();
         while (resultSet.next()) {
             list.add(new User(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4)));
         }

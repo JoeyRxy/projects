@@ -6,9 +6,16 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - Components",
+            "name": "CodeLens (Launch) - TSP1",
             "request": "launch",
-            "mainClass": "mine.learn.graphtheory.Components",
+            "mainClass": "mine.learn.graphtheory.computational_optimization.TSP1",
+            "projectName": "GraphTheory"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TSP2",
+            "request": "launch",
+            "mainClass": "mine.learn.graphtheory.computational_optimization.TSP2",
             "projectName": "GraphTheory"
         },
         {
@@ -16,21 +23,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "internalConsole"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - Dijkstra",
-            "request": "launch",
-            "mainClass": "mine.learn.graphtheory.Dijkstra",
-            "projectName": "GraphTheory"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - MainFrame",
-            "request": "launch",
-            "mainClass": "mine.learn.graphtheory.gui.MainFrame",
-            "projectName": "GraphTheory"
+            "console": "externalTerminal"
         },
         {
             "type": "java",
@@ -45,7 +38,8 @@
                     "com.sun.*",
                     "sun.*",
                     "sunw.*",
-                    "org.omg.*"
+                    "org.omg.*",
+                    "mine.learn.graphtheory.computational_optimization.MyList"
                 ],
                 "skipSynthetics": false,
                 "skipStaticInitializers": false,

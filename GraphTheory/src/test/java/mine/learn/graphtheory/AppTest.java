@@ -1,12 +1,18 @@
 package mine.learn.graphtheory;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -14,6 +20,8 @@ import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 import mine.learn.graphtheory.bean.EdgeWeightedGraph;
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 import mine.learn.graphtheory.bean.WeightedEdge;
+import mine.learn.graphtheory.computational_optimization.TSP1;
+import mine.learn.graphtheory.computational_optimization.TSP2;
 import mine.learn.graphtheory.util.Helpers;
 import mine.learn.graphtheory.util.IndexedPriorityQueue;
 import mine.learn.graphtheory.util.PriorityQueueM;
@@ -293,4 +301,112 @@ public class AppTest {
         }
     }
 
+    @Test
+    public void testLinkedList() {
+        LinkedList<Integer> stack = new LinkedList<>();
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        stack.push(5);
+        for (Integer i : stack) {
+            System.out.println(i);
+        }
+    }
+
+    @Test
+    public void testHashArray() {
+        Boolean[] b = new Boolean[10];
+        for (int i = 0; i < b.length; i++)
+            b[i] = false;
+
+        Set<Boolean[]> tSet = new HashSet<>();
+        tSet.add(b);
+        b[5] = true;
+        tSet.add(b);
+        b[3] = true;
+        tSet.add(b);
+    }
+
+    @Test
+    public void TestTSP() {
+        int n = 200;
+        double[][] g = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                g[i][j] = Math.random() * 10;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            g[i][i] = 0;
+        }
+        // for (int i = 0; i < g.length; i++) {
+        // for (int j = 0; j < g.length; j++) {
+        // System.out.print(String.format("%4.2f ", g[i][j]));
+        // }
+        // System.out.println();
+        // }
+        TSP2 tsp = new TSP2(g, new int[] { 3, 5, 7, 9, 11, 20, 19 });
+        long start = System.currentTimeMillis();
+        double res = tsp.cal();
+        long end = System.currentTimeMillis();
+        System.out.println(res);
+        System.out.println(end - start + " ms");
+        List<Integer> path = tsp.path();
+        System.out.println(path);
+        // check
+        int v = path.get(0);
+        double s = 0;
+        for (int i = 1; i < path.size(); i++) {
+            s += g[v][path.get(i)];
+            v = path.get(i);
+        }
+        s += g[v][path.get(0)];
+        System.out.println(s);
+        assertTrue((Math.abs(res - s) < 1e-8));
+    }
+
+    @Test
+    public void testRotateLeft() {
+        int x = ~1;
+        System.out.println(x);
+        System.out.println((x >>> -1));
+        System.out.println((x << 1));
+    }
+
+    @Test
+    public void testInfinity() {
+        double d = Double.POSITIVE_INFINITY;
+        System.out.println(d);
+        System.out.println(d + 1);
+    }
+
+    @Test
+    public void dasfadfadfadf() {
+        int n = 30;
+        System.out.println((long) n * (1 << n) * Double.SIZE);
+    }
+
+    @Test
+    public void testFloydWarshall() {
+        // int n = 10;
+        // double[][] g = new double[n][n];
+        // for (int i = 0; i < n; i++) {
+        // for (int j = 0; j < n; j++) {
+        // g[i][j] = Math.random() * 10;
+        // }
+        // }
+        // for (int i = 0; i < n; i++) {
+        // g[i][i] = 0;
+        // }
+        double[][] g = { { 0, 3, Double.POSITIVE_INFINITY, 8, 9 }, { 3, 0, 3, 10, 5 },
+                { Double.POSITIVE_INFINITY, 3, 0, 4, 3 }, { 8, 10, 4, 0, 20 }, { 9, 5, 3, 20, 0 } };
+        FloydWarshall spt = new FloydWarshall(g);
+        for (int i = 0; i < g.length; i++) {
+            for (int j = 0; j < g.length; j++) {
+                System.out.println(
+                        i + " -> " + j + " : " + spt.dist(i, j) + "  " + g[i][j] + ", path : " + spt.pathExclude(i, j));
+            }
+        }
+    }
 }
