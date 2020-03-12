@@ -10,7 +10,7 @@ import java.util.*;
 public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
 
     private int V; // number of vertices in this digraph
-    private Set<WeightedDirectedEdge>[] adj; // adj[v] = adjacency list for vertex v
+    private List<WeightedDirectedEdge>[] adj; // adj[v] = adjacency list for vertex v
     private int[] indegree; // indegree[v] = indegree of vertex v
     private List<WeightedDirectedEdge> edges;
 
@@ -20,20 +20,29 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
     private Coordination[] coordinations;
 
     public EdgeWeightedDiGraph(int V) {
-        if (V <= 0)
-            throw new IllegalArgumentException("节点数必须为正整数");
         this.V = V;
         this.indegree = new int[V];
 
         nameOf = new String[V];
         indexOf = new HashMap<>();
         edges = new LinkedList<>();
-        adj = (Set<WeightedDirectedEdge>[]) new Set[V];
+        adj = (List<WeightedDirectedEdge>[]) new List[V];
         coordinations = new Coordination[V];
 
         for (int v = 0; v < V; v++)
-            adj[v] = new HashSet<>();
+            adj[v] = new LinkedList<>();
 
+    }
+
+    public EdgeWeightedDiGraph(double[][] g) {
+        this(g.length);
+        for (int i = 0; i < g.length; i++) {
+            for (int j = 0; j < g.length; j++) {
+                if (g[i][j] != Double.POSITIVE_INFINITY && j != i) {
+                    addEdge(new WeightedDirectedEdge(i, j, g[i][j]));
+                }
+            }
+        }
     }
 
     @Override

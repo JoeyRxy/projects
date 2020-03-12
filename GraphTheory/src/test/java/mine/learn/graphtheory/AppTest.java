@@ -346,22 +346,19 @@ public class AppTest {
         // }
         // System.out.println();
         // }
-        TSP2 tsp = new TSP2(g, new int[] { 3, 5, 7, 9, 11, 20, 19 });
+        TSP2 tsp = new TSP2(new EdgeWeightedDiGraph(g), new int[] { 3, 5, 7, 9, 11, 20, 19 });
         long start = System.currentTimeMillis();
         double res = tsp.cal();
         long end = System.currentTimeMillis();
         System.out.println(res);
         System.out.println(end - start + " ms");
-        List<Integer> path = tsp.path();
+        var path = tsp.path();
         System.out.println(path);
         // check
-        int v = path.get(0);
         double s = 0;
-        for (int i = 1; i < path.size(); i++) {
-            s += g[v][path.get(i)];
-            v = path.get(i);
+        for (WeightedDirectedEdge e : path) {
+            s += e.weight();
         }
-        s += g[v][path.get(0)];
         System.out.println(s);
         assertTrue((Math.abs(res - s) < 1e-8));
     }
@@ -389,24 +386,37 @@ public class AppTest {
 
     @Test
     public void testFloydWarshall() {
-        // int n = 10;
-        // double[][] g = new double[n][n];
-        // for (int i = 0; i < n; i++) {
-        // for (int j = 0; j < n; j++) {
-        // g[i][j] = Math.random() * 10;
-        // }
-        // }
-        // for (int i = 0; i < n; i++) {
-        // g[i][i] = 0;
-        // }
-        double[][] g = { { 0, 3, Double.POSITIVE_INFINITY, 8, 9 }, { 3, 0, 3, 10, 5 },
-                { Double.POSITIVE_INFINITY, 3, 0, 4, 3 }, { 8, 10, 4, 0, 20 }, { 9, 5, 3, 20, 0 } };
-        FloydWarshall spt = new FloydWarshall(g);
-        for (int i = 0; i < g.length; i++) {
-            for (int j = 0; j < g.length; j++) {
-                System.out.println(
-                        i + " -> " + j + " : " + spt.dist(i, j) + "  " + g[i][j] + ", path : " + spt.pathExclude(i, j));
+        int n = 200;
+        double[][] g = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                g[i][j] = Math.random() * 10;
             }
         }
+        for (int i = 0; i < n; i++) {
+            g[i][i] = 0;
+        }
+        // double[][] g = { { 0, 3, Double.POSITIVE_INFINITY, 8, 9 }, { 3, 0, 3, 10, 5
+        // },
+        // { Double.POSITIVE_INFINITY, 3, 0, 4, 3 }, { 8, 10, 4, 0, 20 }, { 9, 5, 3, 20,
+        // 0 } };
+        long start = System.currentTimeMillis();
+        EdgeWeightedDiGraph g2 = new EdgeWeightedDiGraph(g);
+        long end1 = System.currentTimeMillis();
+        FloydWarshall spt = new FloydWarshall(g2);
+        long end2 = System.currentTimeMillis();
+        System.out.println(end1 - start);
+        System.out.println(end2 - end1);
+
+        // double dist = spt.dist(0, 2);
+        // LinkedList<WeightedDirectedEdge> path = spt.path(0, 2);
+        // System.out.println(dist + " : " + path);
+        // for (int i = 0; i < g.length; i++) {
+        // for (int j = 0; j < g.length; j++) {
+        // System.out.println(
+        // i + " -> " + j + " : " + spt.dist(i, j) + " " + g[i][j] + ", path : " +
+        // spt.path(i, j));
+        // }
+        // }
     }
 }
