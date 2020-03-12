@@ -329,7 +329,7 @@ public class AppTest {
     }
 
     @Test
-    public void TestTSP() {
+    public void testTSP() {
         int n = 200;
         double[][] g = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -346,7 +346,8 @@ public class AppTest {
         // }
         // System.out.println();
         // }
-        TSP2 tsp = new TSP2(g, new int[] { 3, 5, 7, 9, 11, 20, 19 });
+        TSP2 tsp = new TSP2(new EdgeWeightedDiGraph(g),
+                new int[] { 0, 3, 5, 7, 9, 11, 20, 19, 100, 130, 111, 97, 28, 67, 81, 177, 189 });
         long start = System.currentTimeMillis();
         double res = tsp.cal();
         long end = System.currentTimeMillis();
@@ -401,12 +402,33 @@ public class AppTest {
         // }
         double[][] g = { { 0, 3, Double.POSITIVE_INFINITY, 8, 9 }, { 3, 0, 3, 10, 5 },
                 { Double.POSITIVE_INFINITY, 3, 0, 4, 3 }, { 8, 10, 4, 0, 20 }, { 9, 5, 3, 20, 0 } };
-        FloydWarshall spt = new FloydWarshall(g);
+        EdgeWeightedDiGraph G = new EdgeWeightedDiGraph(g);
+        FloydWarshall spt = new FloydWarshall(G);
         for (int i = 0; i < g.length; i++) {
             for (int j = 0; j < g.length; j++) {
                 System.out.println(
-                        i + " -> " + j + " : " + spt.dist(i, j) + "  " + g[i][j] + ", path : " + spt.pathExclude(i, j));
+                        i + " -> " + j + " : " + spt.dist(i, j) + "  " + g[i][j] + ", path : " + spt.path(i, j));
             }
         }
+    }
+
+    @Test
+    public void testTSPHeuristic() {
+        int n = 18;
+        double[][] g = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                g[i][j] = Math.random() * 10;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            g[i][i] = 0;
+        }
+        int[] set = new int[n];
+        for (int i = 0; i < set.length; i++) {
+            set[i] = i;
+        }
+        // TSP2 tsp2 = new TSP2(new EdgeWeightedDiGraph(g),set);
+
     }
 }

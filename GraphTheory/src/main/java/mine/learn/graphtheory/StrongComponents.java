@@ -25,9 +25,11 @@ public class StrongComponents {
     private void helper(EdgeWeightedDiGraph graph, int v, boolean[] vis) {
         vis[v] = true;
         for (WeightedDirectedEdge e : graph.adjOf(v)) {
-            int w = e.to();
-            if (!vis[w])
-                helper(graph, w, vis);
+            if (e != null) {
+                int w = e.to();
+                if (!vis[w])
+                    helper(graph, w, vis);
+            }
         }
         reversePostOrder.push(v);
     }
@@ -65,9 +67,11 @@ public class StrongComponents {
         } else
             sets.get(count).add(v);
         for (WeightedDirectedEdge e : g.adjOf(v)) {
-            int w = e.to();
-            if (!marked[w])
-                dfs(w);
+            if (e != null) {
+                int w = e.to();
+                if (!marked[w])
+                    dfs(w);
+            }
         }
     }
 

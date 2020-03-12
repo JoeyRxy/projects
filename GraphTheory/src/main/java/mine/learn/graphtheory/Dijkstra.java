@@ -27,7 +27,8 @@ public class Dijkstra {
         while (!pq.isEmpty()) {
             int v = pq.poll();
             for (WeightedDirectedEdge e : g.adjOf(v))
-                relax(e);
+                if (e != null)
+                    relax(e);
         }
     }
 

@@ -6,11 +6,16 @@ import mine.learn.graphtheory.api.SymbolGraphAPI;
 
 import java.util.*;
 
-@SuppressWarnings("unchecked")
+/**
+ * 改用邻接矩阵表示
+ * <p>
+ * 
+ */
 public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
 
+    private WeightedDirectedEdge[][] g;
+
     private int V; // number of vertices in this digraph
-    private Set<WeightedDirectedEdge>[] adj; // adj[v] = adjacency list for vertex v
     private int[] indegree; // indegree[v] = indegree of vertex v
     private List<WeightedDirectedEdge> edges;
 
@@ -19,21 +24,43 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
 
     private Coordination[] coordinations;
 
+    /**
+     * TODO FOR TEST;DELETE IN Std VERSION
+     * 
+     * @param g
+     */
+    public EdgeWeightedDiGraph(double[][] g) {
+        V = g.length;
+        this.g = new WeightedDirectedEdge[g.length][g.length];
+        edges = new LinkedList<>();
+        for (int i = 0; i < g.length; i++) {
+            for (int j = 0; j < g.length; j++) {
+                if (!Double.isInfinite(g[i][j])) {
+                    this.g[i][j] = new WeightedDirectedEdge(i, j, g[i][j]);
+                    edges.add(this.g[i][j]);
+                }
+            }
+        }
+    }
+
     public EdgeWeightedDiGraph(int V) {
-        if (V <= 0)
-            throw new IllegalArgumentException("节点数必须为正整数");
         this.V = V;
         this.indegree = new int[V];
 
         nameOf = new String[V];
         indexOf = new HashMap<>();
         edges = new LinkedList<>();
-        adj = (Set<WeightedDirectedEdge>[]) new Set[V];
+        g = new WeightedDirectedEdge[V][V];
+        for (int i = 0; i < V; i++) {
+            g[i][i] = new WeightedDirectedEdge(i, i, 0);
+        }
         coordinations = new Coordination[V];
+    }
 
-        for (int v = 0; v < V; v++)
-            adj[v] = new HashSet<>();
-
+    public double wij(int i, int j) {
+        if (g[i][j] == null)
+            return Double.POSITIVE_INFINITY;
+        return g[i][j].weight();
     }
 
     @Override
@@ -67,36 +94,33 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
         return edges.size();
     }
 
-    // throw an IllegalArgumentException unless {@code 0 <= v < V}
-    private void validateVertex(int v) {
-        if (v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
-    }
-
     public void addEdge(WeightedDirectedEdge e) {
-        if (edges.contains(e))
-            return;
         int v = e.from();
         int w = e.to();
-        validateVertex(v);
-        validateVertex(w);
-        adj[v].add(e);
+        if (v == w)
+            return;
+        // //validateVertex(v);
+        // //validateVertex(w);
+        g[v][w] = e;
         indegree[w]++;
         edges.add(e);
     }
 
     public Iterable<WeightedDirectedEdge> adjOf(int v) {
-        validateVertex(v);
-        return adj[v];
+        // validateVertex(v);
+        ArrayList<WeightedDirectedEdge> list = new ArrayList<>(V);
+        for (int i = 0; i < V; i++) {
+            if()
+        }
     }
 
-    public int outdegree(int v) {
-        validateVertex(v);
-        return adj[v].size();
-    }
+    // public int outdegree(int v) {
+    // //validateVertex(v);
+    // return adj[v].size();
+    // }
 
     public int indegree(int v) {
-        validateVertex(v);
+        // validateVertex(v);
         return indegree[v];
     }
 
@@ -105,8 +129,9 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
         StringBuilder builder = new StringBuilder();
         for (int vertex = 0; vertex < V; vertex++) {
             builder.append(vertex + " :\n");
-            for (WeightedDirectedEdge edge : adj[vertex])
-                builder.append("\t").append(edge).append("\n");
+            for (WeightedDirectedEdge edge : g[vertex])
+                if (edge != null)
+                    builder.append("\t").append(edge).append("\n");
         }
         return builder.toString();
     }
@@ -117,9 +142,9 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
     public EdgeWeightedDiGraph reverse() {
         EdgeWeightedDiGraph reverseGraph = new EdgeWeightedDiGraph(V);
         reverseGraph.indexOf = indexOf;
-        for (int v = 0; v < V; v++) {
-            for (WeightedDirectedEdge e : adj[v]) {
-                reverseGraph.addEdge(new WeightedDirectedEdge(e.to(), e.from(), e.weight()));
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                reverseGraph.g[i][j] = new WeightedDirectedEdge(g[j][i]);
             }
         }
         return reverseGraph;
@@ -127,13 +152,13 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
 
     @Override
     public String nameOf(int v) {
-        validateVertex(v);
+        // validateVertex(v);
         return nameOf[v];
     }
 
     @Override
     public void setIndexOf(String vertex, int index) {
-        validateVertex(index);
+        // validateVertex(index);
         indexOf.put(vertex, index);
         nameOf[index] = vertex;
     }

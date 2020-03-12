@@ -1,12 +1,14 @@
 package mine.learn.graphtheory.computational_optimization;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import mine.learn.graphtheory.FloydWarshall;
+import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 
 /**
  * TSP2
@@ -44,17 +46,23 @@ public class TSP2 {
      * 
      * @param set 需要经过的所有节点，要求个数不超过30
      */
-    public TSP2(double[][] graph, int[] set) {
+    public TSP2(EdgeWeightedDiGraph graph, int[] set) {
         if (set.length > 30)
             throw new IllegalArgumentException("问题规模过大，不可计算");
+        for (int i = 0; i < set.length; i++) {
+            if (!(0 <= set[i] && set[i] < graph.V()))
+                throw new IllegalArgumentException("集合包含不存在的节点" + set[i]);
+            for (int j = 0; j < set.length; j++)
+                if (j != i && set[i] == set[j])
+                    throw new IllegalArgumentException("节点集合" + Arrays.toString(set) + "中有重复元素：" + i + ", " + j);
+        }
         int len = set.length;
         this.g = new double[len][len];// 加上source
         spt = new FloydWarshall(graph);
-        for (int i = 0; i < len; i++) {
-            for (int j = 0; j < len; j++) {
+        for (int i = 0; i < len; i++)
+            for (int j = 0; j < len; j++)
                 g[i][j] = spt.dist(set[i], set[j]);
-            }
-        }
+
         memo = new double[len][1 << len];
         pathFrom = new int[len][1 << len];
         this.set = set;
@@ -134,7 +142,7 @@ public class TSP2 {
         double inf = Double.POSITIVE_INFINITY;
         double[][] g = { { 0, 3, inf, 8, 9 }, { 3, 0, 3, 10, 5 }, { inf, 3, 0, 4, 3 }, { 8, 10, 4, 0, 20 },
                 { 9, 5, 3, 20, 0 } };
-        TSP2 tsp = new TSP2(g, new int[] { 1, 2, 3, 4 });
+        TSP2 tsp = new TSP2(new EdgeWeightedDiGraph(g), new int[] { 1, 2, 3, 4 });
         double res = tsp.cal();
         System.out.println(res);
         List<Integer> path = tsp.path();

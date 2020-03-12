@@ -9,11 +9,15 @@ import java.util.Set;
 import mine.learn.graphtheory.api.RealMapGraph;
 import mine.learn.graphtheory.api.SymbolGraphAPI;
 
-@SuppressWarnings("unchecked")
 public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
 
     private int V;
-    private Set<WeightedEdge>[] adj;
+    /**
+     * IMPORTANT：妙啊！实际上看似浪费空间，实际上更节省空间！null不浪费空间啊！
+     * <p>
+     * 只取上半部
+     */
+    private WeightedEdge[][] g;
     private Set<WeightedEdge> edges;
 
     private String[] nameOf;
@@ -22,17 +26,24 @@ public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
     private Coordination[] coordinations;
 
     public EdgeWeightedGraph(int V) {
-        if (V <= 0)
-            throw new IllegalArgumentException("节点数必须为正整数");
         this.V = V;
         nameOf = new String[V];
         indexOf = new HashMap<>();
-        adj = (Set<WeightedEdge>[]) new Set[V];
+        g = new WeightedEdge[V][V];
+        for (int i = 0; i < V; i++) {
+            g[i][i] = new WeightedEdge(i, i, 0);
+        }
         edges = new HashSet<>();
         coordinations = new Coordination[V];
-        for (int v = 0; v < V; v++) {
-            adj[v] = new HashSet<>();
-        }
+    }
+
+    public double wij(int i, int j) {
+        if (g[i][j] == null)
+            return Double.POSITIVE_INFINITY;
+        if (i > j)
+            return g[i][j].weight();
+        else
+            return g[j][i].weight();
     }
 
     @Override
@@ -62,20 +73,19 @@ public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
         return edges.size();
     }
 
-    private void validateVertex(int v) {
-        if (v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
-    }
-
     public void addEdge(WeightedEdge e) {
         if (edges.contains(e))
             return;
         int v = e.either();
         int w = e.other(v);
-        validateVertex(v);
-        validateVertex(w);
-        adj[v].add(e);
-        adj[w].add(e);
+        if (v > w) {
+            g[v][w] = e;
+        } else if (v < w)
+            g[w][v] = e;
+        else
+            return;
+        // validateVertex(v);
+        // validateVertex(w);
         edges.add(e);
     }
 
@@ -83,23 +93,25 @@ public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
         return edges;
     }
 
-    public Iterable<WeightedEdge> adj(int v) {
-        validateVertex(v);
-        return adj[v];
+    public WeightedEdge[] adjOf(int v) {
+        //// validateVertex(v);
+        return g[v];
     }
 
-    public int degree(int v) {
-        validateVertex(v);
-        return adj[v].size();
-    }
+    // public int degree(int v) {
+    // // validateVertex(v);
+    // return g[v].size();
+    // }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (int vertex = 0; vertex < V; vertex++) {
             builder.append(vertex + " :\n");
-            for (WeightedEdge edge : adj[vertex])
-                builder.append("\t").append(edge).append("\n");
+            for (int i = 0; i < vertex; i++) {
+                if (g[vertex][i] != null)
+                    builder.append("\t").append(g[vertex][i]).append("\n");
+            }
         }
         return builder.toString();
     }
@@ -116,7 +128,7 @@ public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
 
     @Override
     public void setIndexOf(String vertex, int index) {
-        validateVertex(index);
+        // validateVertex(index);
         nameOf[index] = vertex;
         indexOf.put(vertex, index);
     }

@@ -48,6 +48,8 @@ public class DirectedCycles {
         marked[vertex] = true;
         isCycle[vertex] = true;
         for (WeightedDirectedEdge e : g.adjOf(vertex)) {
+            if (e == null)
+                continue;
             int to = e.to();
             if (!marked[to]) {
                 edgeTo[to] = vertex;

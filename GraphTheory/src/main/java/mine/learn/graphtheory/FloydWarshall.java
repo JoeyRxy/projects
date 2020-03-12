@@ -1,7 +1,8 @@
 package mine.learn.graphtheory;
 
 import java.util.LinkedList;
-import java.util.List;
+
+import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 
 /**
  * FloydWarshall
@@ -9,25 +10,32 @@ import java.util.List;
 public class FloydWarshall {
 
     private double[][] dp;
-    private int[][] path;// next[i][j]=从i到j经过{0,1,...,n-1}个节点
+    private int[][] path;// next[i][j]=从i到j经过{0,1,...,n-1}个节点，到j之前的一个节点
+    private int V;
 
-    public FloydWarshall(final double[][] g) {
-        dp = new double[g.length][g.length];
-        path = new int[g.length][g.length];
+    public FloydWarshall(EdgeWeightedDiGraph g) {
+        this.V = g.V();
+        dp = new double[V][V];
+        path = new int[V][V];
         // init
-        for (int i = 0; i < g.length; i++) {
-            for (int j = 0; j < g.length; j++) {
-                dp[i][j] = g[i][j];
-                path[i][j] = j;
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                dp[i][j] = g.wij(i, j);
+                if (j == i)
+                    path[i][i] = -1;
+                else
+                    path[i][j] = j;
             }
         }
         // cal
         double ret;
-        for (int k = 0; k < g.length; k++) {
-            for (int i = 0; i < g.length; i++) {
-                for (int j = 0; j < g.length; j++) {
+        for (int k = 0; k < V; k++) {
+            for (int i = 0; i < V; i++) {
+                if (dp[i][k] == -1)
+                    continue;
+                for (int j = 0; j < V; j++) {
                     ret = dp[i][k] + dp[k][j];
-                    if (dp[i][j] > ret) {
+                    if (dp[i][j] > ret) {// 从i到j经过k点
                         dp[i][j] = ret;
                         path[i][j] = path[i][k];
                     }

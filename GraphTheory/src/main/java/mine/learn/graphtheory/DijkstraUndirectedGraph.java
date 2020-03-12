@@ -34,8 +34,9 @@ public class DijkstraUndirectedGraph {
         pq.add(s, distTo[s]);
         while (!pq.isEmpty()) {
             int v = pq.poll();
-            for (WeightedEdge e : g.adj(v))
-                relax(e, v);
+            for (WeightedEdge e : g.adjOf(v))
+                if (e != null)
+                    relax(e, v);
         }
     }
 

@@ -19,6 +19,12 @@ public class WeightedDirectedEdge implements Comparable<WeightedDirectedEdge> {
         this.weight = weight;
     }
 
+    public WeightedDirectedEdge(WeightedDirectedEdge e) {
+        v = e.v;
+        w = e.w;
+        weight = e.weight;
+    }
+
     @Override
     public int compareTo(WeightedDirectedEdge that) {
         return Double.compare(this.weight, that.weight);

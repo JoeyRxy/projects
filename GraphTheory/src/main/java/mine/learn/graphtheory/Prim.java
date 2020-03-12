@@ -65,7 +65,9 @@ public class Prim {
     }
 
     public void f(int v) {
-        for (WeightedEdge e : g.adj(v)) {
+        for (WeightedEdge e : g.adjOf(v)) {
+            if (e == null)
+                continue;
             int other = e.other(v);
             Pair pair = new Pair(other, e.weight());
             if (!marked(other)) {

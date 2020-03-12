@@ -42,10 +42,12 @@ public class Components {
             sets.get(count).add(v);
         }
         marked[v] = true;
-        for (WeightedEdge e : g.adj(v)) {
-            int other = e.other(v);
-            if (!marked[other])
-                dfs(other);
+        for (WeightedEdge e : g.adjOf(v)) {
+            if (e != null) {
+                int other = e.other(v);
+                if (!marked[other])
+                    dfs(other);
+            }
         }
     }
 

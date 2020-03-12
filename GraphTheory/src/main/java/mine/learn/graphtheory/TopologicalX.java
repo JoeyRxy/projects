@@ -31,10 +31,12 @@ public class TopologicalX {
             order.add(v);
             ranks[v] = count++;
             for (WeightedDirectedEdge e : G.adjOf(v)) {
-                int w = e.to();
-                indegree[w]--;
-                if (indegree[w] == 0)
-                    queue.add(w);
+                if (e != null) {
+                    int w = e.to();
+                    indegree[w]--;
+                    if (indegree[w] == 0)
+                        queue.add(w);
+                }
             }
         }
 

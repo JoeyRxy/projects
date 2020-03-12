@@ -18,7 +18,9 @@ public class Prim2 {
     private WeightedEdge[] edgeTo;
 
     private void f(int v) {
-        for (WeightedEdge edge : g.adj(v)) {
+        for (WeightedEdge edge : g.adjOf(v)) {
+            if (edge == null)
+                continue;
             int other = edge.other(v);
             double weight = edge.weight();
             if (distTo[other] < Double.POSITIVE_INFINITY)
