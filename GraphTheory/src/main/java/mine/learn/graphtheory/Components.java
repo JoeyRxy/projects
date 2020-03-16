@@ -77,11 +77,4 @@ public class Components {
         }
         return null;
     }
-
-    public static void main(String[] args) throws NumberFormatException, IOException {
-        Components cc = new Components((EdgeWeightedGraph) Helpers.getGraph("mediumEWG.txt", EdgeWeightedGraph.class));
-        System.out.println(cc.count());
-        List<Integer> allVertexOf0 = cc.allVertexOf(cc.id(0));
-        System.out.println(cc.id(0) + " : \n" + allVertexOf0 + "\nsize : " + allVertexOf0.size());
-    }
 }

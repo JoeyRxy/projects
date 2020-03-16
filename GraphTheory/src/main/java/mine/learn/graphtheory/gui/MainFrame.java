@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 /**
  * MainFrame
  */
+@Deprecated
 public class MainFrame extends JFrame {
 
     /**
@@ -18,20 +19,4 @@ public class MainFrame extends JFrame {
     public MainFrame() {
 
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                MainFrame frame = new MainFrame();
-                frame.setTitle("MainFrame");
-                frame.setSize(800, 1000);
-                frame.setLayout(new FlowLayout());
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setVisible(true);
-            }
-        });
-    }
-
 }

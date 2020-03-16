@@ -77,35 +77,45 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
     }
 
     // throw an IllegalArgumentException unless {@code 0 <= v < V}
-    private void validateVertex(int v) {
-        if (v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
+    // private void validateVertex(int v) {
+    // if (v < 0 || v >= V)
+    // throw new IllegalArgumentException("vertex " + v + " is not between 0 and " +
+    // (V - 1));
+    // }
+
+    public void changeEdge(WeightedDirectedEdge e) {
+        int v = e.from();
+        adj[v].remove(e);
+        adj[v].add(e);
     }
 
+    /**
+     * 既是添加
+     * 
+     * @param e
+     */
     public void addEdge(WeightedDirectedEdge e) {
-        if (edges.contains(e))
-            return;
         int v = e.from();
         int w = e.to();
-        validateVertex(v);
-        validateVertex(w);
+        // validateVertex(v);
+        // validateVertex(w);
         adj[v].add(e);
         indegree[w]++;
         edges.add(e);
     }
 
     public Iterable<WeightedDirectedEdge> adjOf(int v) {
-        validateVertex(v);
+        // validateVertex(v);
         return adj[v];
     }
 
     public int outdegree(int v) {
-        validateVertex(v);
+        // validateVertex(v);
         return adj[v].size();
     }
 
     public int indegree(int v) {
-        validateVertex(v);
+        // validateVertex(v);
         return indegree[v];
     }
 
@@ -136,13 +146,13 @@ public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
 
     @Override
     public String nameOf(int v) {
-        validateVertex(v);
+        // validateVertex(v);
         return nameOf[v];
     }
 
     @Override
     public void setIndexOf(String vertex, int index) {
-        validateVertex(index);
+        // validateVertex(index);
         indexOf.put(vertex, index);
         nameOf[index] = vertex;
     }

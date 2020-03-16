@@ -62,18 +62,19 @@ public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
         return edges.size();
     }
 
-    private void validateVertex(int v) {
-        if (v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V - 1));
-    }
+    // private void validateVertex(int v) {
+    // if (v < 0 || v >= V)
+    // throw new IllegalArgumentException("vertex " + v + " is not between 0 and " +
+    // (V - 1));
+    // }
 
     public void addEdge(WeightedEdge e) {
-        if (edges.contains(e))
-            return;
+        // if (edges.contains(e))
+        // return;
         int v = e.either();
         int w = e.other(v);
-        validateVertex(v);
-        validateVertex(w);
+        // validateVertex(v);
+        // validateVertex(w);
         adj[v].add(e);
         adj[w].add(e);
         edges.add(e);
@@ -84,12 +85,12 @@ public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
     }
 
     public Iterable<WeightedEdge> adj(int v) {
-        validateVertex(v);
+        // validateVertex(v);
         return adj[v];
     }
 
     public int degree(int v) {
-        validateVertex(v);
+        // validateVertex(v);
         return adj[v].size();
     }
 
@@ -116,7 +117,7 @@ public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
 
     @Override
     public void setIndexOf(String vertex, int index) {
-        validateVertex(index);
+        // validateVertex(index);
         nameOf[index] = vertex;
         indexOf.put(vertex, index);
     }

@@ -1,13 +1,11 @@
 package mine.learn.graphtheory.computational_optimization;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import mine.learn.graphtheory.FloydWarshall;
+import mine.learn.graphtheory.StrongComponents;
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 
@@ -57,9 +55,18 @@ public class TSP2 {
                 if (j != i && set[i] == set[j])
                     throw new IllegalArgumentException("节点集合" + Arrays.toString(set) + "中有重复元素：" + i + ", " + j);
         }
+        // 要求set所在图为强连通子图
+        /*
+         * StrongComponents components = new StrongComponents(graph); if
+         * (!components.stronglyConnected(set)) { for (int i = 0; i < set.length; i++) {
+         * System.err.println("元素set[" + i + "] = " + set[i] + "属于分量（标号）：" +
+         * components.id(set[i])); } throw new IllegalArgumentException("集合节点包括非强联通分量");
+         * } components = null;
+         */
         int len = set.length;
         this.g = new double[len][len];// 加上source
         spt = new FloydWarshall(graph);
+        graph = null;
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
                 g[i][j] = spt.dist(set[i], set[j]);
@@ -137,23 +144,4 @@ public class TSP2 {
         return list;
     }
 
-    public static void main(String[] args) {
-        // double[][] g = { { 0, 3, 1, 5, 8 }, { 3, 0, 6, 7, 9 }, { 1, 6, 0, 4, 2 }, {
-        // 5, 7, 4, 0, 3 },
-        // { 8, 9, 2, 3, 0 } };
-        double inf = Double.POSITIVE_INFINITY;
-        double[][] g = { { 0, 3, inf, 8, 9 }, { 3, 0, 3, 10, 5 }, { inf, 3, 0, 4, 3 }, { 8, 10, 4, 0, 20 },
-                { 9, 5, 3, 20, 0 } };
-        TSP2 tsp = new TSP2(new EdgeWeightedDiGraph(g), new int[] { 1, 2, 3, 4 });
-        double res = tsp.cal();
-        System.out.println(res);
-        List<WeightedDirectedEdge> path = tsp.path();
-        System.out.println(path);
-        // check
-        double s = 0;
-        for (WeightedDirectedEdge e : path) {
-            s += e.weight();
-        }
-        System.out.println(s);
-    }
 }

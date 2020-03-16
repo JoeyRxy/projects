@@ -1,8 +1,9 @@
 package mine.learn.graphtheory;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -22,6 +23,9 @@ import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 import mine.learn.graphtheory.bean.WeightedEdge;
 import mine.learn.graphtheory.computational_optimization.TSP1;
 import mine.learn.graphtheory.computational_optimization.TSP2;
+import mine.learn.graphtheory.computational_optimization.heuristic.TSP3;
+import mine.learn.graphtheory.computational_optimization.heuristic.TSP4;
+import mine.learn.graphtheory.computational_optimization.heuristic.TSP5;
 import mine.learn.graphtheory.util.Helpers;
 import mine.learn.graphtheory.util.IndexedPriorityQueue;
 import mine.learn.graphtheory.util.PriorityQueueM;
@@ -329,7 +333,7 @@ public class AppTest {
     }
 
     @Test
-    public void TestTSP() {
+    public void TestTSP3() {
         int n = 200;
         double[][] g = new double[n][n];
         for (int i = 0; i < n; i++) {
@@ -346,21 +350,74 @@ public class AppTest {
         // }
         // System.out.println();
         // }
-        TSP2 tsp = new TSP2(new EdgeWeightedDiGraph(g), new int[] { 3, 5, 7, 9, 11, 20, 19 });
+        TSP3 tsp = new TSP3(new EdgeWeightedDiGraph(g));
         long start = System.currentTimeMillis();
         double res = tsp.cal();
         long end = System.currentTimeMillis();
         System.out.println(res);
         System.out.println(end - start + " ms");
         var path = tsp.path();
-        System.out.println(path);
+        System.out.println(path.size());
         // check
+        // double s = 0;
+        // for (WeightedDirectedEdge e : path) {
+        // s += e.weight();
+        // }
+        // System.out.println(s);
+        // assertTrue((Math.abs(res - s) < 1e-8));
+    }
+
+    public static double sumPath(List<WeightedDirectedEdge> path) {
         double s = 0;
         for (WeightedDirectedEdge e : path) {
             s += e.weight();
         }
-        System.out.println(s);
-        assertTrue((Math.abs(res - s) < 1e-8));
+        return s;
+    }
+
+    @Test
+    public void testTSP() {
+        int n = 1100;
+        Random r = new Random(System.currentTimeMillis());
+        double[][] g = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                g[i][j] = Math.abs(r.nextGaussian() * r.nextDouble()) * 1000;
+            }
+        }
+        for (int i = 0; i < g.length; i++)
+            for (int j = 0; j < g.length; j++)
+                if (Math.random() < 0.10)
+                    g[i][j] = Double.POSITIVE_INFINITY;
+
+        for (int i = 0; i < n; i++) {
+            g[i][i] = 0;
+        }
+        EdgeWeightedDiGraph gg = new EdgeWeightedDiGraph(g);
+        System.out.println("图中有" + gg.V() + "个节点");
+        System.out.println("图中有" + gg.edges().size() + "条边.");
+        int[] SETS = { 5, 9, 13, 36, 86, 0, 47, 55, 66, 77, 88, 99, 111, 123, 146, 132, 167, 189, 112, 98, 97, 95, 94 };
+        System.out.println("需经过点集集合的长度：" + SETS.length);
+        TSP2 tsp = new TSP2(gg, SETS);
+        long start = System.currentTimeMillis();
+        double res = tsp.cal();
+        long end = System.currentTimeMillis();
+        System.out.println("动态算法总边长：" + res);
+        System.out.println("耗时：" + (end - start) + " ms");
+        var path = tsp.path();
+        // System.out.println("路径序列：" + path);
+        System.out.println("路径：\n" + path);
+        System.out.println("=====================");
+
+        // start = System.currentTimeMillis();
+        // TSP5 tsp5 = new TSP5(gg, SETS, 120, 1, 0.997, 1000, 0.5);
+        // end = System.currentTimeMillis();
+        // System.out.println("模拟退火总边长：" + tsp5.getBestDist());
+        // List<WeightedDirectedEdge> path2 = tsp5.getPath();
+        // // System.out.println("路径序列：\n" + path2);
+        // // System.out.println("长度：" + sumPath(path2));
+        // System.out.println("耗时：" + (end - start) + " ms.");
+        // System.out.println("路径：\n" + path2);
     }
 
     @Test
@@ -385,38 +442,167 @@ public class AppTest {
     }
 
     @Test
-    public void testFloydWarshall() {
-        int n = 200;
-        double[][] g = new double[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                g[i][j] = Math.random() * 10;
-            }
-        }
-        for (int i = 0; i < n; i++) {
-            g[i][i] = 0;
-        }
-        // double[][] g = { { 0, 3, Double.POSITIVE_INFINITY, 8, 9 }, { 3, 0, 3, 10, 5
-        // },
-        // { Double.POSITIVE_INFINITY, 3, 0, 4, 3 }, { 8, 10, 4, 0, 20 }, { 9, 5, 3, 20,
-        // 0 } };
-        long start = System.currentTimeMillis();
-        EdgeWeightedDiGraph g2 = new EdgeWeightedDiGraph(g);
+    public void testFloydWarshall() throws IOException {
+        EdgeWeightedDiGraph graph = Helpers.parseJSON("pcb1173.json");
         long end1 = System.currentTimeMillis();
-        FloydWarshall spt = new FloydWarshall(g2);
+        FloydWarshall spt = new FloydWarshall(graph);
         long end2 = System.currentTimeMillis();
-        System.out.println(end1 - start);
-        System.out.println(end2 - end1);
 
         // double dist = spt.dist(0, 2);
         // LinkedList<WeightedDirectedEdge> path = spt.path(0, 2);
         // System.out.println(dist + " : " + path);
-        // for (int i = 0; i < g.length; i++) {
-        // for (int j = 0; j < g.length; j++) {
-        // System.out.println(
-        // i + " -> " + j + " : " + spt.dist(i, j) + " " + g[i][j] + ", path : " +
+        // for (int i = 0; i < graph.V(); i++) {
+        // for (int j = 0; j < graph.V(); j++) {
+        // System.out.println(i + " -> " + j + " : " + spt.dist(i, j) + ", path : " +
         // spt.path(i, j));
         // }
         // }
+        System.out.println((end2 - end1) + " ms");
     }
+
+    @Test
+    public void testTSP5() throws NumberFormatException, IOException {
+        long start = 0, end = 0;
+        start = System.currentTimeMillis();
+        // EdgeWeightedDiGraph graph = (EdgeWeightedDiGraph)
+        // Helpers.getGraph("largeEWG.txt", EdgeWeightedDiGraph.class);
+        // EdgeWeightedDiGraph graph = Helpers.parseJSON("d1291.json");
+        EdgeWeightedDiGraph graph = Helpers.parseJSON("pcb1173.json");
+        // EdgeWeightedDiGraph graph = Helpers.parseJSON("kroB200.json");
+        // EdgeWeightedDiGraph graph = Helpers.parseJSON("ch130.json");
+
+        end = System.currentTimeMillis();
+        System.out.println("读图时间：" + (end - start) + " ms.");
+        int[] set = new int[graph.V()];
+        for (int i = 0; i < set.length; i++) {
+            set[i] = i;
+        }
+        double a = 0.9994;
+        int markov = 8000;
+        double p = 0.5;
+        System.out.println("t0 : " + 100 + ", tf : " + 1 + ", a : " + a + ", markov : " + markov + ", p : " + p);
+        double min = Double.POSITIVE_INFINITY;
+        double max = 0;
+        double s = 0;
+        int times = 1;
+        for (int k = 0; k < times; k++) {
+            // System.out.println("========================");
+            start = System.currentTimeMillis();
+            TSP5 tsp5 = new TSP5(graph, set, 100, 1, a, markov, p);
+            end = System.currentTimeMillis();
+            double bestDist = tsp5.getBestDist();
+            s += bestDist;
+            if (max < bestDist)
+                max = bestDist;
+            if (min > bestDist)
+                min = bestDist;
+            System.out.println("my score : " + bestDist);
+            List<WeightedDirectedEdge> path = tsp5.getPath();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("tsp5 pcb1173 path 2")));
+            writer.write(path.toString());
+            writer.close();
+            System.out.println(sumPath(path));
+        }
+        System.out.println("duration : " + (end - start) + " ms.");
+        System.out.println("my min score : " + min);
+        System.out.println("my max score : " + max);
+        System.out.println("my avrage : " + (s / times));
+        System.out.println("==========================");
+        TSP3 tsp3 = new TSP3(graph);
+        start = System.currentTimeMillis();
+        double cal = tsp3.cal();
+        end = System.currentTimeMillis();
+        System.out.println(cal);
+        System.out.println(end - start);
+    }
+
+    @Test
+    public void testTSP53() throws IOException {
+        EdgeWeightedDiGraph graph = Helpers.parseJSON("pcb1173.json");
+        FloydWarshall spt = new FloydWarshall(graph);
+        double[][] g = new double[graph.V()][graph.V()];
+        for (int i = 0; i < g.length; i++) {
+            for (int j = 0; j < g.length; j++) {
+                g[i][j] = spt.dist(i, j);
+            }
+        }
+        BufferedWriter writer = new BufferedWriter(new FileWriter(new File("floydwarshall")));
+        writer.write(Arrays.deepToString(g));
+        writer.close();
+    }
+
+    @Test
+    public void testTSP1() {
+        int n = 12;
+        Random r = new Random(System.currentTimeMillis());
+        double[][] g = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                g[i][j] = Math.abs(r.nextGaussian() * r.nextDouble()) * 200;
+            }
+        }
+        for (int i = 0; i < g.length; i++)
+            for (int j = 0; j < g.length; j++)
+                if (Math.random() < 0.10)
+                    g[i][j] = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < n; i++) {
+            g[i][i] = 0;
+        }
+        TSP1 tsp1 = new TSP1(g);
+        long start, end;
+        start = System.currentTimeMillis();
+        double res = tsp1.res();
+        end = System.currentTimeMillis();
+        System.out.println(res);
+        System.out.println("duration : " + (end - start) + " ms");
+    }
+
+    @Test
+    public void testTSPContrast() throws IOException {
+        int n = 1100;
+        Random r = new Random(System.currentTimeMillis());
+        double[][] graph = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            if(r.nextDouble()<0.1) r.setSeed(System.currentTimeMillis());
+            for (int j = 0; j < n; j++) {
+                graph[i][j] = Math.abs(r.nextGaussian() * r.nextDouble()) * 1000;
+            }
+        }
+        for (int i = 0; i < graph.length; i++)
+            for (int j = 0; j < graph.length; j++)
+                if (Math.random() * r.nextDouble() < 0.50)
+                    graph[i][j] = Double.POSITIVE_INFINITY;
+
+        for (int i = 0; i < n; i++) {
+            graph[i][i] = 0;
+        }
+        long start, end;
+        EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(graph);
+        // EdgeWeightedDiGraph g = Helpers.parseJSON("pcb1173.json");
+        // int[] set = { 0, 2, 3, 5, 10, 12, 13, 19, 29, 33, 36, 38, 39, 23, 34, 67, 78
+        // };
+        int[] set = new int[g.V()];
+        for (int i = 0; i < g.V(); i++) {
+            set[i] = i;
+        }
+        System.out.println("============ Graph Info ====================");
+        System.out.println("图有" + g.V() + "个节点");
+        System.out.println("图有" + g.E() + "条边");
+        System.out.println("需遍历的节点共" + set.length + "个");
+        // System.out.println("============================================");
+        // TSP2 tsp2 = new TSP2(g, set);
+        // start = System.currentTimeMillis();
+        // double dist2 = tsp2.cal();
+        // end = System.currentTimeMillis();
+        // System.out.println("============ TSP Exact Algo ================");
+        // System.out.println("距离：" + dist2);
+        // System.out.println("耗时：" + (end - start) + " ms.");
+        System.out.println("============ TSP Heuristic Algo ============");
+        start = System.currentTimeMillis();
+        TSP5 tsp5 = new TSP5(g, set, 120, 1, 0.9999, 3000, 0.5);
+        end = System.currentTimeMillis();
+        System.out.println("距离：" + tsp5.getBestDist());
+        System.out.println("耗时：" + (end - start) + " ms.");
+    }
+
 }

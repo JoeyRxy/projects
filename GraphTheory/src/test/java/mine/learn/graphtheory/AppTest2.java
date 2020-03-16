@@ -3,16 +3,14 @@ package mine.learn.graphtheory;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
 import java.util.Random;
 
 import org.junit.Test;
+
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 import mine.learn.graphtheory.util.Helpers;
 
@@ -88,5 +86,18 @@ public class AppTest2 {
                 count++;
         }
         System.out.println((double) count / x.length);
+    }
+
+    @Test
+    public void testBigGraph() throws IOException {
+        long start, end;
+        start = System.currentTimeMillis();
+        EdgeWeightedDiGraph g = Helpers.parseJSON("C:\\Users\\Rxy\\Downloads\\Compressed\\pcb3038.json");
+        end = System.currentTimeMillis();
+        System.out.println("time : " + (end - start) + " ms.");
+        BufferedWriter writer = new BufferedWriter(new FileWriter(new File("pcb3038.txt")));
+        writer.write("time : " + (end - start) + " ms.");
+        writer.write(g.toString());
+        writer.close();
     }
 }

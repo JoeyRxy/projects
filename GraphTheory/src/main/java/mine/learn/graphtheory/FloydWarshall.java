@@ -1,7 +1,6 @@
 package mine.learn.graphtheory;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
@@ -74,12 +73,4 @@ public class FloydWarshall {
         return list;
     }
 
-    public static void main(String[] args) {
-        double[][] g = { { 0, 3, Double.POSITIVE_INFINITY, 8, 9 }, { 3, 0, 3, 10, 5 },
-                { Double.POSITIVE_INFINITY, 3, 0, 4, 3 }, { 8, 10, 4, 0, 20 }, { 9, 5, 3, 20, 0 } };
-        FloydWarshall spt = new FloydWarshall(new EdgeWeightedDiGraph(g));
-        double dist = spt.dist(0, 2);
-        LinkedList<WeightedDirectedEdge> path = spt.path(0, 2);
-        System.out.println(dist + " : " + path);
-    }
 }

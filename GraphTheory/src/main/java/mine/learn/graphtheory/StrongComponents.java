@@ -91,16 +91,18 @@ public class StrongComponents {
         return id[v] == id[w];
     }
 
-    public static void main(String[] args) throws NumberFormatException, IOException {
-        EdgeWeightedDiGraph graph = (EdgeWeightedDiGraph) Helpers.getGraph("scc.txt", EdgeWeightedDiGraph.class);
-        StrongComponents scc = new StrongComponents(graph);
-        System.out.println(scc.count());
-        for (int i = 0; i < graph.V(); i++) {
-            int id = scc.id(i);
-            System.out.println(i + " : " + id);
+    /**
+     * 强连通 是一个<em>等价关系</em>
+     */
+    public boolean stronglyConnected(int[] set) {
+        if (set.length < 3)
+            throw new IllegalArgumentException("集合包含元素小于等于2");
+        int v = set[0];
+        for (int i = 1; i < set.length - 1; i++) {
+            if (id[v] != id[set[i]])
+                return false;
         }
-        for (int i = 0; i < scc.count(); i++) {
-            System.out.println(scc.allVertexOf(i));
-        }
+        return true;
     }
+
 }

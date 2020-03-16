@@ -176,6 +176,7 @@ public class FibHeap<E extends Comparable<? super E>> {
         // ex. log2(13) = 3，向上取整为4。
         int maxDegree = (int) Math.floor(Math.log(keyNum) / Math.log(2.0));
         int D = maxDegree + 1;
+        @SuppressWarnings("unchecked")
         FibNode[] cons = (FibNode[]) new Object[D];
 
         for (int i = 0; i < D; i++)
