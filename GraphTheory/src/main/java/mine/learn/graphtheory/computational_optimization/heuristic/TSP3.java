@@ -13,6 +13,7 @@ import mine.learn.graphtheory.bean.WeightedDirectedEdge;
  * <p>
  * 贪心启发
  */
+@Deprecated
 public class TSP3 {
 
     private EdgeWeightedDiGraph g;

@@ -19,7 +19,7 @@ public class TSP5 {
     private double[][] g;
     private int[] bestOrder;
     private double bestDist;
-    private FloydWarshall spt;
+    private FloydWarshall floydwarshall;
     private int[] set;
 
     /**
@@ -39,14 +39,14 @@ public class TSP5 {
             throw new IllegalArgumentException("变异概率0<p<1");
         if (t0 <= tf)
             throw new IllegalArgumentException("初始温度应高于最终温度");
-        spt = new FloydWarshall(graph);
+        floydwarshall = new FloydWarshall(graph);
         graph = null;
         this.V = set.length;
         this.set = set;
         this.g = new double[V][V];
         for (int i = 0; i < V; i++) {
             for (int j = 0; j < V; j++) {
-                g[i][j] = spt.dist(set[i], set[j]);
+                g[i][j] = floydwarshall.dist(set[i], set[j]);
             }
         }
         int[] order = getGreedyOrder();
@@ -164,17 +164,17 @@ public class TSP5 {
     }
 
     private void sort3(int[] seg) {
-        int minIdx;
-        for (int i = 0; i < 3; i++) {
-            minIdx = i;
-            for (int j = i + 1; j < 3; j++) {
-                if (seg[minIdx] > seg[j]) {
-                    minIdx = j;
-                }
-            }
-            int t = seg[minIdx];
-            seg[minIdx] = seg[i];
-            seg[i] = t;
+        int j = seg[1] < seg[2] ? 1 : 2;
+        int t;
+        if (seg[0] > seg[j]) {
+            t = seg[0];
+            seg[0] = seg[j];
+            seg[j] = t;
+        }
+        if (seg[1] > seg[2]) {
+            t = seg[1];
+            seg[1] = seg[2];
+            seg[2] = t;
         }
     }
 
@@ -203,9 +203,9 @@ public class TSP5 {
         rotateTo0(bestOrder);
         List<WeightedDirectedEdge> path = new LinkedList<>();
         for (int i = 0; i < V - 1; i++) {
-            path.addAll(spt.path(set[bestOrder[i]], set[bestOrder[i + 1]]));
+            path.addAll(floydwarshall.path(set[bestOrder[i]], set[bestOrder[i + 1]]));
         }
-        path.addAll(spt.path(set[bestOrder[V - 1]], set[bestOrder[0]]));
+        path.addAll(floydwarshall.path(set[bestOrder[V - 1]], set[bestOrder[0]]));
         return path;
     }
 

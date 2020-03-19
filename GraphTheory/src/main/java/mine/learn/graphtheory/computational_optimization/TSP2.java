@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import mine.learn.graphtheory.FloydWarshall;
-import mine.learn.graphtheory.StrongComponents;
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 
@@ -65,11 +64,11 @@ public class TSP2 {
          */
         int len = set.length;
         this.g = new double[len][len];// 加上source
-        spt = new FloydWarshall(graph);
+        floydwarshall = new FloydWarshall(graph);
         graph = null;
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len; j++) {
-                g[i][j] = spt.dist(set[i], set[j]);
+                g[i][j] = floydwarshall.dist(set[i], set[j]);
             }
         }
         memo = new double[len][1 << len];
@@ -124,7 +123,7 @@ public class TSP2 {
         return min;
     }
 
-    private FloydWarshall spt;
+    private FloydWarshall floydwarshall;
 
     public double cal() {
         return memoDFS(0, S0);
@@ -133,13 +132,13 @@ public class TSP2 {
     public List<WeightedDirectedEdge> path() {
         LinkedList<WeightedDirectedEdge> list = new LinkedList<>();
         int v = pathFrom[source][S0], w = source;
-        list.addAll(spt.path(set[w], set[v]));
+        list.addAll(floydwarshall.path(set[w], set[v]));
         int S = S0;
         while (v != source) {
             S &= (~(1 << v));
             w = v;
             v = pathFrom[v][S];
-            list.addAll(spt.path(set[w], set[v]));
+            list.addAll(floydwarshall.path(set[w], set[v]));
         }
         return list;
     }

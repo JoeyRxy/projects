@@ -445,16 +445,17 @@ public class AppTest {
     public void testFloydWarshall() throws IOException {
         EdgeWeightedDiGraph graph = Helpers.parseJSON("pcb1173.json");
         long end1 = System.currentTimeMillis();
-        FloydWarshall spt = new FloydWarshall(graph);
+        FloydWarshall floydwarshall = new FloydWarshall(graph);
         long end2 = System.currentTimeMillis();
 
-        // double dist = spt.dist(0, 2);
-        // LinkedList<WeightedDirectedEdge> path = spt.path(0, 2);
+        // double dist = floydwarshall.dist(0, 2);
+        // LinkedList<WeightedDirectedEdge> path = floydwarshall.path(0, 2);
         // System.out.println(dist + " : " + path);
         // for (int i = 0; i < graph.V(); i++) {
         // for (int j = 0; j < graph.V(); j++) {
-        // System.out.println(i + " -> " + j + " : " + spt.dist(i, j) + ", path : " +
-        // spt.path(i, j));
+        // System.out.println(i + " -> " + j + " : " + floydwarshall.dist(i, j) + ",
+        // path : " +
+        // floydwarshall.path(i, j));
         // }
         // }
         System.out.println((end2 - end1) + " ms");
@@ -519,11 +520,11 @@ public class AppTest {
     @Test
     public void testTSP53() throws IOException {
         EdgeWeightedDiGraph graph = Helpers.parseJSON("pcb1173.json");
-        FloydWarshall spt = new FloydWarshall(graph);
+        FloydWarshall floydwarshall = new FloydWarshall(graph);
         double[][] g = new double[graph.V()][graph.V()];
         for (int i = 0; i < g.length; i++) {
             for (int j = 0; j < g.length; j++) {
-                g[i][j] = spt.dist(i, j);
+                g[i][j] = floydwarshall.dist(i, j);
             }
         }
         BufferedWriter writer = new BufferedWriter(new FileWriter(new File("floydwarshall")));
@@ -559,26 +560,26 @@ public class AppTest {
 
     @Test
     public void testTSPContrast() throws IOException {
-        int n = 1100;
-        Random r = new Random(System.currentTimeMillis());
-        double[][] graph = new double[n][n];
-        for (int i = 0; i < n; i++) {
-            if(r.nextDouble()<0.1) r.setSeed(System.currentTimeMillis());
-            for (int j = 0; j < n; j++) {
-                graph[i][j] = Math.abs(r.nextGaussian() * r.nextDouble()) * 1000;
-            }
-        }
-        for (int i = 0; i < graph.length; i++)
-            for (int j = 0; j < graph.length; j++)
-                if (Math.random() * r.nextDouble() < 0.50)
-                    graph[i][j] = Double.POSITIVE_INFINITY;
+        // int n = 1100;
+        // Random r = new Random(System.currentTimeMillis());
+        // double[][] graph = new double[n][n];
+        // for (int i = 0; i < n; i++) {
+        // if(r.nextDouble()<0.1) r.setSeed(System.currentTimeMillis());
+        // for (int j = 0; j < n; j++) {
+        // graph[i][j] = Math.abs(r.nextGaussian() * r.nextDouble()) * 1000;
+        // }
+        // }
+        // for (int i = 0; i < graph.length; i++)
+        // for (int j = 0; j < graph.length; j++)
+        // if (Math.random() * r.nextDouble() < 0.50)
+        // graph[i][j] = Double.POSITIVE_INFINITY;
 
-        for (int i = 0; i < n; i++) {
-            graph[i][i] = 0;
-        }
+        // for (int i = 0; i < n; i++) {
+        // graph[i][i] = 0;
+        // }
+        // EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(graph);
         long start, end;
-        EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(graph);
-        // EdgeWeightedDiGraph g = Helpers.parseJSON("pcb1173.json");
+        EdgeWeightedDiGraph g = Helpers.parseJSON("pcb1173.json");
         // int[] set = { 0, 2, 3, 5, 10, 12, 13, 19, 29, 33, 36, 38, 39, 23, 34, 67, 78
         // };
         int[] set = new int[g.V()];
@@ -599,10 +600,15 @@ public class AppTest {
         // System.out.println("耗时：" + (end - start) + " ms.");
         System.out.println("============ TSP Heuristic Algo ============");
         start = System.currentTimeMillis();
-        TSP5 tsp5 = new TSP5(g, set, 120, 1, 0.9999, 3000, 0.5);
+        TSP5 tsp5 = new TSP5(g, set, 120, 1, 0.99999, 30000, 0.5);
         end = System.currentTimeMillis();
         System.out.println("距离：" + tsp5.getBestDist());
         System.out.println("耗时：" + (end - start) + " ms.");
+        BufferedWriter writer = new BufferedWriter(new FileWriter(new File("path pdb1173")));
+        writer.write("距离：" + tsp5.getBestDist() + "\n");
+        writer.write("耗时：" + (end - start) + " ms." + "\n");
+        writer.write(tsp5.getPath().toString());
+        writer.close();
     }
 
 }

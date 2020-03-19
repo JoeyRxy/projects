@@ -1,6 +1,6 @@
-package mine.learn.graphtheory.computational_optimization;
+package mine.learn.graphtheory.util;
 
-class MyList {
+public class MyList {
 
     public Node head;
     public Node tail;

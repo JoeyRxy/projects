@@ -1,5 +1,8 @@
 package mine.learn.graphtheory.computational_optimization;
 
+import mine.learn.graphtheory.util.MyList;
+import mine.learn.graphtheory.util.Node;
+
 /**
  * TSP
  */
@@ -19,10 +22,8 @@ public class TSP1 {
         S = new MyList();
         // add all vertex to S
         s = 0;
-        for (int i = 0; i < V; i++) {
+        for (int i = 0; i < V; i++)
             S.add(i);
-        }
-
     }
 
     public double res() {

@@ -5,7 +5,6 @@ import java.util.Random;
 
 import mine.learn.graphtheory.FloydWarshall;
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
-import mine.learn.graphtheory.util.Helpers;
 import mine.learn.graphtheory.util.PriorityQueueExt;
 
 /**
@@ -13,6 +12,7 @@ import mine.learn.graphtheory.util.PriorityQueueExt;
  * <p>
  * GA
  */
+@Deprecated
 public class TSP4 {
     private double[][] g;
     private int V;
@@ -36,10 +36,10 @@ public class TSP4 {
             double sigma) {
         V = set.length;
         g = new double[V][V];
-        FloydWarshall spt = new FloydWarshall(graph);
+        FloydWarshall floydwarshall = new FloydWarshall(graph);
         for (int i = 0; i < set.length; i++) {
             for (int j = 0; j < set.length; j++) {
-                g[i][j] = spt.dist(set[i], set[j]);
+                g[i][j] = floydwarshall.dist(set[i], set[j]);
             }
         }
         this.sigma = sigma;

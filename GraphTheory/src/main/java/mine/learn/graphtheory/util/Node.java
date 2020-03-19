@@ -1,8 +1,8 @@
-package mine.learn.graphtheory.computational_optimization;
+package mine.learn.graphtheory.util;
 
 import java.util.Objects;
 
-class Node {
+public class Node {
     public Node prev;
     public Node next;
     public int data = Integer.MIN_VALUE;
