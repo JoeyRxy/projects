@@ -1,0 +1,6 @@
+{
+    "threshold": 1024000,
+    "tempRoot": "C:/Users/Rxy/Pictures/temp",
+    "fileRoot": "C:/Users/Rxy/Pictures/files",
+    "fileSizeMax": 1024000000
+}

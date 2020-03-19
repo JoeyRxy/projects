@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传</title>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script>
+        function f(e) {
+            if (e.text() == 'play') {
+                e.text('stop');
+                $("#video").get(0).play();
+            } else if (e.text() == 'stop') {
+                e.text('play');
+                $("#video").get(0).pause();
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <form action="upload" method="post" enctype="multipart/form-data">
+            照片：<input type="file" name="photo" id="photo"><br>
+            名字：<input type="text" name="name" id="name"><br>
+            <input type="submit" value="上传">
+        </form>
+    </div>
+    <!-- <div>
+        <video id="video">
+            <source src="content/WeChat_20200114205327.mp4">
+        </video>
+    </div>
+    <div><button onclick="f($(this))">play</button></div> -->
+</body>
+
+</html>
