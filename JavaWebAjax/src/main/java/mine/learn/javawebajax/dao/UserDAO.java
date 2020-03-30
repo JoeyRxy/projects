@@ -102,8 +102,6 @@ public class UserDAO {
         if (resultSet.next()) {
             pwd = resultSet.getString("pwd");
         }
-        assert pwd != null;
-
         resultSet.close();
         pstmt.close();
         // 不要频繁关闭连接

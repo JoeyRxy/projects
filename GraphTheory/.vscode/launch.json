@@ -5,55 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "java",
-            "name": "CodeLens (Launch) - TSP3",
-            "request": "launch",
-            "mainClass": "mine.learn.graphtheory.computational_optimization.heuristic.TSP3",
-            "projectName": "RoutePlanning"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - TSP5",
-            "request": "launch",
-            "mainClass": "mine.learn.graphtheory.computational_optimization.heuristic.TSP5",
-            "projectName": "RoutePlanning"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - Helpers",
-            "request": "launch",
-            "mainClass": "mine.learn.graphtheory.util.Helpers",
-            "projectName": "GraphTheory"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - TSP5",
-            "request": "launch",
-            "mainClass": "mine.learn.graphtheory.computational_optimization.heuristic.TSP5",
-            "projectName": "GraphTheory"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - JSON2Graph",
-            "request": "launch",
-            "mainClass": "mine.learn.graphtheory.util.JSON2Graph",
-            "projectName": "GraphTheory"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - TSP1",
-            "request": "launch",
-            "mainClass": "mine.learn.graphtheory.computational_optimization.TSP1",
-            "projectName": "GraphTheory"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - TSP2",
-            "request": "launch",
-            "mainClass": "mine.learn.graphtheory.computational_optimization.TSP2",
-            "projectName": "GraphTheory"
-        },
-        {
             "name": "Python: 当前文件",
             "type": "python",
             "request": "launch",
@@ -62,7 +13,7 @@
         },
         {
             "type": "java",
-            "name": "Debug Current File",
+            "name": "Java Current File",
             "request": "launch",
             "mainClass": "${file}",
             "console": "internalConsole",

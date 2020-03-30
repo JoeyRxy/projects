@@ -20,23 +20,20 @@ public class FloydWarshall {
         path = new WeightedDirectedEdge[V][V];
 
         // init
-        for (int i = 0; i < dp.length; i++) {
-            for (int j = 0; j < dp.length; j++) {
+        for (int i = 0; i < dp.length; i++)
+            for (int j = 0; j < dp.length; j++)
                 dp[i][j] = Double.POSITIVE_INFINITY;
-            }
-        }
         for (int i = 0; i < V; i++) {
             for (WeightedDirectedEdge e : g.adjOf(i)) {
                 dp[e.from()][e.to()] = e.weight();
                 path[e.from()][e.to()] = e;
             }
-
             dp[i][i] = 0;
         }
         // cal
         double ret;
-        for (int k = 0; k < V; k++) {
-            for (int i = 0; i < V; i++) {
+        for (int k = 0; k < V; k++)
+            for (int i = 0; i < V; i++)
                 if (path[i][k] != null)
                     for (int j = 0; j < V; j++) {
                         ret = dp[i][k] + dp[k][j];
@@ -45,8 +42,6 @@ public class FloydWarshall {
                             path[i][j] = path[i][k];
                         }
                     }
-            }
-        }
     }
 
     public double dist(int from, int to) {

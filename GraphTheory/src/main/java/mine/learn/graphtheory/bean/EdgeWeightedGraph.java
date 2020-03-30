@@ -10,7 +10,7 @@ import mine.learn.graphtheory.api.RealMapGraph;
 import mine.learn.graphtheory.api.SymbolGraphAPI;
 
 @SuppressWarnings("unchecked")
-public class EdgeWeightedGraph implements SymbolGraphAPI, RealMapGraph {
+public class EdgeWeightedGraph implements Graph, SymbolGraphAPI, RealMapGraph {
 
     private int V;
     private Set<WeightedEdge>[] adj;

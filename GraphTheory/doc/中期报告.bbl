@@ -1,0 +1,83 @@
+\begin{thebibliography}{12}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{#1}
+\expandafter\ifx\csname urlstyle\endcsname\relax\else
+  \urlstyle{same}\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \DeclareUrlCommand\doi{\urlstyle{rm}}\else
+  \providecommand\doi[1]{\href{https://doi.org/#1}{\nolinkurl{#1}}}\fi
+
+\bibitem[Sedgewick et~al.(2011)Sedgewick and Wayne]{algs4}
+SEDGEWICK~R, WAYNE~K.
+\newblock Algorithms\allowbreak[M].
+\newblock [S.l.]: Addison-wesley professional, 2011.
+
+\bibitem[Kopardekar et~al.(2016)Kopardekar, Rios, Prevot, Johnson, Jung, and
+  Robinson]{kopardekar2016unmanned}
+KOPARDEKAR~P, RIOS~J, PREVOT~T, et~al.
+\newblock Unmanned aircraft system traffic management (utm) concept of
+  operations\allowbreak[J].
+\newblock 2016.
+
+\bibitem[刘洋(2015)]{liuyang}
+刘洋.
+\newblock 无人机运行安全风险评估与路径规划研究\allowbreak[D].
+\newblock 北京: BUAA, 2015.
+
+\bibitem[Cormen et~al.(2009{\natexlab{a}})Cormen, Leiserson, Rivest, and
+  Stein]{introtoalgo}
+CORMEN~T~H, LEISERSON~C~E, RIVEST~R~L, et~al.
+\newblock Introduction to algorithms\allowbreak[M].
+\newblock Cambridge, Massachusetts: MIT press, 2009{\natexlab{a}}.
+
+\bibitem[Cormen et~al.(2009{\natexlab{b}})Cormen, Leiserson, Rivest, and
+  Stein]{introtoor}
+CORMEN~T~H, LEISERSON~C~E, RIVEST~R~L, et~al.
+\newblock Introduction to oprational research\allowbreak[M].
+\newblock Cambridge, Massachusetts: MIT press, 2009{\natexlab{b}}.
+
+\bibitem[Patel(2019)]{gridsgraph}
+PATEL~A.
+\newblock Hexagonal grids\allowbreak[EB/OL].
+\newblock 2019.
+\newblock \url{https://www.redblobgames.com/grids/hexagons/}.
+
+\bibitem[Felner(2011)]{felner2011position}
+FELNER~A.
+\newblock Position paper: Dijkstra's algorithm versus uniform cost search or a
+  case against dijkstra's algorithm\allowbreak[C]//\allowbreak
+Fourth annual symposium on combinatorial search.
+\newblock [S.l.: s.n.], 2011.
+
+\bibitem[Bellman(1958)]{bellman1958routing}
+BELLMAN~R.
+\newblock On a routing problem\allowbreak[J].
+\newblock Quarterly of applied mathematics, 1958, 16\penalty0 (1):\penalty0
+  87-90.
+
+\bibitem[Patel(2016)]{astarredbloggames}
+PATEL~A.
+\newblock Introduction to the {A*} algorithm\allowbreak[EB/OL].
+\newblock 2016.
+\newblock
+  \url{https://www.redblobgames.com/pathfinding/a-star/introduction.html}.
+
+\bibitem[Cook(2019)]{worldtsp}
+COOK~W.
+\newblock The world tsp\allowbreak[EB/OL].
+\newblock 2019.
+\newblock \url{http://www.math.uwaterloo.ca/tsp/index.html}.
+
+\bibitem[Papadimitriou(2009)]{papadimi}
+PAPADIMITRIOU~C~H.
+\newblock 组合最优化：算法和复杂性\allowbreak[M].
+\newblock 北京: 清华大学出版社, 2009.
+
+\bibitem[Reinelt()]{tsplib}
+REINELT~G.
+\newblock Tsplib\allowbreak[EB/OL].
+\newblock Universität Heidelberg.
+\newblock
+  \url{http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/index.html}.
+
+\end{thebibliography}

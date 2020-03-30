@@ -1,4 +1,3 @@
-
 package mine.learn.graphtheory.bean;
 
 import mine.learn.graphtheory.api.RealMapGraph;
@@ -7,7 +6,7 @@ import mine.learn.graphtheory.api.SymbolGraphAPI;
 import java.util.*;
 
 @SuppressWarnings("unchecked")
-public class EdgeWeightedDiGraph implements SymbolGraphAPI, RealMapGraph {
+public class EdgeWeightedDiGraph implements Graph, SymbolGraphAPI, RealMapGraph {
 
     private int V; // number of vertices in this digraph
     private List<WeightedDirectedEdge>[] adj; // adj[v] = adjacency list for vertex v

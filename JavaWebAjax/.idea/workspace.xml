@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="00ef1c50-1a7d-4adf-a7d7-9974df3375de" name="Default Changelist" comment="" />
+    <list default="true" id="00ef1c50-1a7d-4adf-a7d7-9974df3375de" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__commons_fileupload_commons_fileupload_1_3_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__commons_io_commons_io_2_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/libraries/Maven__javax_websocket_javax_websocket_api_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/artifacts/JavaWebAjax_war.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/artifacts/JavaWebAjax_war.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/artifacts/JavaWebAjax_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/artifacts/JavaWebAjax_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vscode/tasks.json" beforeDir="false" afterPath="$PROJECT_DIR$/../.vscode/tasks.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JavaWebAjax.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaWebAjax.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/mine/learn/javawebajax/dao/ScheduleDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/mine/learn/javawebajax/dao/ScheduleDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/mine/learn/javawebajax/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/java/mine/learn/javawebajax/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/webapp/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/webapp/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main/webapp/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../web_jsp/src/main/webapp/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../web_jsp/src/main/webapp/signin.jsp" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,19 +37,87 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand />
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="local@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="local@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="local@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="mysite: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="local@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="mysite: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="admin: table" type="285a2a93:MysqlImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="local@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="mysite: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="myfile: table" type="285a2a93:MysqlImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="local@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="mysite: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="user: table" type="285a2a93:MysqlImplModel$Table" />
+      </path>
+    </expand>
     <select />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="C:\Users\Rxy\Documents\MYCODE\projects\JavaWebAjax\.idea" />
+      </set>
+    </option>
+  </component>
   <component name="ProjectId" id="1YZIk0lkMwPM8Js5pih9q9VrpNb" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="root:local@localhost" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+            </expand>
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -40,10 +127,72 @@
       <option name="presentableId" value="Default" />
       <updated>1583143828647</updated>
       <workItem from="1583143832652" duration="1876000" />
+      <workItem from="1584630367341" duration="1290000" />
+      <workItem from="1584668385966" duration="1323000" />
+      <workItem from="1584673460291" duration="929000" />
+      <workItem from="1584676740385" duration="1772000" />
+      <workItem from="1584773923055" duration="269000" />
+      <workItem from="1584774312425" duration="106000" />
+      <workItem from="1584790023345" duration="7062000" />
+      <workItem from="1584844211778" duration="31000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="277" y="99" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584630456648">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state x="277" y="99" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1368.882@0.0.1368.882" timestamp="1584630456648" />
+    <state x="365" y="246" key="DUMP_DIALOG_DIMENSION_KEY" timestamp="1584631007723">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state x="365" y="246" key="DUMP_DIALOG_DIMENSION_KEY/0.0.1368.882@0.0.1368.882" timestamp="1584631007723" />
+    <state x="465" y="196" key="FileChooserDialogImpl" timestamp="1584803460121">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state x="465" y="196" key="FileChooserDialogImpl/0.0.1368.882@0.0.1368.882" timestamp="1584803460121" />
+    <state width="588" height="230" key="GridCell.Tab.0.bottom" timestamp="1584803423715">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state width="588" height="230" key="GridCell.Tab.0.bottom/0.0.1368.882@0.0.1368.882" timestamp="1584803423715" />
+    <state width="588" height="230" key="GridCell.Tab.0.center" timestamp="1584803423715">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state width="588" height="230" key="GridCell.Tab.0.center/0.0.1368.882@0.0.1368.882" timestamp="1584803423715" />
+    <state width="588" height="230" key="GridCell.Tab.0.left" timestamp="1584803423715">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state width="588" height="230" key="GridCell.Tab.0.left/0.0.1368.882@0.0.1368.882" timestamp="1584803423715" />
+    <state width="588" height="230" key="GridCell.Tab.0.right" timestamp="1584803423715">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state width="588" height="230" key="GridCell.Tab.0.right/0.0.1368.882@0.0.1368.882" timestamp="1584803423715" />
+    <state width="214" height="477" key="HiddenNamespacesPopup" timestamp="1584673547181">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state width="214" height="477" key="HiddenNamespacesPopup/0.0.1368.882@0.0.1368.882" timestamp="1584673547181" />
+    <state x="401" y="81" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1584792029096">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state x="401" y="81" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/0.0.1368.882@0.0.1368.882" timestamp="1584792029096" />
+    <state x="520" y="129" key="com.intellij.database.view.ui.DbObjectDialog" timestamp="1584673497410">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state x="520" y="129" key="com.intellij.database.view.ui.DbObjectDialog/0.0.1368.882@0.0.1368.882" timestamp="1584673497410" />
+    <state x="528" y="330" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1" timestamp="1584676955967">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state x="528" y="330" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1/0.0.1368.882@0.0.1368.882" timestamp="1584676955967" />
+    <state x="368" y="265" key="com.intellij.ide.util.TipDialog" timestamp="1584844211753">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state x="368" y="265" key="com.intellij.ide.util.TipDialog/0.0.1368.882@0.0.1368.882" timestamp="1584844211753" />
+    <state x="347" y="186" width="672" height="678" key="search.everywhere.popup" timestamp="1584630428395">
+      <screen x="0" y="0" width="1368" height="882" />
+    </state>
+    <state x="347" y="186" width="672" height="678" key="search.everywhere.popup/0.0.1368.882@0.0.1368.882" timestamp="1584630428395" />
   </component>
 </project>

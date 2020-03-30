@@ -2,7 +2,7 @@ package mine.learn.graphtheory.bean;
 
 import java.util.Objects;
 
-public class WeightedDirectedEdge implements Comparable<WeightedDirectedEdge> {
+public class WeightedDirectedEdge implements Edge, Comparable<WeightedDirectedEdge> {
     private int v;
     private int w;
     private double weight;
@@ -38,7 +38,7 @@ public class WeightedDirectedEdge implements Comparable<WeightedDirectedEdge> {
 
     @Override
     public String toString() {
-        return String.format("%-5d -> %5d : %-10.5f", v, w, weight);
+        return String.format("%5d -> %-5d : %-10.5f", v, w, weight);
     }
 
     @Override

@@ -5,5 +5,5 @@ package mine.learn.javawebajax.util;
  */
 public interface SurplusListener {
 
-    public void update(final int surplus);
+    public void update(int surplus);
 }

@@ -5,6 +5,8 @@
     // "java.completion.filteredTypes": [],
     "java.test.config": {
         "name": "mine",
-        "vmargs": ["-Xmx4096m"]
-    }
+        "vmargs": [
+            "-Xmx4096m"
+        ]
+    },
 }

@@ -1,0 +1,170 @@
+%% %%=================================================================
+%% %% <UTF-8>
+%% %% 北航学位论文模板使用样例
+%% %% 请将以下文件与此LaTeX文件放在同一目录中.
+%% %%-----------
+%% %% buaa.cls                  : LaTeX宏模板文件
+%% %% bst/GBT7714-2005.bst      : 国标参考文献BibTeX样式文件2005(https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style)
+%% %% bst/GBT7714-2015.bst      : 国标参考文献BibTeX样式文件2015(https://github.com/zepinglee/gbt7714-bibtex-style)
+%% %% pic/logo-buaa.eps         : 论文封皮北航字样
+%% %% pic/head-doctor.eps       : 论文封皮北博士学位论文标题(华文行楷字体替代解决方案)
+%% %% pic/head-master.eps       : 论文封皮北学硕学位论文标题(华文行楷字体替代解决方案)
+%% %% pic/head-professional.eps : 论文封皮北专硕学位论文标题(华文行楷字体替代解决方案)
+%% %% tex/*.tex                 : 本模板样例中的独立章节
+%% %%-----------
+%% %% 请统一使用UTF-8编码.
+%% %%=================================================================
+
+%=================================================================
+% buaa基于ctexbook模板
+% 论文样式参考自《研究生手册--二〇一五年八月》
+%======================
+% 模板导入:
+% \documentclass[thesis,permission,printtype,ostype,<ctexbookoptions>]{buaa}
+%======================
+% 模板选项:
+%======================
+% I.论文类型(thesis)
+%--------------------
+% a.学术硕士论文（master）[缺省值]
+% b.专业硕士论文（professional）
+% c.博士论文（doctor）
+%--------------------
+% II.密级(permission)
+%--------------------
+% a.公开（public）[缺省值]
+% b.内部（privacy）
+% c.秘密（secret=secret3）
+% c.1.秘密3年（secret3）
+% c.2.秘密5年（secret5）
+% c.3.秘密10年（secret10）
+% c.4.秘密永久（secret*）
+% d.机密（classified=classified5）
+% d.1.机密3年（classified3）
+% d.2.机密5年（classified5）
+% d.3.机密10年（classified10）
+% d.4.机密永久（classified*）
+% e.绝密（topsecret=topsecret10）
+% e.1.绝密3年（topsecret3）
+% e.2.绝密5年（topsecret5）
+% e.3.绝密10年（topsecret10）
+% e.4.绝密永久（topsecret*）
+%--------------------
+% III.打印设置(printtype)
+%--------------------
+% a.单面打印（oneside）[缺省值]
+% b.双面打印（twoside）
+%--------------------
+% IV.系统类型(ostype)
+%--------------------
+% a.win（oneside）[缺省值]
+% b.linux (linux)
+% c.mac (mac)
+%--------------------
+% V.ctexbook设置选项(<ctexbookoptions>)
+%--------------------
+% ...
+%======================
+% 其他说明:
+% 1. Mac系统请使用mac选项，并使用XeLaTeX编译。
+% 2. 可加入额外ctexbook文档类的选项，其将会被传递给ctexbook。
+%    例如：\documentclass[fontset=founder]{buaa}
+% 3. CTeX在Linux下默认使用Fandol字体，为避免某些生僻字无法显示，在系统已安装方正
+%    字体的前提下可通过fontset=founder选项常用方正字体。
+%=================================================================
+
+\documentclass[master,privacy,twoside,win]{buaa}
+
+%=================================================================
+% 开启/关闭引用编号颜色：参考文献，公式，图，表，算法 等……
+\refcolor{on}   % 开启: on[默认]; 关闭: off;
+% 摘要和正文从右侧页开始
+\beginright{on} % 开启: on[默认]; 关闭: off;
+% 空白页留字
+\emptypagewords{[ -- This page is a preset empty page -- ]}
+
+%=================================================================
+% buaa模板已内嵌以下LaTeX工具包:
+%--------------------
+% ifthen, etoolbox, titletoc, remreset,
+% geometry, fancyhdr, setspace,
+% float, graphicx, subfigure, epstopdf,
+% array, enumitem,
+% booktabs, longtable, multirow, caption,
+% listings, algorithm2e, amsmath, amsthm,
+% hyperref, pifont, color, soul, 
+% ---
+% For Win: times
+% For Lin: newtxtext, newtxmath
+% For Mac: times, fontspec
+%--------------------
+% 请在此处添加额外工具包>>
+
+
+%=================================================================
+% buaa模板已内嵌以下LaTeX宏:
+%--------------------
+% \highlight{text} % 黄色高亮
+%--------------------
+% 请在此处添加自定义宏>>
+
+
+%%=================================================================
+% 论文题目及副标题-{中文}{英文}
+\Title{城市空域多无人机协同运行规划方法研究}
+
+% 学科大类,默认工学
+% \Branch{工学}
+
+% 院系,专业及研究方向
+\Department{电子信息工程学院}
+\Major{通信工程}
+
+% 导师信息-{中文名}{英文名}{职称}
+\Tutor{导师姓名}{Tutor}{教授}
+\Cotutor{副导师姓名}{Cotutor}{高工}
+
+% 学生姓名-{中文名}{英文名}
+\Author{任星宇}
+% 学生学号
+\StudentID{ID16101052}
+\Feild{}
+
+
+
+%%=================================================================
+% 摘要-{中文}{英文}
+
+\begin{document}
+
+%%=================================================================
+% 标题级别
+%--------------------
+% \chapter{第一章}
+% \section{1.1 小节}
+% \subsection{1.1.1 条}
+% \subsubsection{1.1.1.1}
+% \paragraph{1.1.1.1.1}
+% \subparagraph{1.1.1.1.1.1}
+%--------------------
+%%=================================================================
+
+% 绪论
+\input{tex/chap_intro}
+
+% 说明
+\input{tex/chap_instruction}
+
+% 示例
+\input{tex/chap_sample}
+
+% 总结
+\input{tex/chap_summary}
+
+% 参考文献
+% 2015版国标GBT7714-2015
+% 2005版国标GBT7714-2005
+\Bib{bst/GBT7714-2015}{ref}
+
+
+\end{document}

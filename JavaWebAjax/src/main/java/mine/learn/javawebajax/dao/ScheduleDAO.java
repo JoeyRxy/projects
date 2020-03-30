@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 import mine.learn.javawebajax.entity.DocSchedule;
-import mine.learn.javawebajax.util.Surplus;
 
 /**
  * DayDAO
