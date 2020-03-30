@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聊天</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Bootstrap-Core-CSS -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <!-- Style-CSS -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Font-Awesome-Icons-CSS -->
+    <!-- //Custom-Files -->
+
+    <!-- Web-Fonts -->
+    <link
+        href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
+        rel="stylesheet">
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script>
+        $(() => {
+            $.ajax({
+                url: "loginstate",
+                method: 'post',
+                dataType: "json",
+                success: start,
+                error: error
+            });
+        });
+
+        function start(res) {
+            if (!res.data) {
+                alert("未登录，请登录！");
+                window.location.href = "login.html";
+            } else {
+                var $change = $("#change");
+                $change.html(
+                    '<li>' + $.cookie("name") +
+                    '</li><li><a href="signoff" class="dropdown">注销</a></li>'
+                );
+            }
+        }
+
+        function error(_, status, __) {
+            alert("未登录，请登录");
+            window.location.href = "login.html";
+        }
+
+        var ws;
+        // ws = new WebSocket(uri);
+        function connect() {
+            $.get("alias", res => {
+                var uri;
+                var loc = window.location;
+                if (loc === 'https:') {
+                    uri = 'wss:'
+                } else {
+                    uri = 'ws:'
+                }
+                uri += ('//' + loc.host);
+                uri += '/rxy/chat';
+
+                var alias = JSON.parse(res).data;
+                uri += ('/' + alias);
+                ws = new WebSocket(uri);
+
+
+                ws.onerror = () => {
+                    $("#count").html('');
+                    $("#msg").append('<br>. error! ');
+                }
+
+                ws.onmessage = (event) => {
+                    var data = JSON.parse(event.data);
+                    $("#count").html(data.count);
+                    $("#msg").append('<br>' + data.user + " : " + data.msg);
+                }
+
+                ws.onclose = (data) => {
+                    $("#count").html('');
+                    // $("#msg").append('<br>' + data.data);
+                    $("#msg").html('<br>' + "用户离开");
+                }
+
+                ws.onopen = (data) => {
+                    $("#msg").html('<br>' + "新用户加入");
+                }
+            });
+        }
+
+        // window.onbeforeunload = () => {
+        //     ws.close();
+        // }
+
+        window.closed = () => {
+            ws.close();
+        }
+
+
+        function send() {
+            if (ws === undefined || ws === null) {
+                alert("未连接");
+                return;
+            }
+            var msg = $("#text").val();
+            ws.send(msg);
+        }
+
+        function closeWebSocket() {
+            if (ws === undefined || ws === null) {
+                alert("未连接");
+                return;
+            }
+            ws.close();
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="main-top" id="home">
+        <!-- header -->
+        <header>
+            <div class="container-fluid">
+                <div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
+                    <!-- logo -->
+                    <div id="logo">
+                        <h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
+                    </div>
+                    <!-- //logo -->
+                    <!-- nav -->
+                    <div class="nav_w3ls">
+                        <nav>
+                            <label for="drop" class="toggle">Menu</label>
+                            <input type="checkbox" id="drop" />
+                            <ul class="menu">
+                                <li><a href="index.html">主页</a></li>
+                                <li><a href="files.html">文件</a></li>
+                                <li><a href="chat.html">聊天</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- //nav -->
+                    <div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
+                        <nav>
+                            <ul id="change">
+                                <li><a href="login.html">登录</a></li>
+                                <li><a href="adminlogin.html">管理员</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div>
+        在线聊天
+    </div><br>
+    <div>在线人数：<span id="count"></span></div>
+    <br>
+    <div>
+        输入：<input id="text" type="text"><br><br>
+        <button onclick="connect()">连接</button><br><br>
+        <button onclick="send()">发送</button><br><br>
+        <button onclick="closeWebSocket()">离开</button>
+    </div>
+    <br>
+    <div>
+        <div id="msg"></div>
+    </div>
+</body>
+
+</html>

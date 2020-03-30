@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [{
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "console": "internalConsole",
+            "stepFilters": {
+                "classNameFilters": [
+                    "java.*",
+                    "javax.*",
+                    "com.sun.*",
+                    "sun.*",
+                    "sunw.*",
+                    "org.omg.*"
+                ],
+                "skipSynthetics": false,
+                "skipStaticInitializers": false,
+                "skipConstructors": false
+            }
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-App<MyWebSite>",
+            "request": "launch",
+            "mainClass": "top.mine.website.App",
+            "projectName": "MyWebSite",
+            "console": "integratedTerminal"
+        }
+    ]
+}

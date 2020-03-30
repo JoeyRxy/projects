@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件</title>
+    <script src="js/jquery-3.1.1.js"></script>
+
+    <script src="js/jquery.cookie.js"></script>
+    <script>
+        $(() => {
+            $.ajax({
+                url: "loginstate",
+                method: 'post',
+                dataType: "json",
+                success: start,
+                error: error
+            });
+            $("#file").change(() => {
+                var files = $("#file")[0].files;
+                var $filesname = $("#filesname");
+                for (let i = 0; i < files.length; i++) {
+                    $filesname.append(
+                        '文件名：<input type="text" required id="filename' + i + '" value="' + files[i].name + '"><br>'
+                    );
+                }
+            });
+            $("#submit").click(() => {
+                var formData = new FormData();
+                var files = $("#file")[0].files;
+                for (let i = 0; i < files.length; i++) {
+                    formData.append('file' + i, files[i], $("#filename" + i).val());
+                }
+                $.ajax({
+                    url: 'upload2',
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    method: 'post',
+                    success: res => {
+                        res = JSON.parse(res);
+                        if (res.data) {
+                            $("#file").val('');
+                            $("#filesname").html('');
+                        } else {
+                            alert("可能没登录？！")
+                        }
+                    }
+                });
+            });
+        });
+
+        function start(res) {
+            if (!res.data) {
+                alert("未登录，请登录！");
+                window.location.href = "login.html";
+            } else {
+                var $change = $("#change");
+                $change.html(
+                    '<li>' + $.cookie("name") +
+                    '</li><li><a href="signoff" class="dropdown">注销</a></li>'
+                );
+            }
+
+        }
+
+        function error(_, status, __) {
+            console.log(status);
+            alert("服务器错误：" + status);
+            window.location.href = "login.html";
+        }
+
+        function del($e) {
+            var $filename = $e.siblings('span')[0];
+            var json = {
+                filename: $filename.innerText
+            };
+            $.post("delete", json, getfiles)
+        }
+
+        function download($e) {
+            var $filename = $e.siblings('span')[0];
+            window.open("download?filename=" + $filename.innerText);
+        }
+
+        function getfiles() {
+            var $files = $("#files");
+            $files.html('');
+            $.post("allfile", res => {
+                res.data.forEach(filename => {
+                    $files.append('<div><span>' + filename +
+                        '</span><button onclick="download($(this))">下载</button><button onclick="del($(this))">删除</button></div>'
+                    );
+                });
+            }, 'json')
+        }
+
+        function uploadfiles() {
+            $()
+        }
+    </script>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Bootstrap-Core-CSS -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <!-- Style-CSS -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Font-Awesome-Icons-CSS -->
+    <!-- //Custom-Files -->
+
+    <!-- Web-Fonts -->
+    <link
+        href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="main-top" id="home">
+        <!-- header -->
+        <header>
+            <div class="container-fluid">
+                <div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
+                    <!-- logo -->
+                    <div id="logo">
+                        <h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
+                    </div>
+                    <!-- //logo -->
+                    <!-- nav -->
+                    <div class="nav_w3ls">
+                        <nav>
+                            <label for="drop" class="toggle">Menu</label>
+                            <input type="checkbox" id="drop" />
+                            <ul class="menu">
+                                <li><a href="index.html">主页</a></li>
+                                <li><a href="files.html">文件</a></li>
+                                <li><a href="chat.html">聊天</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- //nav -->
+                    <div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
+                        <nav>
+                            <ul id="change">
+                                <li><a href="login.html">登录</a></li>
+                                <li><a href="adminlogin.html">管理员</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <div class="list-group" id="files">
+
+    </div>
+
+    <div class="col-6">
+        <button class="btn btn-sm mt-0" onclick="getfiles()">获取你的文件</button>
+    </div>
+
+    <div class="title h3 col-6">上传文件</div>
+
+    <!-- <form action="upload" class="contact-wthree-do" method="post" enctype="multipart/form-data">
+        <nav class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>
+                        文件
+                    </label>
+                    <label>
+                        <input class="form-control-file btn" type="file" placeholder="文件名" name="photo" required
+                            multiple>
+                    </label>
+                </div>
+            </div>
+        </nav>
+        <nav class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>
+                        名字
+                    </label>
+                    <label>
+                        <input class="form-control" type="text" placeholder="文件名" name="filename" required="">
+                    </label>
+                </div>
+            </div>
+        </nav>
+        <div class="row mt-3">
+            <div class="col-md-3">
+                <button class="btn btn-cont-w3 mt-0" id="submit">上传</button>
+            </div>
+        </div>
+    </form> -->
+
+    <div>
+        <input type="file" id="file" multiple>
+        <br>
+        名称:<div id="filesname">
+        </div>
+        <br>
+        <button id="submit">上传</button>
+    </div>
+</body>
+
+</html>

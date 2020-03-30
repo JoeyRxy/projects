@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script>
+        $(() => {
+            $.ajax({
+                url: "adminloginstate",
+                method: 'post',
+                dataType: "json",
+                success: start,
+                // error: error
+            });
+        });
+        function start(res) {
+            if (res.data) {
+                alert("已登录");
+                window.location.href = "admin.html";
+            }
+
+        }
+        function login() {
+            $.post("adminlogin",
+                {
+                    adminname: $("#name").val(),
+                    adminpwd: $("#pwd").val()
+                },
+                res => {
+                    if (res.data) window.location.href = "admin.html";
+                    else alert("用户名或密码错误！");
+                },
+                'json');
+        }
+    </script>
+</head>
+
+<body>
+    <div id="login">
+        <div>
+            用户名：<input type="text" name="adminname" id="name"><br>
+            密码：<input type="password" name="adminpwd" id="pwd"><br>
+            <button onclick="login()">登录</button>
+        </div>
+    </div>
+    <footer>
+        需要申请管理员账户？请联系<strong>rxy的邮箱</strong> :<br> morethanless007@gmail.com
+    </footer>
+</body>
+
+
+</html>

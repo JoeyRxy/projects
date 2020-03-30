@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员</title>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script>
+        $(() => {
+            $.ajax({
+                url: "adminloginstate",
+                method: 'post',
+                dataType: "json",
+                success: start,
+                // error: error
+            });
+        });
+        function start(res) {
+            if (!res.data) {
+                alert("未登录，请登录！");
+                window.location.href = "adminlogin.html";
+            }
+
+        }
+
+        function error(_, status, __) {
+            console.log(status);
+            alert("未登录，请登录");
+            window.location.href = "adminlogin.html";
+        }
+
+
+
+        function getusers() {
+            $.post(
+                'allusers',
+                res => {
+                    var $tbody = $("#tbody");
+                    $tbody.html('');
+                    res.data.forEach(element => {
+                        $tbody.append(
+                            '<tr>' +
+                            '<td>' + element.name + '</td>' +
+                            '<td><input type="text" name="alias" id="alias" value="' + element.alias + '"></td>' +
+                            '<td><button onclick="del($(this))">删除</button></td>' +
+                            '<td><button onclick="aliasChange($(this))">修改昵称</button></td>' +
+                            '<td><button onclick="allfiles($(this))">查看文件</button></td>' +
+                            '</tr>'
+                        )
+                    });
+                },
+                'json'
+            )
+        }
+
+        /**
+         * 
+         * @param {JQuery} $elem 
+         */
+        function aliasChange($elem) {
+            var $td = $elem.parent('td').siblings('td');
+            var json = {
+                name: $td[0].innerText,
+                alias: $td.children("#alias").val()
+            };
+            $.post('aliaschange', json, res => {
+                if (res.data) getusers();
+            }, 'json')
+        }
+
+        function del($elem) {
+            alert('删除操作会将用户下的文件一并删除！');
+            $.post(
+                'deleteuser',
+                {
+                    name: $elem.parent('td').siblings('td:eq(0)').text()
+                },
+                (res) => {
+                    if (res.data)
+                        getusers();
+                }, 'json');
+        }
+
+        // user
+        function delfile($e, $name) {
+            var $filename = $e.siblings('span')[0];
+            var json = {
+                name: $name,
+                filename: $filename.innerText
+            };
+            $.post("admindelfile", json, res => {
+                if (JSON.parse(res).data) {
+                    var $files = $("#userfiles");
+                    $files.html('');
+                    $.post('adminallfile', { name: $name }, res => {
+                        res.data.forEach(filename => {
+                            $files.append('<div><span>' + filename +
+                                '</span><button onclick="delfile($(this),\'' + $name + '\')">删除</button></div>'
+                            );
+                        });
+                    }, 'json');
+                }
+            });
+        }
+
+        function allfiles($elem) {
+            $name = $elem.parent('td').siblings('td')[0].innerText;
+            var json = {
+                name: $name
+            };
+            $("#username").text($name);
+            var $files = $("#userfiles");
+            $files.html('');
+            $.post('adminallfile', json, res => {
+                res.data.forEach(filename => {
+                    $files.append('<div><span>' + filename +
+                        '</span><button onclick="delfile($(this),\'' + $name + '\')">删除</button></div>'
+                    );
+                });
+            }, 'json');
+        }
+    </script>
+</head>
+
+<body>
+    <div><a href="adminsignoff">注销</a></div>
+    <br>
+    <button onclick="getusers()">获取所有用户</button>
+    <div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>昵称</th>
+                    <th>操作1</th>
+                    <th>操作2</th>
+                    <th>操作3</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div>
+        <div id="username">
+
+        </div><br>
+        <div id="userfiles">
+
+        </div>
+    </div>
+</body>
+
+</html>

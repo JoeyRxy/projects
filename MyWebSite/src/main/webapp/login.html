@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Bootstrap-Core-CSS -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <!-- Style-CSS -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Font-Awesome-Icons-CSS -->
+    <!-- //Custom-Files -->
+
+    <!-- Web-Fonts -->
+    <link
+        href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
+        rel="stylesheet">
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script>
+        $(() => {
+            $.ajax({
+                url: "loginstate",
+                method: 'post',
+                dataType: "json",
+                success: start,
+                error: error
+            });
+        });
+
+        function start(res) {
+            if (res.data) {
+                alert("已登录！");
+                window.location.href = "index.html";
+            } else {
+                let failed = $.cookie("failed");
+                if (failed) alert("用户名或密码错误！");
+                $.removeCookie("failed");
+            }
+        }
+
+        function error(_, status, __) {
+            let failed = $.cookie("failed");
+            if (failed) alert("用户名或密码错误！");
+            $.removeCookie("failed");
+        }
+
+        function f() {
+            var $name = $("#name");
+            var $alias = $("#alias");
+            var $pwd = $("#pwd");
+            data = {
+                name: $name.val(),
+                alias: $alias.val(),
+                pwd: $pwd.val()
+            };
+            $.post("signup", data, res => {
+                if (!res.data) {
+                    alert("注册失败")
+                } else {
+                    alert("注册成功");
+                    window.location.reload();
+                }
+            }, 'json');
+        }
+
+        function reg() {
+            $("#reg").html(
+                '<div class="contact-wthree-do">' +
+                '<nav class="form-group">' +
+                '<div class="row">' +
+                '<div class="col-md-6">' +
+                '</div>' +
+                '</div>' +
+                '</nav>' +
+                '<nav class="form-group">' +
+                '<div class="row">' +
+                '<div class="col-md-6">' +
+                '<label>' +
+                '名字' +
+                '</label>' +
+                '<label>' +
+                '<input class="form-control" type="text" placeholder="某某某" id="name" required="">' +
+                '</label>' +
+                '</div>' +
+                '</div>' +
+                '</nav>' +
+                '<nav class="form-group">' +
+                '<div class="row">' +
+                '<div class="col-md-6">' +
+                '<label>' +
+                '昵称' +
+                '</label>' +
+                '<label>' +
+                '<input class="form-control" type="text" placeholder="某某某" id="alias" required="">' +
+                '</label>' +
+                '</div>' +
+                '</div>' +
+                '</nav>' +
+                '<nav class="form-group">' +
+                '<div class="row">' +
+                '<div class="col-md-6">' +
+                '<label>' +
+                '密码' +
+                '</label>' +
+                '<label>' +
+                '<input class="form-control" type="password" id="pwd" placeholder="********" required="">' +
+                '</label>' +
+                '</div>' +
+                '</div>' +
+                '</nav>' +
+                '<div class="row mt-3">' +
+                '<div class="col-md-6">' +
+                '<button onclick="f()" class="btn btn-cont-w3 btn-block mt-4">注册</button>' +
+                '</div>' +
+                '</div>' +
+                '</div>'
+            );
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="main-top" id="home">
+        <!-- header -->
+        <header>
+            <div class="container-fluid">
+                <div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
+                    <!-- logo -->
+                    <div id="logo">
+                        <h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
+                    </div>
+                    <!-- //logo -->
+                    <!-- nav -->
+                    <div class="nav_w3ls">
+                        <nav>
+                            <label for="drop" class="toggle">Menu</label>
+                            <input type="checkbox" id="drop" />
+                            <ul class="menu">
+                                <li><a href="index.html">主页</a></li>
+                                <li><a href="files.html">文件</a></li>
+                                <li><a href="chat.html">聊天</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- //nav -->
+                    <div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
+                        <nav>
+                            <ul id="change">
+                                <li><a href="login.html">登录</a></li>
+                                <li><a href="adminlogin.html">管理员</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+
+    <div class="contact py-5" id="contact">
+        <div class="container pb-xl-5 pb-lg-3">
+            <div class="row">
+                <div class="col-lg-6 mt-lg-0 mt-5">
+                    <!-- contact form grid -->
+                    <div id="reg" class="contact-top1">
+                        <form action="login" method="post" class="contact-wthree-do" accept-charset="UTF-8">
+                            <nav class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                    </div>
+                                </div>
+                            </nav>
+                            <nav class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>
+                                            名字
+                                        </label>
+                                        <label>
+                                            <input class="form-control" type="text" placeholder="某某某" name="name"
+                                                required="">
+                                        </label>
+                                    </div>
+                                </div>
+                            </nav>
+                            <nav class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>
+                                            密码
+                                        </label>
+                                        <label>
+                                            <input class="form-control" type="password" name="pwd"
+                                                placeholder="********" required="">
+                                        </label>
+                                    </div>
+                                </div>
+                            </nav>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <input type="submit" class="btn btn-cont-w3 btn-block mt-4" value="登录">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                没有账户？请<button onclick="reg()" class="btn btn-sm mt-0">注册</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //contact form grid ends here -->
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

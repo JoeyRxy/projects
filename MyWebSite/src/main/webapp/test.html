@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script>
+        $(() => {
+            $("#file").change(() => {
+                var files = $("#file")[0].files;
+                var $filesname = $("#filesname");
+                for (let i = 0; i < files.length; i++) {
+                    $filesname.append(
+                        '文件名：<input type="text" required id="filename' + i + '" value="' + files[i].name + '"><br>'
+                    );
+                }
+            });
+            $("#submit").click(() => {
+                var formData = new FormData();
+                var files = $("#file")[0].files;
+                for (let i = 0; i < files.length; i++) {
+                    formData.append('file' + i, files[i], $("#filename" + i).val());
+                }
+                $.ajax({
+                    url: 'upload2',
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    method: 'post',
+                });
+            });
+        })
+    </script>
+</head>
+
+<body>
+    <div>
+        <input type="file" id="file" multiple>
+        <br>
+        名称:<div id="filesname">
+        </div>
+        <br>
+        <button id="submit">上传</button>
+    </div>
+</body>
+
+</html>
