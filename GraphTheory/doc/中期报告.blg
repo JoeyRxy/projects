@@ -7,45 +7,46 @@ Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Database file #1: cites.bib
 Warning--empty year in tsplib
 Warning--empty journal in kopardekar2016unmanned
-You've used 12 entries,
+Warning--empty journal in tsptheory
+You've used 23 entries,
             4281 wiz_defined-function locations,
-            943 strings with 7861 characters,
-and the built_in function-call counts, 46030 in all, are:
-= -- 983
-> -- 5168
-< -- 6443
-+ -- 1824
-- -- 389
-* -- 298
-:= -- 6420
-add.period$ -- 40
-call.type$ -- 12
-change.case$ -- 40
-chr.to.int$ -- 1612
-cite$ -- 14
-duplicate$ -- 218
-empty$ -- 611
-format.name$ -- 131
-if$ -- 12059
+            1007 strings with 9498 characters,
+and the built_in function-call counts, 90303 in all, are:
+= -- 1981
+> -- 10086
+< -- 12677
++ -- 3615
+- -- 778
+* -- 615
+:= -- 12589
+add.period$ -- 73
+call.type$ -- 23
+change.case$ -- 74
+chr.to.int$ -- 3226
+cite$ -- 26
+duplicate$ -- 416
+empty$ -- 1137
+format.name$ -- 252
+if$ -- 23536
 int.to.chr$ -- 2
-int.to.str$ -- 13
+int.to.str$ -- 24
 missing$ -- 0
-newline$ -- 75
-num.names$ -- 36
-pop$ -- 2358
+newline$ -- 130
+num.names$ -- 69
+pop$ -- 4506
 preamble$ -- 1
-purify$ -- 12
+purify$ -- 23
 quote$ -- 0
-skip$ -- 4656
+skip$ -- 9121
 stack$ -- 0
-substring$ -- 2083
-swap$ -- 24
-text.length$ -- 96
+substring$ -- 4270
+swap$ -- 45
+text.length$ -- 183
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 128
-warning$ -- 2
-while$ -- 122
+type$ -- 269
+warning$ -- 3
+while$ -- 243
 width$ -- 0
-write$ -- 160
-(There were 2 warnings)
+write$ -- 310
+(There were 3 warnings)

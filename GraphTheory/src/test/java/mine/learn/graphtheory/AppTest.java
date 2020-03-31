@@ -396,7 +396,7 @@ public class AppTest {
         EdgeWeightedDiGraph gg = new EdgeWeightedDiGraph(g);
         System.out.println("图中有" + gg.V() + "个节点");
         System.out.println("图中有" + gg.edges().size() + "条边.");
-        int[] SETS = { 5, 9, 13, 36, 86, 0, 47, 55, 66, 77, 88, 99, 111, 123, 146, 132, 167, 189, 112, 98, 97, 95, 94 };
+        int[] SETS = { 5, 9, 13, 36, 86, 47, 55, 66, 77, 88, 99, 111, 123, 146, 132, 167, 189, 112, 98 };
         System.out.println("需经过点集集合的长度：" + SETS.length);
         TSP2 tsp = new TSP2(gg, SETS);
         long start = System.currentTimeMillis();
@@ -468,7 +468,7 @@ public class AppTest {
         // EdgeWeightedDiGraph graph = (EdgeWeightedDiGraph)
         // Helpers.getGraph("largeEWG.txt", EdgeWeightedDiGraph.class);
         // EdgeWeightedDiGraph graph = Helpers.parseJSON("d1291.json");
-        EdgeWeightedDiGraph graph = Helpers.parseJSON("pcb1173.json");
+        EdgeWeightedDiGraph graph = Helpers.parseJSON("src/main/resources/pcb1173.json");
         // EdgeWeightedDiGraph graph = Helpers.parseJSON("kroB200.json");
         // EdgeWeightedDiGraph graph = Helpers.parseJSON("ch130.json");
 
@@ -478,8 +478,8 @@ public class AppTest {
         for (int i = 0; i < set.length; i++) {
             set[i] = i;
         }
-        double a = 0.9994;
-        int markov = 8000;
+        double a = 0.999;
+        int markov = 5000;
         double p = 0.5;
         System.out.println("t0 : " + 100 + ", tf : " + 1 + ", a : " + a + ", markov : " + markov + ", p : " + p);
         double min = Double.POSITIVE_INFINITY;
@@ -499,7 +499,7 @@ public class AppTest {
                 min = bestDist;
             System.out.println("my score : " + bestDist);
             List<WeightedDirectedEdge> path = tsp5.getPath();
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("tsp5 pcb1173 path 2")));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File("tsp5 pcb1173 path 3")));
             writer.write(path.toString());
             writer.close();
             System.out.println(sumPath(path));
@@ -508,13 +508,13 @@ public class AppTest {
         System.out.println("my min score : " + min);
         System.out.println("my max score : " + max);
         System.out.println("my avrage : " + (s / times));
-        System.out.println("==========================");
-        TSP3 tsp3 = new TSP3(graph);
-        start = System.currentTimeMillis();
-        double cal = tsp3.cal();
-        end = System.currentTimeMillis();
-        System.out.println(cal);
-        System.out.println(end - start);
+        // System.out.println("==========================");
+        // TSP3 tsp3 = new TSP3(graph);
+        // start = System.currentTimeMillis();
+        // double cal = tsp3.cal();
+        // end = System.currentTimeMillis();
+        // System.out.println(cal);
+        // System.out.println(end - start);
     }
 
     @Test
@@ -534,7 +534,7 @@ public class AppTest {
 
     @Test
     public void testTSP1() {
-        int n = 12;
+        int n = 10;
         Random r = new Random(System.currentTimeMillis());
         double[][] g = new double[n][n];
         for (int i = 0; i < n; i++) {
