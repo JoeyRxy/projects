@@ -71,7 +71,7 @@
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[scale=1.2]{renwushu.png}
+    \includegraphics[scale=0.75]{renwushu.png}
 \end{figure}
 \thispagestyle{empty}
 \newpage
@@ -90,7 +90,7 @@
 \paragraph{}要解决上述问题，首先，要开展无人机运行安全风险评估研究，从地面、空中两个角度衡量无人机运行所带来的安全隐患，在满足安全性前提下获取无人机自身目标安全水平，评估运行空域的安全状态并生成空域危险等级；其次，基于无人机自身目标安全水平以及空域安全态势要求，开展单架无人机自主飞行路径规划研究，针对二维、三维不同运行场景参数限制，有效规避地形障碍物、空域潜在威胁等因素，为无人机规划最优运行路径；第三，在解决单架无人机最优化运行的基础上，研究多无人机协同路径规划问题并考虑时间因素，在实现无人机自身影响因素建模的前提下，重点解决多无人机时空协同运行问题、飞行冲突及间隔保持问题，为每架无人机规划时空最优运行路径。针对单架无人机路径规划场景数据量大、作用因素多且关联性强、全局范围内寻优复杂等诸多难点问题，首先，根据无人机运行任务需求设计一种离散化的路径特征提取机制，将此类问题转化为多目标大尺度下的联合全局优化，然后构造地形函数并完成所有影响因素的建模；其次，将无人机飞行距离、飞行时间等均作为约束条件，设计目标优化函数并在搜索空间内为其分配搜索阈值；第三，基于指定地形特征及影响因素作用开展最优化运行研究，提出两类适用于二维/三维不同场景下的高效路径规划算法，实现最优解位置的快速定位并得到最优运行路径点序列，实验结果证明算法具有较好的有效性、精确性与鲁棒性。针对多无人机运行规划中自身限制因素建模难、四维协同运行规划难等突出问题。~\cite{liuyang}
 \paragraph{}例如亚马逊等公司开发的无人机物流配送即为其中一种应用场景，本课题的背景也是基于物流配送的低空无人机，意图初步实现一种物流管理和路径规划方案。低空环境更接近于路面的路径，但是低空无人机可以经过的空间是三维的，相对地面的车辆，路径限制更少。
 \subsection{国内外研究现状}
-\paragraph{}关于路径规划，有经典的算法和近年来发展的算法。 经典的算法是基于图论的组合优化问题。涉及的经典算法包括 Dijkstra 算法，loyd-Warshall 算法，流问题的 Ford-Fulkerson 方法~\cite{introtoalgo}。近年来在经典算法方向的研究也包括利用组合优化的方法，利用整数规划，动态规划等方法，进行路径的规划~\cite{introtoor}。这种方法的原理是在规划空间内用一系列的路径段表征一条运行路径，通过搜索算法寻找最优的路径段实现无人机最佳运行路径的获取，该方向已经成为研究的热点。通过使用 Voronoi 图实现了飞行器的运行规划，此方法是把危险区域、无人机均等同于一个质点并建立 Voronoi 图，然后通过 K 算法寻找最优路径，由于该算法并未涉及无人机自身的参数性能因素，并不符合实际的运行 要求，因此无法真正应用到实际场景中；又进一步的将该算法扩展到了无人直升机的运行规划领域，而且收到了较好的效果，PRM 算法的核心是通过在运动的空间内实施采样，通过采样结果生成路线图，然后基于该路线图进行路径的进一步搜索后得到最佳路径，主要分为学习阶段、查询阶段两个过程；还有一种方法叫可视图法(Visibility Graph, VG)~\cite{2005coordination}，将障碍物、危险区域的顶点作为可视图基本元素，由互相可见的顶点生成路线 图，该方法原理简单，执行起来并不复杂，但是当区域内的危险区域、障碍物较多时， 算法的效率急剧下降，需要耗费大量的计算时间；Canny 早在 1987 年就提出了一种 叫做轮廓图的路线图理论，通过映射将高维度规划空间转化为低维度，在低维空间内 找出障碍物对应的边界，即轮廓，然后反复迭代最终得到一维轮廓曲线，进而获取最终的运行路径，该方法的缺陷是当问题维数较高时需要进行多次映射，导致运算量大、耗时长，此方法并不是十分实用；还有一种概率地图法~\cite{zhangyi2007j}，在无人机自主运行规划中得 到了广泛的应用，通过该方法使得规划问题的复杂度与规划空间的复杂度不受规划空间维数的影响，因此即使规划空间维度很高时也不会影响算法的执行效率，运算时间几乎不受影响 基于组合优化的经典算法研究在于精确（或较精确）的求解问题，可以保证最优（或对于 NP 难问题求近似最优）。~\cite{chenyan2009}
+\paragraph{}关于路径规划，有经典的算法和近年来发展的算法。 经典的算法是基于图论的组合优化问题。涉及的经典算法包括 Dijkstra 算法，Floyd-Warshall 算法，流问题的 Ford-Fulkerson 方法~\cite{introtoalgo}。近年来在经典算法方向的研究也包括利用组合优化的方法，利用整数规划，动态规划等方法，进行路径的规划~\cite{introtoor}。这种方法的原理是在规划空间内用一系列的路径段表征一条运行路径，通过搜索算法寻找最优的路径段实现无人机最佳运行路径的获取，该方向已经成为研究的热点。通过使用 Voronoi 图实现了飞行器的运行规划，此方法是把危险区域、无人机均等同于一个质点并建立 Voronoi 图，然后通过 K 算法寻找最优路径，由于该算法并未涉及无人机自身的参数性能因素，并不符合实际的运行 要求，因此无法真正应用到实际场景中；又进一步的将该算法扩展到了无人直升机的运行规划领域，而且收到了较好的效果，PRM 算法的核心是通过在运动的空间内实施采样，通过采样结果生成路线图，然后基于该路线图进行路径的进一步搜索后得到最佳路径，主要分为学习阶段、查询阶段两个过程；还有一种方法叫可视图法(Visibility Graph, VG)~\cite{2005coordination}，将障碍物、危险区域的顶点作为可视图基本元素，由互相可见的顶点生成路线 图，该方法原理简单，执行起来并不复杂，但是当区域内的危险区域、障碍物较多时， 算法的效率急剧下降，需要耗费大量的计算时间；Canny 早在 1987 年就提出了一种 叫做轮廓图的路线图理论，通过映射将高维度规划空间转化为低维度，在低维空间内 找出障碍物对应的边界，即轮廓，然后反复迭代最终得到一维轮廓曲线，进而获取最终的运行路径，该方法的缺陷是当问题维数较高时需要进行多次映射，导致运算量大、耗时长，此方法并不是十分实用；还有一种概率地图法~\cite{zhangyi2007j}，在无人机自主运行规划中得 到了广泛的应用，通过该方法使得规划问题的复杂度与规划空间的复杂度不受规划空间维数的影响，因此即使规划空间维度很高时也不会影响算法的执行效率，运算时间几乎不受影响 基于组合优化的经典算法研究在于精确（或较精确）的求解问题，可以保证最优（或对于 NP 难问题求近似最优）。~\cite{chenyan2009}
 \paragraph{}而另一种思路和方向是通过类似统计和估计的近似算法，包括蚁群算法，PSO 算法，以及启发式的算法，例如A*算法。这些算法的特点是结果未必正确，精确性和模型个体相关性较大，与计算参数和计算机效果相关性很大，甚至从其算法目的上来说，其追求的就是“近似最优”。 近些年的另一种研究思路是通过人工智能的方法研究路径规划。
 
 \subsection{研究内容}
@@ -142,7 +142,7 @@
 \subparagraph{}甚至纯粹形式的TSP都有若干应用，如企划、物流、芯片制造。稍作修改，就是DNA测序等许多领域的一个子问题。在这些应用中，“城市”的概念用来表示客户、焊接点或DNA片段，而“距离”的概念表示旅行时间或成本或DNA片段之间的相似性度量。TSP还用在天文学中，观察很多源的天文学家希望减少在源之间转动望远镜的时间。许多应用（如资源或时间窗口有限）中，可能会加入额外的约束。~\cite{worldtsp}
 \subparagraph{}可以用加权有向图图来对TSP建模，则城市是图的顶点，道路是图的边，道路的距离就是该边的长度。它是起点和终点都在一个特定顶点，访问每个顶点恰好一次的最小化问题。通常，该模型是一个完全图（即每对顶点由一条边连接）。如果两个城市之间不存在路径，则增加一条非常长的边就可以完成图，而不影响计算最优回路。
 \subparagraph{}TSP问题可以通过整数规划的方法解决~\cite{papadimi}，目前还没有进行整数规划的学习，暂将方程列下：
-\begin{align}
+\begin{align*}
     \min & \sum _{i=1}^{n}\sum _{j\neq i,j=1}^{n}c_{ij}x_{ij}\colon &  &                      \\
          & x_{ij}\in \{0,1\}                                        &  & i,j=1,\ldots ,n;     \\
          & u_{i}\in  \mathbb{Z}                                     &  & i=2,\ldots ,n;       \\
@@ -150,7 +150,7 @@
          & \sum _{j=1,j\neq i}^{n}x_{ij}=1                          &  & i=1,\ldots ,n;       \\
          & u_{i}-u_{j}+nx_{ij}\leq n-1                              &  & 2\leq i\neq j\leq n; \\
          & 0\leq u_{i}\leq n-1                                      &  & 2\leq i\leq n.
-\end{align}
+\end{align*}
 \subparagraph{}关于TSP问题的是实现见~\ref{sec:solutionTSP}.
 \subparagraph{应用场景}除了本文所述的物流规划问题，TSP问题在其他方面也有很多应用。比如飞机航线安排、送邮件、快递服务、设计校车行进路线等等。实际上其应用范围扩展到了许多其他领域。
 \subparagraph{}印制电路板转孔是TSP应用的经典例子，在一块电路板上打成百上千个孔，转头在这些孔之间移动，相当于对所有的孔进行一次巡游。把这个问题转化为TSP，孔相当于城市．孔到孔之问的移动时间就是距离。
@@ -159,12 +159,25 @@
 \subsubsection{多无人机的多目标路径规划}
 \paragraph{}多无人机的路径规划涉及的主要问题是车辆路径规划问题（Vehicle Routing Problem），是TSP问题的一般化，相对来说更接近实际的模型，但是也复杂得多。鉴于TSP问题是一个NP难得问题，因此VRP问题也是一个NP难的问题。
 
-\paragraph{VRP问题}最早是由Dantzig和Ramser于1959年首次提出，它是指一定数量的客户，各自有不同数量的货物需求，配送中心向客户提供货物，由一个车队负责分送货物，组织适当的行车路线，目标是使得客户的需求得到满足，并能在一定的约束下，达到诸如路程最短、成本最小、耗费时间最少等目的。
+\paragraph{VRP问题}最早是由Dantzig和Ramser于1959年首次提出~\cite{dantzig1959truck}，它是指一定数量的客户，各自有不同数量的货物需求，配送中心向客户提供货物，由一个车队负责分送货物，组织适当的行车路线，目标是使得客户的需求得到满足，并能在一定的约束下，达到诸如路程最短、成本最小、耗费时间最少等目的。
 \subparagraph{}可见，VRP问题考虑的实际状况要复杂得多，我们在此以最短路径作为优化目标，暂不考虑成本等问题。
-\subparagraph{}关于VRP问题的进一步描述和探究见~\ref{sec:vrp}
+\subparagraph{}VRP问题有很多解法，在关于VRP问题的进一步描述和探究见~\ref{sec:vrp}
 
 
 \subsection{进度安排}
+\paragraph{}见表~\ref{tab:progress}
+\begin{table}[h]
+    \centering
+    \caption{进度安排}\label{tab:progress}
+    \begin{tabular}{|C{7cm}|C{7cm}|}
+        \toprule
+        时间 & 安排              \\
+        \hline
+        4月  & NSGA算法和VRP启发 \\
+        5月  & VRP的精确算法     \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \section{已完成的研究工作}
 
@@ -303,10 +316,6 @@
         \EndFunction
     \end{algorithmic}
 \end{algorithm}
-
-\paragraph{}实现细节：TODO
-% \paragraph{}完整代码见~\ref{app:scc}.
-
 
 \subsection{单无人机的单目标路径规划}
 \subsubsection{Dijkstra算法}\label{sec:dijkstra}
@@ -620,11 +629,11 @@
     \label{fig:metropolis}
 \end{figure}
 
-\paragraph{}启发式算法的方式有很多种，计算~\cite{arora1998polynomial}
-\subparagraph{算法参数}参数主要是用来控制结束条件和随机参数。这些参数见表~\ref{tab:tspsaaparams}~\cite{wang2012genetic}
+\paragraph{}启发式算法的方式有很多种~\cite{arora1998polynomial}，除了退火算法之外还有遗传算法，这些启发式的算法都是随机化择优的算法。关于遗传算法，详见~\ref{sec:ga}
+\subparagraph{算法参数}参数主要是用来控制结束条件和随机参数。这些参数见表~\ref{tab:tspsaparams}~\cite{wang2012genetic}
 \begin{table}[htbp]
     \centering
-    \caption{退火参数}\label{tab:tspsaaparams}
+    \caption{退火参数}\label{tab:tspsaparams}
     \begin{tabular}{L{2.5cm}L{2.5cm}L{8cm}}
         \toprule
         参数名   & 参数类型 & 参数意义                 \\
@@ -639,11 +648,11 @@
 \end{table}
 
 
-\paragraph{伪代码}见算法~\ref{algotspsaa}
+\paragraph{伪代码}见算法~\ref{algotspsa}
 \begin{algorithm}
-    \caption{TSPSAA}\label{algotspsaa}
+    \caption{TSPSA}\label{algotspsa}
     \begin{algorithmic}[1] %每行显示行号
-        \Function {Saa}{$G,set,t_0,t_f,a,markov,p$}
+        \Function {Sa}{$G,set,t_0,t_f,a,markov,p$}
         \State $g\gets$\Call{tspinit}{$G,set$}
         \State $order\gets$\Call{greedy}{$g$}
         \State set $dist$ be $order$'s total dist
@@ -672,10 +681,10 @@
 \end{algorithm}
 
 
-\paragraph{测试结果}见表~\ref{tab:tspsaa}
+\paragraph{测试结果}见表~\ref{tab:tspsa}
 \begin{table}[htb]
     \centering
-    \caption{TSP退火启发}\label{tab:tspsaa}
+    \caption{TSP退火启发}\label{tab:tspsa}
     \begin{tabular}{L{2cm}L{2cm}L{2cm}L{3.4cm}L{3.4cm}}
         \toprule
         数据名   & 节点数   & 耗时    & 结果                 & 历史最佳           \\
@@ -701,273 +710,52 @@
 
 \section{已取得的阶段性研究成果}
 \subsection{多无人机的多目标路径规划}\label{sec:vrp}
-\subsubsection{VRP问题}
-\paragraph{VRP的精确解法~\cite{qureshi2010exact}}
+\paragraph{综述}求解车辆路径问题的方法主要分为两类：精确算法和启发式算法。
+\subparagraph{}精确算法可以通过整数规划的方法解决，关于整数规划，可以使用分支定界法和割平面法。首先整数规划给出了一组方程
+\begin{align*}
+    \min & \sum_{i\in V}\sum_{j \in V}c_{ij}x_{ij}\colon   &  &                                                     \\
+         & \sum _{i\in V}x_{ij}=1                          &  & \forall j\in V\backslash \left\{0\right\}           \\
+         & \sum _{i\in V}x_{ij}=1                          &  & \forall j\in V\backslash \left\{0\right\}           \\
+         & \sum _{i\in V}x_{i0}=K                          &  &                                                     \\
+         & \sum _{j\in V}x_{0j}=K                          &  &                                                     \\
+         & \sum _{i\notin S}\sum _{j\in S}x_{ij}\geq r(S), &  & \forall S\subseteq V\setminus \{0\},S\neq \emptyset \\
+         & x_{ij}\in \{0,1\}                               &  & \forall i,j\in V
+\end{align*}
+\paragraph{}关于这组方程的解法，有分支定界法和割平面法。分支定界法先将整数约束去掉，以一般线性不等式的单纯形法解出一个解，并判断是否符合整数约束，若不符合，以非整数的相邻整数分支出整数子问题，再进行线性不等式求解，直到找到最优解。割平面法也是先将整数约束去掉，在线性约束条件（割平面）上，将线性不等式的空间割掉一部分，使其割掉的部分只包含非整数解，直到切割到只剩一个整数节点，就是最优解。
+\subsubsection{VRP的精确解法~\cite{qureshi2010exact}}
+\paragraph{}可以使用动态规划的方法对VRP问题进行求解，将问题视为一个n阶段的决策问题，求解具有递推关系的解，类似于TSP的解法，这种解法和整数规划的思路不同，但是也可以获得解。
 
+\subsubsection{遗传算法\label{sec:ga}}
+\paragraph{}遗传算法是类似于退火算法的一种优化方法。在遗传算法里，设置一个变量序列，称为染色体。在VRP问题中，染色体为城市的编号串，如果设置第一城市为源节点，为0号节点，在一个城市序列中，包括所有的需遍历的城市，以源节点0作为分割序列，分割出几个首尾连接的环，每个环作为一个遍历方法，整个城市序列表示一个vrp的解法，今后称之为“染色体”。首先，算法随机生成一定数量的染色体。在每一代中，都会评价每一个体，并通过计算适应度函数得到适应度数值。这里的适应度函数设置为一个接口，通过计算城市序列的整体距离，通过某种函数计算出一个适应度。
 
+\paragraph{}下一步是产生下一代个体并组成种群。这个过程是通过选择和繁殖完成，其中繁殖包括交配（crossover，在算法研究领域中我们称之为交叉操作）和突变（mutation）。选择则是根据新个体的适应度进行，但同时不意味着完全以适应度高低为导向，因为单纯选择适应度高的个体将可能导致算法快速收敛到局部最优解而非全局最优解，我们称之为早熟。作为折中，遗传算法依据原则：适应度越高，被选择的机会越高，而适应度低的，被选择的机会就低。初始的数据可以通过这样的选择过程组成一个相对优化的群体。之后，被选择的个体进入交配过程。一般的遗传算法都有一个交配概率（又称为交叉概率），范围一般是0.6$\sim$1，这个交配概率反映两个被选中的个体进行交配的概率。例如，交配概率为0.8，则80\%的“夫妻”会生育后代。每两个个体通过交配产生两个新个体，代替原来的“老”个体，而不交配的个体则保持不变。交配父母的染色体相互交换，从而产生两个新的染色体，第一个个体前半段是父亲的染色体，后半段是母亲的，第二个个体则正好相反。再下一步是突变，通过突变产生新的“子”个体。一般遗传算法都有一个固定的突变常数（又称为变异概率），通常是0.1或者更小，这代表变异发生的概率。根据这个概率，新个体的染色体随机的突变。
+\paragraph{}最终在一定条件下结束算法。
+\paragraph{遗传算法参数}见表~\ref{tab:vrpgaparams}
+\begin{table}[htbp]
+    \centering
+    \caption{遗传算法的参数}\label{tab:vrpgaparams}
+    \begin{tabular}{L{2.5cm}L{2.5cm}L{8cm}}
+        \toprule
+        参数名 & 参数类型 & 参数意义   \\
+        \hline
+        $P$    & int      & 种群规模   \\
+        $l$    & int      & 染色体长度 \\
+        $pc$   & double   & 交配概率   \\
+        $pm$   & double   & 突变概率   \\
+        $f$    & function & 适应度函数 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
-
-
-
-
-
-
-
-
-
-
-
-
+\paragraph{进一步的遗传算法}进一步可以使用论文~\cite{deb2002fast}中名为NSGA-\uppercase\expandafter{\romannumeral2}的改进版本，效果更优。
 \section{存在的问题以及后续工作安排}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\begin{itemize}
+    \item TSP问题的整数规划实验
+    \item TSP，VRP问题的NSGA-\uppercase\expandafter{\romannumeral2}解法
+    \item VRP问题的整数规划实验
+\end{itemize}
 
 \newpage
 \bibliography{cites}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% \newpage
-% \section{附录}
-
-% \paragraph{StronglyComponents}\label{app:scc}
-% \begin{lstlisting}[title="StrongComponents.java"]
-%     public class StrongComponents {
-
-%     private boolean[] marked;
-%     private int[] id;
-%     private int count;
-%     private ArrayList<List<Integer>> sets;
-%     private EdgeWeightedDiGraph g;
-%     private LinkedList<Integer> reversePostOrder;
-%     private int V;
-
-%     private void helper(EdgeWeightedDiGraph graph, int v, boolean[] vis) {
-%         vis[v] = true;
-%         for (WeightedDirectedEdge e : graph.adjOf(v)) {
-%             int w = e.to();
-%             if (!vis[w])
-%                 helper(graph, w, vis);
-%         }
-%         reversePostOrder.push(v);
-%     }
-
-%     public StrongComponents(EdgeWeightedDiGraph g) {
-%         this.g = g;
-%         V = g.V();
-%         id = new int[V];
-%         marked = new boolean[V];
-%         // get reversePostOrder
-%         reversePostOrder = new LinkedList<>();
-%         boolean[] vis = new boolean[V];
-%         EdgeWeightedDiGraph reverseG = g.reverse();
-%         for (int i = 0; i < V; i++)
-%             if (!vis[i])
-%                 helper(reverseG, i, vis);
-
-%         //
-%         sets = new ArrayList<>();
-%         for (int v : reversePostOrder) {
-%             if (!marked[v]) {
-%                 dfs(v);
-%                 count++;
-%             }
-%         }
-%     }
-
-%     private void dfs(int v) {
-%         marked[v] = true;
-%         id[v] = count;
-%         if (count == sets.size()) {
-%             List<Integer> tmp = new ArrayList<>();
-%             tmp.add(v);
-%             sets.add(tmp);
-%         } else
-%             sets.get(count).add(v);
-%         for (WeightedDirectedEdge e : g.adjOf(v)) {
-%             int w = e.to();
-%             if (!marked[w])
-%                 dfs(w);
-%         }
-%     }
-
-%     public int count() {
-%         return count;
-%     }
-
-%     public List<Integer> allVertexOf(int id) {
-%         return sets.get(id);
-%     }
-
-%     public int sizeOf(int id) {
-%         return sets.get(id).size();
-%     }
-
-%     public int id(int v) {
-%         return id[v];
-%     }
-
-%     public boolean stronglyConnected(int v, int w) {
-%         return id[v] == id[w];
-%     }
-
-%     public boolean stronglyConnected(int[] set) {
-%         int v = set[0];
-%         for (int i = 1; i < set.length - 1; i++) {
-%             if (id[v] != id[set[i]])
-%                 return false;
-%         }
-%         return true;
-%     }
-% \end{lstlisting}
-
-% \paragraph{Dijkstra}\label{app:dijkstra}
-% \begin{lstlisting}[title="Dijkstra.java"]
-%     public class Dijkstra {
-%         private double[] distTo;
-%         private WeightedDirectedEdge[] edgeTo;
-%         private IndexedPriorityQueue<Double> pq;
-%         private int s;
-
-%         public Dijkstra(EdgeWeightedDiGraph g, int s) {
-%             int vn = g.V();
-%             distTo = new double[vn];
-%             edgeTo = new WeightedDirectedEdge[vn];
-%             this.s = s;
-%             for (int v = 0; v < vn; v++)
-%                 distTo[v] = Double.POSITIVE_INFINITY;
-%             distTo[s] = 0.0;
-
-%             pq = new IndexedPriorityQueue<>(vn);
-%             pq.add(s, distTo[s]);
-%             while (!pq.isEmpty()) {
-%                 int v = pq.poll();
-%                 for (WeightedDirectedEdge e : g.adjOf(v))
-%                     relax(e);
-%             }
-%         }
-
-%         private void relax(WeightedDirectedEdge e) {
-%             int v = e.from(), w = e.to();
-%             double d = distTo[v] + e.weight();
-%             if (distTo[w] > d) {
-%                 distTo[w] = d;
-%                 edgeTo[w] = e;
-%                 pq.add(w, d);
-%             }
-%         }
-
-%         public double distTo(int v) {
-%             return distTo[v];
-%         }
-
-%         public boolean hasPathTo(int v) {
-%             return distTo[v] < Double.POSITIVE_INFINITY;
-%         }
-
-%         public Iterable<WeightedDirectedEdge> pathTo(int v) {
-%             if (!hasPathTo(v))
-%                 return null;
-%             LinkedList<WeightedDirectedEdge> path = new LinkedList<>();
-%             for (WeightedDirectedEdge e = edgeTo[v]; e != null; e = edgeTo[e.from()]) {
-%                 path.push(e);
-%             }
-%             return path;
-%         }
-%     }
-%     \end{lstlisting}
-
-% \paragraph{Floyd-Warshall}\label{app:floydwarshall}
-
-% \begin{lstlisting}[title="FloydWarshall.java"]
-%     public class FloydWarshall {
-
-%         private double[][] dp;
-%         private WeightedDirectedEdge[][] path;
-%         private int V;
-
-%         public FloydWarshall(EdgeWeightedDiGraph g) {
-%             this.V = g.V();
-%             dp = new double[V][V];
-%             path = new WeightedDirectedEdge[V][V];
-
-%             for (int i = 0; i < dp.length; i++) {
-%                 for (int j = 0; j < dp.length; j++) {
-%                     dp[i][j] = Double.POSITIVE_INFINITY;
-%                 }
-%             }
-%             for (int i = 0; i < V; i++) {
-%                 for (WeightedDirectedEdge e : g.adjOf(i)) {
-%                     dp[e.from()][e.to()] = e.weight();
-%                     path[e.from()][e.to()] = e;
-%                 }
-
-%                 dp[i][i] = 0;
-%             }
-
-%             double ret;
-%             for (int k = 0; k < V; k++) {
-%                 for (int i = 0; i < V; i++) {
-%                     if (path[i][k] != null)
-%                         for (int j = 0; j < V; j++) {
-%                             ret = dp[i][k] + dp[k][j];
-%                             if (dp[i][j] > ret) {
-%                                 dp[i][j] = ret;
-%                                 path[i][j] = path[i][k];
-%                             }
-%                         }
-%                 }
-%             }
-%         }
-
-%         public double dist(int from, int to) {
-%             return dp[from][to];
-%         }
-
-%         public boolean hasPath(int from, int to) {
-%             return !Double.isInfinite(dp[from][to]);
-%         }
-
-%         public LinkedList<WeightedDirectedEdge> path(int from, int to) {
-%             if (Double.isInfinite(dp[from][to]))
-%                 return null;
-%             LinkedList<WeightedDirectedEdge> list = new LinkedList<>();
-%             WeightedDirectedEdge e = path[from][to];
-%             while (e != null) {
-%                 list.add(e);
-%                 e = path[e.to()][to];
-%             }
-%             return list;
-%         }
-%     }
-% \end{lstlisting}
-
 
 \end{document}

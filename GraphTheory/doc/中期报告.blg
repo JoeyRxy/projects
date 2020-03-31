@@ -8,45 +8,45 @@ Database file #1: cites.bib
 Warning--empty year in tsplib
 Warning--empty journal in kopardekar2016unmanned
 Warning--empty journal in tsptheory
-You've used 23 entries,
+You've used 25 entries,
             4281 wiz_defined-function locations,
-            1007 strings with 9498 characters,
-and the built_in function-call counts, 90303 in all, are:
-= -- 1981
-> -- 10086
-< -- 12677
-+ -- 3615
-- -- 778
-* -- 615
-:= -- 12589
-add.period$ -- 73
-call.type$ -- 23
-change.case$ -- 74
-chr.to.int$ -- 3226
-cite$ -- 26
-duplicate$ -- 416
-empty$ -- 1137
-format.name$ -- 252
-if$ -- 23536
+            1022 strings with 9819 characters,
+and the built_in function-call counts, 101391 in all, are:
+= -- 2211
+> -- 11388
+< -- 14258
++ -- 4045
+- -- 881
+* -- 695
+:= -- 14112
+add.period$ -- 79
+call.type$ -- 25
+change.case$ -- 83
+chr.to.int$ -- 3617
+cite$ -- 28
+duplicate$ -- 452
+empty$ -- 1237
+format.name$ -- 284
+if$ -- 26408
 int.to.chr$ -- 2
-int.to.str$ -- 24
+int.to.str$ -- 26
 missing$ -- 0
-newline$ -- 130
-num.names$ -- 69
-pop$ -- 4506
+newline$ -- 140
+num.names$ -- 75
+pop$ -- 5066
 preamble$ -- 1
-purify$ -- 23
+purify$ -- 25
 quote$ -- 0
-skip$ -- 9121
+skip$ -- 10284
 stack$ -- 0
-substring$ -- 4270
-swap$ -- 45
-text.length$ -- 183
+substring$ -- 4808
+swap$ -- 51
+text.length$ -- 202
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 269
+type$ -- 295
 warning$ -- 3
-while$ -- 243
+while$ -- 270
 width$ -- 0
-write$ -- 310
+write$ -- 340
 (There were 3 warnings)

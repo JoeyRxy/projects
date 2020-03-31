@@ -1,8 +1,14 @@
 import numpy as np
-import scipy.special as sp
+from numpy.random import Generator, PCG64
 import matplotlib.pyplot as plt
-x = np.arange(12)
-y1 = sp.factorial(x)
-y2 = (2**x)*(x**2)
-plt.plot(x, y1, x, y2)
-plt.show()
+import time
+a = np.arange(100000)
+r = Generator(PCG64())
+
+start = time.time()
+for x in a:
+    np.exp(r.standard_normal()*10000)
+end = time.time()
+print("duration :")
+print((end - start)*1000)
+print(" ms")

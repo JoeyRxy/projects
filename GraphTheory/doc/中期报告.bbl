@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{25}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{#1}
 \expandafter\ifx\csname urlstyle\endcsname\relax\else
@@ -11,6 +11,13 @@
 SEDGEWICK~R, WAYNE~K.
 \newblock Algorithms\allowbreak[M].
 \newblock [S.l.]: Addison-wesley professional, 2011.
+
+\bibitem[Qureshi et~al.(2010)Qureshi, Taniguchi, and Yamada]{qureshi2010exact}
+QURESHI~A~G, TANIGUCHI~E, YAMADA~T.
+\newblock Exact solution for the vehicle routing problem with semi soft time
+  windows and its application\allowbreak[J].
+\newblock Procedia-Social and Behavioral Sciences, 2010, 2\penalty0
+  (3):\penalty0 5931-5943.
 
 \bibitem[Kopardekar et~al.(2016)Kopardekar, Rios, Prevot, Johnson, Jung, and
   Robinson]{kopardekar2016unmanned}
@@ -101,6 +108,11 @@ PAPADIMITRIOU~C~H.
 \newblock 旅行商问题 (TSP) 的几种求解方法\allowbreak[D].
 \newblock 北京: [出版者不详], 2006.
 
+\bibitem[Dantzig et~al.(1959)Dantzig and Ramser]{dantzig1959truck}
+DANTZIG~G~B, RAMSER~J~H.
+\newblock The truck dispatching problem\allowbreak[J].
+\newblock Management science, 1959, 6\penalty0 (1):\penalty0 80-91.
+
 \bibitem[Reinelt()]{tsplib}
 REINELT~G.
 \newblock Tsplib\allowbreak[EB/OL].
@@ -139,11 +151,11 @@ WANG~H~F, CHEN~Y~Y.
 \newblock Computers \& Industrial Engineering, 2012, 62\penalty0 (1):\penalty0
   84-95.
 
-\bibitem[Qureshi et~al.(2010)Qureshi, Taniguchi, and Yamada]{qureshi2010exact}
-QURESHI~A~G, TANIGUCHI~E, YAMADA~T.
-\newblock Exact solution for the vehicle routing problem with semi soft time
-  windows and its application\allowbreak[J].
-\newblock Procedia-Social and Behavioral Sciences, 2010, 2\penalty0
-  (3):\penalty0 5931-5943.
+\bibitem[Deb et~al.(2002)Deb, Pratap, Agarwal, and Meyarivan]{deb2002fast}
+DEB~K, PRATAP~A, AGARWAL~S, et~al.
+\newblock A fast and elitist multiobjective genetic algorithm:
+  Nsga-ii\allowbreak[J].
+\newblock IEEE transactions on evolutionary computation, 2002, 6\penalty0
+  (2):\penalty0 182-197.
 
 \end{thebibliography}

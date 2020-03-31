@@ -100,4 +100,15 @@ public class AppTest2 {
         writer.write(g.toString());
         writer.close();
     }
+
+    @Test
+    public void testExp() {
+        Random r = new Random(System.currentTimeMillis());
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 10000; i++) {
+            Math.exp(r.nextGaussian() * 1000);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("duration : " + (end - start) + " ms.");
+    }
 }
