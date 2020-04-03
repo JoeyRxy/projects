@@ -1,0 +1,6 @@
+{
+    "threshold": 1024000,
+    "tempRoot": "C:/Users/Rxy/Downloads/nothing/files",
+    "fileRoot": "C:/Users/Rxy/Downloads/nothing/tmp",
+    "fileSizeMax": 1024000000
+}

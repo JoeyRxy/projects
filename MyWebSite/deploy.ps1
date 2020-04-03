@@ -1,4 +1,4 @@
-cd C:\Users\Rxy\Documents\MYCODE\project\MyWebSite
+cd C:\Users\Rxy\Documents\MYCODE\projects\MyWebSite
 mv src/main/resources/upload.json .
 mv other/upload.json src/main/resources/
 mvn clean package -DskipTests

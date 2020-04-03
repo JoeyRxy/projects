@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 
 import top.mine.website.dao.UserDAO;
-import top.mine.website.util.BCrypt;
 
 /**
  * DownloadService

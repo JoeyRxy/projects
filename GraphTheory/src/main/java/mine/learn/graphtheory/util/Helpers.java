@@ -71,8 +71,7 @@ public class Helpers {
 
     }
 
-    public static EdgeWeightedDiGraph parseJSON(String fileString) throws IOException {
-        File file = new File(fileString);
+    public static EdgeWeightedDiGraph parseJSON(File file, int[] best) throws IOException {
         FileInputStream in = new FileInputStream(file);
         StringBuilder builder = new StringBuilder();
         byte[] b = new byte[102400];
@@ -84,7 +83,8 @@ public class Helpers {
         builder = null;
         in.close();
         JSONObject root = graphJSON.getJSONObject("travellingSalesmanProblemInstance");
-        System.out.println("best score : " + root.getString("best"));
+        // System.out.println("best score : " + root.getString("best"));
+        best[0] = Integer.parseInt(root.getString("best"));
         JSONArray vertex = root.getJSONObject("graph").getJSONArray("vertex");
         root = null;
         int V = vertex.size();

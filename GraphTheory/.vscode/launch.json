@@ -5,6 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "CodeLens (Launch) - TSP5",
+            "request": "launch",
+            "mainClass": "mine.learn.graphtheory.computational_optimization.heuristic.TSP5",
+            "projectName": "RoutePlanning"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GA",
+            "request": "launch",
+            "mainClass": "mine.learn.graphtheory.util.ga.GA",
+            "projectName": "RoutePlanning"
+        },
+        {
             "name": "Python: 当前文件",
             "type": "python",
             "request": "launch",

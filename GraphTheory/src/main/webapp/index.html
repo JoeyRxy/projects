@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSP</title>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script>
+        $(() => {
+            $('#start').click(() => {
+                var chart = echarts.init(document.getElementById("main"));
+                var data = {
+                    file: $('#file').val(),
+                    t0: $('#t0').val(),
+                    tf: $('#tf').val(),
+                    a: $('#a').val(),
+                    markov: $('#markov').val()
+                };
+                chart.showLoading({
+                    text: "计算中...."
+                });
+                $.post("tsp", data, res => {
+                    res = JSON.parse(res);
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            position: function (pt) {
+                                return [pt[0], '10%'];
+                            }
+                        },
+                        title: {
+                            left: 'center',
+                            text: 'TSP',
+                        },
+                        legend: {
+                            top: 'bottom',
+                            data: ['TSP']
+                        },
+                        toolbox: {
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: res.xAxisData
+                        },
+                        yAxis: {
+                            min: res.best,
+                            // max: 'dataMax',
+                            type: 'value',
+                            boundaryGap: [0, '100%']
+                        },
+                        dataZoom: [{
+                            type: 'inside',
+                            start: 0,
+                            end: 10
+                        }, {
+                            start: 0,
+                            end: 10,
+                            handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                            handleSize: '80%',
+                            handleStyle: {
+                                color: '#fff',
+                                shadowBlur: 3,
+                                shadowColor: 'rgba(0, 0, 0, 0.6)',
+                                shadowOffsetX: 2,
+                                shadowOffsetY: 2
+                            }
+                        }],
+                        series: [{
+                            name: 'bestDist',
+                            type: 'line',
+                            smooth: true,
+                            symbol: 'none',
+                            sampling: 'average',
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgb(255, 70, 131)'
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0,
+                                        0, 1, [{
+                                            offset: 0,
+                                            color: 'rgb(255, 158, 68)'
+                                        }, {
+                                            offset: 1,
+                                            color: 'rgb(255, 70, 131)'
+                                        }])
+                                }
+                            },
+                            data: res.seriesData
+                        }]
+                    };
+                    chart.hideLoading();
+                    chart.setOption(option);
+                    $('#best').text(res.best);
+                    $('#mybest').text(res.seriesData[res.seriesData.length - 1]);
+                    $('#path').text(res.path);
+                    $('#duration').text(res.duration);
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <div id="main" style="width: 1300px;height:600px;">
+
+    </div>
+    <br>
+    <div>
+        file:<select id="file">
+            <option value="ch130.json">ch130</option>
+            <option value="kroB200.json">kroB200</option>
+            <option value="rat783.json">rat783</option>
+            <option value="pcb1173.json">pcb1173</option>
+        </select>
+
+        t0:<select id="t0">
+            <option value="10">10</option>
+            <option value="1">1</option>
+            <option value="0.1">0.1</option>
+        </select>
+
+        tf:<select id="tf">
+            <option value="0.1">0.1</option>
+            <option value="0.01">0.01</option>
+            <option value="0.001">0.001</option>
+            <option value="0.0001">0.0001</option>
+        </select>
+
+        a:<select id="a">
+            <option value="0.999">0.999</option>
+            <option value="0.9995">0.9995</option>
+            <option value="0.9999">0.9999</option>
+        </select>
+
+        markov:<select id="markov">
+            <option value="1000">1000</option>
+            <option value="5000">5000</option>
+            <option value="10000">10000</option>
+        </select>
+    </div><br>
+    <button id="start">Start</button>
+    <div>
+        HistoryBest: <span id="best"></span>
+        <br>
+        Mybest: <span id="mybest"></span>
+    </div>
+    <div>Duration: <span id="duration"></span></div>
+    <div>MyPath:<br><span id="path">
+
+        </span></div>
+</body>
+
+</html>

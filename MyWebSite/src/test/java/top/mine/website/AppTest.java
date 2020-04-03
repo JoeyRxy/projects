@@ -1,5 +1,10 @@
 package top.mine.website;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -75,5 +80,41 @@ public class AppTest {
         System.out.println(json2);
         JSONObject parseObject = JSONObject.parseObject(json2);
         System.out.println(parseObject);
+    }
+
+    @Test
+    public void testMultiThreadRead() {
+        File file = new File("src/main/webapp/files.html");
+        for (int i = 0; i < 3; i++) {
+            new Thread(new ReadFile(file)).start();
+        }
+    }
+
+    class ReadFile implements Runnable {
+
+        private File file;
+
+        ReadFile(File file) {
+            this.file = file;
+        }
+
+        @Override
+        public void run() {
+            try {
+                FileInputStream in = new FileInputStream(file);
+                int len;
+                byte[] b = new byte[10];
+                StringBuilder builder = new StringBuilder();
+                while ((len = in.read(b)) != -1) {
+                    builder.append(new String(b, 0, len));
+                }
+                in.close();
+                System.out.println(Thread.currentThread().getName() + " : " + builder.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 }

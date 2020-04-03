@@ -50,15 +50,17 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
     /**
      * most important diff from {@link PriorityQueue}:
      * <ul>
-     * <li>bind an unique index <code>i</code> with element <code>e</code>, in order
+     * <li>bind an unique index <code>k</code> with element <code>e</code>, in order
      * to quick-find</li>
-     * <li>you should remember which index <code>i</code> bind with which element
+     * <li>you should remember which index <code>k</code> bind with which element
      * <code>e</code></li>
      * <li>if <code>k</code> exists, change the key to <code>e</code>, else add the
      * <code>k</code> with element <code>e</code>.</li>
      * </ul>
-     *
-     * @param k bind index <code>i</code> with element <code>e</code>
+     * <p>
+     * <code>k</code> start from 0.
+     * 
+     * @param k bind index <code>k</code> with element <code>e</code>
      * @param e
      */
     public void add(int k, E e) {
@@ -164,6 +166,19 @@ public class IndexedPriorityQueue<E extends Comparable<? super E>> {
 
     public int size() {
         return n;
+    }
+
+    @Override
+    public String toString() {
+        if (n == 0)
+            return "[]";
+        StringBuilder builder = new StringBuilder("[");
+        builder.append(keys[pq[1]]);
+        for (int i = 1; i < n; i++) {
+            builder.append(", " + keys[pq[i + 1]]);
+        }
+        builder.append("]");
+        return builder.toString();
     }
 
     // helpers

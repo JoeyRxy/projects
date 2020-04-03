@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSP</title>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- Bootstrap-Core-CSS -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <!-- Style-CSS -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Font-Awesome-Icons-CSS -->
+    <!-- //Custom-Files -->
+
+    <!-- Web-Fonts -->
+    <link
+        href="http://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext"
+        rel="stylesheet">
+
+    <script>
+        $(() => {
+            $.ajax({
+                url: "loginstate",
+                method: 'post',
+                dataType: "json",
+                success: start,
+                error: error
+            });
+
+
+            $('#start').click(() => {
+                var chart = echarts.init(document.getElementById("main"));
+                var data = {
+                    file: $('#file').val(),
+                    t0: $('#t0').val(),
+                    tf: $('#tf').val(),
+                    a: $('#a').val(),
+                    markov: $('#markov').val()
+                };
+                chart.showLoading({
+                    text: "计算中...."
+                });
+                $.post("tsp", data, res => {
+                    res = JSON.parse(res);
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            position: function (pt) {
+                                return [pt[0], '10%'];
+                            }
+                        },
+                        title: {
+                            left: 'center',
+                            text: 'TSP-file=' + data.file + '-a=' + data.a + '-t0=' + data
+                                .t0 + '-tf=' + data.tf + '-markov=' + data.markov,
+                        },
+                        legend: {
+                            top: 'bottom',
+                            data: ['TSP']
+                        },
+                        toolbox: {
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: res.xAxisData
+                        },
+                        yAxis: {
+                            min: res.best,
+                            max: Math.floor(res.seriesData[0] + 10),
+                            type: 'value',
+                            boundaryGap: [0, '100%']
+                        },
+                        dataZoom: [{
+                            type: 'inside',
+                            start: 0,
+                            end: 10
+                        }, {
+                            start: 0,
+                            end: 10,
+                            handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                            handleSize: '80%',
+                            handleStyle: {
+                                color: '#fff',
+                                shadowBlur: 3,
+                                shadowColor: 'rgba(0, 0, 0, 0.8)',
+                                shadowOffsetX: 2,
+                                shadowOffsetY: 2
+                            }
+                        }],
+                        series: [{
+                            name: 'bestDist',
+                            type: 'line',
+                            // smooth: true,
+                            sampling: 'average',
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgb(51, 51, 0)'
+                                }
+                            },
+                            // areaStyle: {
+                            //     normal: {
+                            //         color: new echarts.graphic.LinearGradient(0, 0,
+                            //             0, 1, [{
+                            //                 offset: 0,
+                            //                 color: 'rgb(255, 158, 68)'
+                            //             }, {
+                            //                 offset: 1,
+                            //                 color: 'rgb(255, 70, 131)'
+                            //             }])
+                            //     }
+                            // },
+                            data: res.seriesData
+                        }]
+                    };
+                    chart.hideLoading();
+                    chart.setOption(option);
+                    $('#best').text(res.best);
+                    $('#mybest').text(res.seriesData[res.seriesData.length - 1]);
+                    $('#duration').text(res.duration + " ms");
+                    var $path = $('#path');
+                    $path.html('');
+                    res.path.forEach(e => {
+                        $path.append(e.v + ' -> ' + e.w + ' : ' + e.weight + '<br>')
+                    });
+                }).fail(() => {
+                    chart.hideLoading();
+                    alert("error");
+                })
+            });
+        });
+
+        function start(res) {
+            if (!res.data) {
+                alert("未登录，请登录！");
+                window.location.href = "login.html";
+
+            } else {
+                var $change = $("#change");
+                $change.html(
+                    '<li>' + $.cookie("name") +
+                    '</li><li><a href="signoff" class="dropdown">注销</a></li>'
+                );
+            }
+        }
+
+        function error(_, status, __) {
+            console.log(status);
+            alert("未登录，请登录");
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+
+<body>
+    <div class="main-top" id="home">
+        <!-- header -->
+        <header>
+            <div class="container-fluid">
+                <div class="header d-lg-flex justify-content-between align-items-center py-3 px-sm-3">
+                    <!-- logo -->
+                    <div id="logo">
+                        <h1><a href="index.html"><span class="fa fa-linode mr-2"></span>Rxy</a></h1>
+                    </div>
+                    <!-- //logo -->
+                    <!-- nav -->
+                    <div class="nav_w3ls">
+                        <nav>
+                            <label for="drop" class="toggle">Menu</label>
+                            <input type="checkbox" id="drop" />
+                            <ul class="menu">
+                                <li><a href="index.html">主页</a></li>
+                                <li><a href="files.html">文件</a></li>
+                                <li><a href="chat.html">实时聊天</a></li>
+                                <li><a href="tsp.html">TSP计算</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- //nav -->
+                    <div class="d-flex mt-lg-1 mt-sm-2 mt-3 justify-content-center">
+                        <nav>
+                            <ul id="change">
+                                <li><a href="login.html">登录</a></li>
+                                <li><a href="adminlogin.html">管理员</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+    <div id="main" style="width: 1300px;height:600px;">
+
+    </div>
+    <br>
+    <div>
+        <span class="badge-info">file</span> <select class="selectpicker" data-style="btn-primary" id="file">
+            <option value="ch130.json">ch130</option>
+            <option value="kroB200.json">kroB200</option>
+            <option value="rat783.json">rat783</option>
+        </select>
+
+        <span class="badge-info">t0</span><select class="selectpicker" data-style="btn-primary" id="t0">
+            <option value="100">100</option>
+            <option value="10">10</option>
+            <option value="1">1</option>
+            <option value="0.1">0.1</option>
+        </select>
+
+        <span class="badge-info">tf</span><select class="selectpicker" data-style="btn-primary" id="tf">
+            <option value="0.1">0.1</option>
+            <option value="0.01">0.01</option>
+            <option value="0.001">0.001</option>
+            <option value="0.0001">0.0001</option>
+            <option value="0.00001">0.00001</option>
+        </select>
+
+        <span class="badge-info">a</span><select class="selectpicker" data-style="btn-primary" id="a">
+            <option value="0.999">0.999</option>
+            <option value="0.9995">0.9995</option>
+            <option value="0.9999">0.9999</option>
+        </select>
+
+        <span class="badge-info">markov</span><select class="selectpicker" data-style="btn-primary" id="markov">
+            <option value="1000">1000</option>
+            <option value="5000">2000</option>
+            <option value="5000">5000</option>
+            <option value="10000">10000</option>
+        </select>
+    </div><br>
+    <button class="btn-block col-1" id="start">Start</button>
+    <br>
+    <div>
+        <span class="badge-success">History Best</span> <span class="text-info" id="best"></span>
+        <br>
+        <span class="badge-success">My Best</span> <span class="text-info" id="mybest"></span>
+    </div>
+    <div><span class="badge-success">Duration</span> <span class="text-info" id="duration"></span></div>
+    <br>
+    <div>MyPath<br><span id="path">
+
+        </span></div>
+</body>
+
+</html>

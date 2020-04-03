@@ -61,9 +61,8 @@
 \contentsline {paragraph}{}{7}{subsubsection.2.3.2}% 
 \contentsline {paragraph}{}{7}{subsubsection.2.3.2}% 
 \contentsline {subsection}{\numberline {2.4}拓展数据结构}{7}{subsection.2.4}% 
-\contentsline {subsubsection}{\numberline {2.4.1}带索引的优先队列\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces \cite {algs4}}{7}{subsubsection.2.4.1}% 
-\contentsline {subsubsection}{\numberline {2.4.2}并查集}{7}{subsubsection.2.4.2}% 
-\contentsline {paragraph}{}{7}{subsubsection.2.4.2}% 
+\contentsline {subsubsection}{\numberline {2.4.1}带索引的优先队列\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces $^{\cite {algs4}}$}{7}{subsubsection.2.4.1}% 
+\contentsline {paragraph}{}{7}{subsubsection.2.4.1}% 
 \contentsline {subsection}{\numberline {2.5}基本图论工具}{8}{subsection.2.5}% 
 \contentsline {subsubsection}{\numberline {2.5.1}强连通分量}{8}{subsubsection.2.5.1}% 
 \contentsline {paragraph}{}{8}{subsubsection.2.5.1}% 
@@ -96,41 +95,41 @@
 \contentsline {subparagraph}{}{11}{table.6}% 
 \contentsline {subparagraph}{动态规划法}{13}{table.7}% 
 \contentsline {subparagraph}{}{13}{table.7}% 
-\contentsline {subparagraph}{引进工具类}{13}{figure.1}% 
-\contentsline {subparagraph}{}{14}{figure.1}% 
-\contentsline {subparagraph}{}{14}{figure.1}% 
-\contentsline {paragraph}{伪代码}{14}{figure.1}% 
-\contentsline {paragraph}{测试结果}{14}{algorithm.4}% 
-\contentsline {subsubsection}{\numberline {2.7.4}TSP的贪心启发}{14}{subsubsection.2.7.4}% 
-\contentsline {paragraph}{}{14}{subsubsection.2.7.4}% 
-\contentsline {paragraph}{}{14}{subsubsection.2.7.4}% 
-\contentsline {paragraph}{}{14}{subsubsection.2.7.4}% 
-\contentsline {paragraph}{}{14}{subsubsection.2.7.4}% 
-\contentsline {paragraph}{}{14}{subsubsection.2.7.4}% 
-\contentsline {paragraph}{伪代码}{16}{subsubsection.2.7.4}% 
-\contentsline {paragraph}{测试结果}{16}{algorithm.5}% 
-\contentsline {paragraph}{}{16}{table.9}% 
-\contentsline {subsubsection}{\numberline {2.7.5}TSP的退火启发}{16}{subsubsection.2.7.5}% 
-\contentsline {paragraph}{}{16}{subsubsection.2.7.5}% 
-\contentsline {paragraph}{}{16}{subsubsection.2.7.5}% 
+\contentsline {subparagraph}{引进工具类}{13}{table.7}% 
+\contentsline {subparagraph}{}{13}{table.7}% 
+\contentsline {subparagraph}{}{13}{table.7}% 
+\contentsline {paragraph}{伪代码}{13}{table.7}% 
+\contentsline {paragraph}{测试结果}{13}{algorithm.4}% 
+\contentsline {subsubsection}{\numberline {2.7.4}TSP的贪心启发}{13}{subsubsection.2.7.4}% 
+\contentsline {paragraph}{}{13}{subsubsection.2.7.4}% 
+\contentsline {paragraph}{}{13}{subsubsection.2.7.4}% 
+\contentsline {paragraph}{}{15}{subsubsection.2.7.4}% 
+\contentsline {paragraph}{}{15}{subsubsection.2.7.4}% 
+\contentsline {paragraph}{}{15}{subsubsection.2.7.4}% 
+\contentsline {paragraph}{伪代码}{15}{subsubsection.2.7.4}% 
+\contentsline {paragraph}{测试结果}{15}{algorithm.5}% 
+\contentsline {paragraph}{}{15}{table.9}% 
+\contentsline {subsubsection}{\numberline {2.7.5}TSP的退火启发}{17}{subsubsection.2.7.5}% 
 \contentsline {paragraph}{}{17}{subsubsection.2.7.5}% 
-\contentsline {paragraph}{}{17}{figure.2}% 
-\contentsline {subparagraph}{算法参数}{17}{figure.2}% 
+\contentsline {paragraph}{}{17}{subsubsection.2.7.5}% 
+\contentsline {paragraph}{}{17}{subsubsection.2.7.5}% 
+\contentsline {paragraph}{}{17}{figure.1}% 
+\contentsline {subparagraph}{算法参数}{17}{figure.1}% 
 \contentsline {paragraph}{伪代码}{17}{table.10}% 
 \contentsline {paragraph}{测试结果}{17}{algorithm.6}% 
-\contentsline {subparagraph}{结果分析}{19}{table.11}% 
+\contentsline {subparagraph}{结果分析}{17}{table.11}% 
 \contentsline {subparagraph}{}{19}{table.11}% 
-\contentsline {section}{\numberline {3}已取得的阶段性研究成果}{19}{section.3}% 
-\contentsline {subsection}{\numberline {3.1}多无人机的多目标路径规划}{19}{subsection.3.1}% 
-\contentsline {paragraph}{综述}{19}{subsection.3.1}% 
-\contentsline {subparagraph}{}{19}{subsection.3.1}% 
+\contentsline {section}{\numberline {3}已取得的阶段性研究成果}{20}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}多无人机的多目标路径规划}{20}{subsection.3.1}% 
+\contentsline {paragraph}{综述}{20}{subsection.3.1}% 
+\contentsline {subparagraph}{}{20}{subsection.3.1}% 
 \contentsline {paragraph}{}{20}{subsection.3.1}% 
-\contentsline {subsubsection}{\numberline {3.1.1}VRP的精确解法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces \cite {qureshi2010exact}}{20}{subsubsection.3.1.1}% 
+\contentsline {subsubsection}{\numberline {3.1.1}VRP的精确解法\hspace {0.25em plus 0.125em minus 0.08em}\ignorespaces $^{\cite {qureshi2010exact}}$}{20}{subsubsection.3.1.1}% 
 \contentsline {paragraph}{}{20}{subsubsection.3.1.1}% 
 \contentsline {subsubsection}{\numberline {3.1.2}遗传算法}{20}{subsubsection.3.1.2}% 
 \contentsline {paragraph}{}{20}{subsubsection.3.1.2}% 
 \contentsline {paragraph}{}{20}{subsubsection.3.1.2}% 
-\contentsline {paragraph}{}{20}{subsubsection.3.1.2}% 
-\contentsline {paragraph}{遗传算法参数}{20}{subsubsection.3.1.2}% 
-\contentsline {paragraph}{进一步的遗传算法}{20}{table.12}% 
-\contentsline {section}{\numberline {4}存在的问题以及后续工作安排}{21}{section.4}% 
+\contentsline {paragraph}{}{21}{subsubsection.3.1.2}% 
+\contentsline {paragraph}{遗传算法参数}{21}{subsubsection.3.1.2}% 
+\contentsline {paragraph}{进一步的遗传算法}{21}{table.12}% 
+\contentsline {section}{\numberline {4}存在的问题以及后续工作安排}{22}{section.4}% 

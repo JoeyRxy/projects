@@ -22,7 +22,8 @@
                 var $filesname = $("#filesname");
                 for (let i = 0; i < files.length; i++) {
                     $filesname.append(
-                        '文件名：<input type="text" required id="filename' + i + '" value="' + files[i].name + '"><br>'
+                        '文件名：<input type="text" required id="filename' + i + '" value="' + files[i]
+                        .name + '"><br>'
                     );
                 }
             });
@@ -136,7 +137,8 @@
                             <ul class="menu">
                                 <li><a href="index.html">主页</a></li>
                                 <li><a href="files.html">文件</a></li>
-                                <li><a href="chat.html">聊天</a></li>
+                                <li><a href="chat.html">实时聊天</a></li>
+                                <li><a href="tsp.html">TSP计算</a></li>
                             </ul>
                         </nav>
                     </div>

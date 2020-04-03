@@ -1,13 +1,19 @@
 package mine.learn.graphtheory.computational_optimization.heuristic;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 import mine.learn.graphtheory.FloydWarshall;
 import mine.learn.graphtheory.bean.EdgeWeightedDiGraph;
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
+import mine.learn.graphtheory.util.Helpers;
 
 /**
  * TSP5
@@ -21,6 +27,10 @@ public class TSP5 {
     private double bestDist;
     private FloydWarshall floydwarshall;
     private int[] set;
+    private double p;
+    private Random r;
+    private List<Integer> xAxisData;
+    private List<Double> series1Data;
 
     /**
      * 
@@ -33,6 +43,7 @@ public class TSP5 {
      * @param p      越接近1，块交换越多；越接近0，点交换越多
      */
     public TSP5(EdgeWeightedDiGraph graph, int[] set, double t0, double tf, double a, int markov, double p) {
+        this.p = p;
         if (a < 0 || a > 1)
             throw new IllegalArgumentException("温度衰减0<a<1");
         if (p < 0 || p > 1)
@@ -58,31 +69,17 @@ public class TSP5 {
         double dist_new = dist;
         // 退火
         int count = 0;
-        Random r = new Random();
+        r = new Random();
+        xAxisData = new LinkedList<>();
+        series1Data = new LinkedList<>();
         r.setSeed(System.currentTimeMillis());
         for (double t = t0; t >= tf; t *= a) {
+            xAxisData.add(count);
+            series1Data.add(bestDist);
             count++;
             // System.out.println("第" + (count) + "轮 : " + bestDist);
             for (int i = 0; i < markov; i++) {
-                if (Math.random() < p) {// 交换两点
-                    int v = r.nextInt(V);
-                    int w = r.nextInt(V);
-                    while (w == v) {
-                        w = r.nextInt(V);
-                    }
-                    order_new = swap(order_new, v, w);
-                } else {// 交换两段
-                    int[] seg = new int[3];
-                    seg[0] = r.nextInt(V);
-                    seg[1] = r.nextInt(V);
-                    while (seg[1] == seg[0])
-                        seg[1] = r.nextInt(V);
-                    seg[2] = r.nextInt(V);
-                    while (seg[2] == seg[1] || seg[2] == seg[0])
-                        seg[2] = r.nextInt(V);
-                    sort3(seg);
-                    order_new = swap(order_new, seg[0], seg[1], seg[2]);
-                }
+                genNewOrder(order_new);
                 dist_new = calcDist(order_new);
                 if (dist_new < dist) {
                     dist = dist_new;
@@ -95,7 +92,7 @@ public class TSP5 {
                     dist = dist_new;
                     order = order_new;
                 }
-                order_new = order;
+                order_new = Arrays.copyOf(order, V);
             }
         }
         System.out.println("共进行了" + count + "轮.");
@@ -150,17 +147,13 @@ public class TSP5 {
         }
     }
 
-    private int[] swap(int[] order, int i, int j, int k) {
-        int[] tmp = Arrays.copyOf(order, V);
-        int l = i, m = j;
-        while (m <= k) {
-            tmp[l++] = order[m++];
-        }
-        m = i;
-        while (l <= k) {
-            tmp[l++] = order[m++];
-        }
-        return tmp;
+    private void swap(int[] order, int i, int j, int k) {
+        int[] tmp = Arrays.copyOfRange(order, i, j);
+        while (j < k)
+            order[i++] = order[j++];
+        j = 0;
+        while (i < k)
+            order[i++] = tmp[j++];
     }
 
     private void sort3(int[] seg) {
@@ -178,12 +171,26 @@ public class TSP5 {
         }
     }
 
-    private int[] swap(int[] order, int v, int w) {
-        int[] tmp = Arrays.copyOf(order, order.length);
-        int t = tmp[v];
-        tmp[v] = tmp[w];
-        tmp[w] = t;
-        return tmp;
+    private void genNewOrder(int[] order) {
+        int[] seg = new int[3];
+        seg[0] = r.nextInt(V);
+        seg[1] = r.nextInt(V);
+        while (seg[1] == seg[0]) {
+            seg[1] = r.nextInt(V);
+        }
+        if (Math.random() < p) {// 交换两点
+            swap(order, seg[0], seg[1]);
+        } else {// 交换两段
+            seg[2] = r.nextInt(V);
+            sort3(seg);
+            swap(order, seg[0], seg[1], seg[2]);
+        }
+    }
+
+    private void swap(int[] order, int v, int w) {
+        int t = order[v];
+        order[v] = order[w];
+        order[w] = t;
     }
 
     private double calcDist(int[] order) {
@@ -207,6 +214,29 @@ public class TSP5 {
         }
         path.addAll(floydwarshall.path(set[bestOrder[V - 1]], set[bestOrder[0]]));
         return path;
+    }
+
+    public List<Integer> getXAxisData() {
+        return xAxisData;
+    }
+
+    public List<Double> getSeries1Data() {
+        return series1Data;
+    }
+
+    public static void main(String[] args) throws IOException {
+        // EdgeWeightedDiGraph graph = Helpers.parseJSON(new
+        // File("src/main/resources/pcb1173.json"));
+        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/ch130.json"), null);
+        int[] set = new int[graph.V()];
+        for (int i = 0; i < set.length; i++) {
+            set[i] = i;
+        }
+        TSP5 tsp = new TSP5(graph, set, 1, 0.001, 0.999, 1000, 0.5);
+        double bestDist = tsp.getBestDist();
+        System.out.println(bestDist);
+        // List<WeightedDirectedEdge> path = tsp.getPath();
+        // System.out.println(path);
     }
 
 }

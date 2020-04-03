@@ -92,7 +92,8 @@ public class AppTest2 {
     public void testBigGraph() throws IOException {
         long start, end;
         start = System.currentTimeMillis();
-        EdgeWeightedDiGraph g = Helpers.parseJSON("C:\\Users\\Rxy\\Downloads\\Compressed\\pcb3038.json");
+        EdgeWeightedDiGraph g = Helpers.parseJSON(new File("C:\\Users\\Rxy\\Downloads\\Compressed\\pcb3038.json"),
+                null);
         end = System.currentTimeMillis();
         System.out.println("time : " + (end - start) + " ms.");
         BufferedWriter writer = new BufferedWriter(new FileWriter(new File("pcb3038.txt")));
@@ -110,5 +111,16 @@ public class AppTest2 {
         }
         long end = System.currentTimeMillis();
         System.out.println("duration : " + (end - start) + " ms.");
+    }
+
+    public void f(int[] x) {
+        x[0] = 1000;
+    }
+
+    @Test
+    public void testtest() {
+        int[] a = { -1 };
+        f(a);
+        System.out.println(a[0]);
     }
 }

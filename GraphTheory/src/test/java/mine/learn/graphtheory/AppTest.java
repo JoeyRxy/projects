@@ -162,6 +162,20 @@ public class AppTest {
         // }
     }
 
+    @Test
+    public void testIndexedpq() {
+        IndexedPriorityQueue<Integer> pq = new IndexedPriorityQueue<>(40);
+        Random r = new Random(System.currentTimeMillis());
+        for (int i = 0; i < 40; i++) {
+            pq.add(r.nextInt(40), r.nextInt(1000));
+        }
+        System.out.println(pq);
+        while (!pq.isEmpty()) {
+            pq.poll();
+            System.out.println(pq);
+        }
+    }
+
     private String randomString(Random r, int len) {
         StringBuilder builder = new StringBuilder();
 
@@ -443,7 +457,7 @@ public class AppTest {
 
     @Test
     public void testFloydWarshall() throws IOException {
-        EdgeWeightedDiGraph graph = Helpers.parseJSON("pcb1173.json");
+        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/ch130.json"), null);
         long end1 = System.currentTimeMillis();
         FloydWarshall floydwarshall = new FloydWarshall(graph);
         long end2 = System.currentTimeMillis();
@@ -467,10 +481,10 @@ public class AppTest {
         start = System.currentTimeMillis();
         // EdgeWeightedDiGraph graph = (EdgeWeightedDiGraph)
         // Helpers.getGraph("largeEWG.txt", EdgeWeightedDiGraph.class);
-        // EdgeWeightedDiGraph graph = Helpers.parseJSON("d1291.json");
-        EdgeWeightedDiGraph graph = Helpers.parseJSON("src/main/resources/pcb1173.json");
-        // EdgeWeightedDiGraph graph = Helpers.parseJSON("kroB200.json");
-        // EdgeWeightedDiGraph graph = Helpers.parseJSON("ch130.json");
+        // EdgeWeightedDiGraph graph = Helpers.parseJSON("d1291.json",null);
+        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/pcb1173.json"), null);
+        // EdgeWeightedDiGraph graph = Helpers.parseJSON("kroB200.json",null);
+        // EdgeWeightedDiGraph graph = Helpers.parseJSON("ch130.json",null);
 
         end = System.currentTimeMillis();
         System.out.println("读图时间：" + (end - start) + " ms.");
@@ -519,7 +533,7 @@ public class AppTest {
 
     @Test
     public void testTSP53() throws IOException {
-        EdgeWeightedDiGraph graph = Helpers.parseJSON("pcb1173.json");
+        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/ch130.json"), null);
         FloydWarshall floydwarshall = new FloydWarshall(graph);
         double[][] g = new double[graph.V()][graph.V()];
         for (int i = 0; i < g.length; i++) {
@@ -579,7 +593,7 @@ public class AppTest {
         // }
         // EdgeWeightedDiGraph g = new EdgeWeightedDiGraph(graph);
         long start, end;
-        EdgeWeightedDiGraph g = Helpers.parseJSON("pcb1173.json");
+        EdgeWeightedDiGraph g = Helpers.parseJSON(new File("src/main/resources/ch130.json"), null);
         // int[] set = { 0, 2, 3, 5, 10, 12, 13, 19, 29, 33, 36, 38, 39, 23, 34, 67, 78
         // };
         int[] set = new int[g.V()];
