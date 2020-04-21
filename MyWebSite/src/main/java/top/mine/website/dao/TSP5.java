@@ -1,7 +1,5 @@
 package top.mine.website.dao;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -58,7 +56,6 @@ public class TSP5 {
         }
         int[] order = getGreedyOrder();
         double dist = calcDist(order);
-        System.out.println("初始的贪心顺序的距离：" + dist);
         bestOrder = Arrays.copyOf(order, V);
         bestDist = dist;
         int[] order_new = Arrays.copyOf(order, order.length);
@@ -68,10 +65,23 @@ public class TSP5 {
         r = new Random();
         xAxisData = new LinkedList<>();
         series1Data = new LinkedList<>();
+        // 数据量
+        int dataSize = (int) (Math.log10(tf / t0) / Math.log10(a));
+        int step;
+        if (dataSize > 100000) {
+            step = 1000;
+        } else if (dataSize > 10000) {
+            step = 100;
+        } else
+            step = 10;
         r.setSeed(System.currentTimeMillis());
+        int _t = step;
         for (double t = t0; t >= tf; t *= a) {
-            xAxisData.add(count);
-            series1Data.add(bestDist);
+            if (_t-- == 0) {
+                xAxisData.add(count);
+                series1Data.add(bestDist);
+                _t = step;
+            }
             count++;
             // System.out.println("第" + (count) + "轮 : " + bestDist);
             for (int i = 0; i < markov; i++) {
@@ -91,7 +101,8 @@ public class TSP5 {
                 order_new = Arrays.copyOf(order, V);
             }
         }
-        System.out.println("共进行了" + count + "轮.");
+        xAxisData.add(count);
+        series1Data.add(bestDist);
     }
 
     private int[] getGreedyOrder() {

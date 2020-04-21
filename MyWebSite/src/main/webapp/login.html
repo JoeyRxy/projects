@@ -43,7 +43,7 @@
 
         function error(_, status, __) {
             let failed = $.cookie("failed");
-            if (failed) alert("用户名或密码错误！");
+            if (failed) alert("出现某种错误！错误代码：" + status);
             $.removeCookie("failed");
         }
 

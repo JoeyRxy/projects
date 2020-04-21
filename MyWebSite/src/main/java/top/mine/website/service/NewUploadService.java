@@ -82,14 +82,16 @@ public class NewUploadService extends HttpServlet {
             File file = new File(fileRoot, filename);
             InputStream in = part.getInputStream();
             FileOutputStream os = new FileOutputStream(file);
+            long filelen = 0;
             while ((len = in.read(b)) != -1) {
                 for (int i = 0; i < len; i++)
                     for (int j = 0; j < key.length; j++)
                         b[i] ^= key[j];
                 os.write(b, 0, len);
+                filelen += len;
             }
             try {
-                MyfileDAO.insert(new Myfile(userId, filename));
+                MyfileDAO.insert(new Myfile(userId, filename,filelen));
             } catch (SQLException e) {
                 e.printStackTrace();
             }

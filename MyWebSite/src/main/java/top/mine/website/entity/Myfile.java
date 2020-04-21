@@ -7,14 +7,27 @@ import java.util.Objects;
  */
 public class Myfile {
 
-    private int id;
     private int userId;
     private String fileName;
+    private long fileLength;
 
-    public Myfile(int id, int userId, String fileName) {
-        this.id = id;
+    public Myfile(int userId, String fileName, long fileLength) {
         this.userId = userId;
         this.fileName = fileName;
+        setFileLength(fileLength);
+    }
+
+    public Myfile(int userId, String fileName) {
+        this.userId = userId;
+        this.fileName = fileName;
+    }
+
+    public long getFileLength() {
+        return fileLength;
+    }
+
+    public void setFileLength(long fileLength) {
+        this.fileLength = fileLength;
     }
 
     public int getUserId() {
@@ -23,14 +36,6 @@ public class Myfile {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFileName() {
@@ -43,7 +48,7 @@ public class Myfile {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(fileName, userId);
     }
 
     @Override
@@ -55,17 +60,12 @@ public class Myfile {
         if (getClass() != obj.getClass())
             return false;
         Myfile other = (Myfile) obj;
-        return id == other.id;
-    }
-
-    public Myfile(int user_id, String fileName) {
-        this.userId = user_id;
-        this.fileName = fileName;
+        return Objects.equals(fileName, other.fileName) && userId == other.userId;
     }
 
     @Override
     public String toString() {
-        return "Myfile [fileName=" + fileName + ", id=" + id + ", userId=" + userId + "]";
+        return "Myfile [fileLength=" + fileLength + ", fileName=" + fileName + ", userId=" + userId + "]";
     }
 
 }

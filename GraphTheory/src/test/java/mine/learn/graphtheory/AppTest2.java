@@ -7,7 +7,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -122,5 +127,76 @@ public class AppTest2 {
         int[] a = { -1 };
         f(a);
         System.out.println(a[0]);
+    }
+
+    @Test
+    public void testParse() {
+        String x = " 23.9 ";
+        double xx = Double.parseDouble(x);
+        System.out.println(xx);
+    }
+
+    @Test
+    public void testArrayEquals() {
+        int[] a = { 1, 2, 3 };
+        int[] b = { 1, 2, 3 };
+        int[] c = { 2, 1, 3 };
+        System.out.println(Arrays.hashCode(a));
+        System.out.println(Arrays.hashCode(b));
+        System.out.println(Arrays.hashCode(c));
+        System.out.println("=============");
+        System.out.println(Arrays.equals(a, b));
+        System.out.println(Arrays.equals(a, c));
+    }
+
+    @Test
+    public void testSet() {
+        HashSet<Integer> set1 = new HashSet<>();
+        HashSet<Integer> set2 = new HashSet<>();
+        set1.add(2);
+        set1.add(3);
+        set1.add(1);
+        set2.add(3);
+        set2.add(1);
+        set2.add(2);
+        System.out.println(set1.hashCode());
+        System.out.println(set2.hashCode());
+        System.out.println(set1.equals(set2));
+    }
+
+    @Test
+    public void testClone() {
+        int[] a = { 5, 3, 6, 1 };
+        int[] b = a.clone();
+        System.out.println(Arrays.toString(a));
+        System.out.println(Arrays.toString(b));
+        b[2] = 10;
+        System.out.println(Arrays.toString(a));
+        System.out.println(Arrays.toString(b));
+        // =====================
+        HashSet<Integer> set1 = new HashSet<>();
+        set1.add(2);
+        set1.add(3);
+        set1.add(1);
+        System.out.println(set1);
+        HashSet<Integer> set2 = (HashSet<Integer>) set1.clone();
+        System.out.println(set2);
+    }
+
+    @Test
+    public void testMapOfSet() {
+        HashMap<TreeSet<Integer>, Integer> map = new HashMap<>();
+        TreeSet<Integer> set0 = new TreeSet<>();
+        set0.add(4);
+        set0.add(11);
+        set0.add(9);
+        set0.add(2);
+        map.put(set0, set0.hashCode());
+        set0.remove(9);
+        System.out.println(map.get(set0.clone()));
+        map.put((TreeSet) set0.clone(), set0.hashCode());
+        System.out.println(map.get(set0.clone()));
+        set0.add(9);
+        System.out.println(map.get(set0.clone()));
     }
 }

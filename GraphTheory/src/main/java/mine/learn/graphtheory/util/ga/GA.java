@@ -93,7 +93,7 @@ public class GA {
     }
 
     private Gene[] shuffle(Gene[] initGenes) {
-        Gene[] genes = Arrays.copyOf(initGenes, len);
+        Gene[] genes = initGenes.clone();
         for (int l = 0; l != len; l++) {
             int i = r.nextInt(len);
             int j = r.nextInt(len);

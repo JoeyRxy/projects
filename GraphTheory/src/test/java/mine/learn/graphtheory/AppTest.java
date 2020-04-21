@@ -6,14 +6,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -22,10 +25,10 @@ import mine.learn.graphtheory.bean.EdgeWeightedGraph;
 import mine.learn.graphtheory.bean.WeightedDirectedEdge;
 import mine.learn.graphtheory.bean.WeightedEdge;
 import mine.learn.graphtheory.computational_optimization.TSP1;
-import mine.learn.graphtheory.computational_optimization.TSP2;
+import mine.learn.graphtheory.computational_optimization.TSPDP;
 import mine.learn.graphtheory.computational_optimization.heuristic.TSP3;
 import mine.learn.graphtheory.computational_optimization.heuristic.TSP4;
-import mine.learn.graphtheory.computational_optimization.heuristic.TSP5;
+import mine.learn.graphtheory.computational_optimization.heuristic.TSPSA;
 import mine.learn.graphtheory.util.Helpers;
 import mine.learn.graphtheory.util.IndexedPriorityQueue;
 import mine.learn.graphtheory.util.PriorityQueueM;
@@ -412,7 +415,7 @@ public class AppTest {
         System.out.println("图中有" + gg.edges().size() + "条边.");
         int[] SETS = { 5, 9, 13, 36, 86, 47, 55, 66, 77, 88, 99, 111, 123, 146, 132, 167, 189, 112, 98 };
         System.out.println("需经过点集集合的长度：" + SETS.length);
-        TSP2 tsp = new TSP2(gg, SETS);
+        TSPDP tsp = new TSPDP(gg, SETS);
         long start = System.currentTimeMillis();
         double res = tsp.cal();
         long end = System.currentTimeMillis();
@@ -503,7 +506,7 @@ public class AppTest {
         for (int k = 0; k < times; k++) {
             // System.out.println("========================");
             start = System.currentTimeMillis();
-            TSP5 tsp5 = new TSP5(graph, set, 100, 1, a, markov, p);
+            TSPSA tsp5 = new TSPSA(graph, set, 100, 1, a, markov, p);
             end = System.currentTimeMillis();
             double bestDist = tsp5.getBestDist();
             s += bestDist;
@@ -614,7 +617,7 @@ public class AppTest {
         // System.out.println("耗时：" + (end - start) + " ms.");
         System.out.println("============ TSP Heuristic Algo ============");
         start = System.currentTimeMillis();
-        TSP5 tsp5 = new TSP5(g, set, 120, 1, 0.99999, 30000, 0.5);
+        TSPSA tsp5 = new TSPSA(g, set, 120, 1, 0.99999, 30000, 0.5);
         end = System.currentTimeMillis();
         System.out.println("距离：" + tsp5.getBestDist());
         System.out.println("耗时：" + (end - start) + " ms.");
@@ -625,4 +628,116 @@ public class AppTest {
         writer.close();
     }
 
+    @Test
+    public void testInfnity() {
+        double inf = Double.POSITIVE_INFINITY;
+        double x = inf + 1;
+        double y = inf - 1000;
+        System.out.println(x);
+        System.out.println(y);
+    }
+
+    @Test
+    public void testHashMap() {// TODO:现象有待解释？
+        HashMap<Set<Integer>, String> map = new HashMap<>();
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        set1.add(23);
+        set2.add(32);
+        map.put(set1, "set1 : " + set1.toString());
+        map.put(set2, "set2 : " + set2.toString());
+        System.out.println(map);
+        System.out.println(map.get(set1));
+        set1.add(666);
+        System.out.println(map.get(set1));
+        System.out.println(map);
+        map.put(set1, "set1 : " + set1.toString());
+        System.out.println(map);
+        System.out.println("=================");
+        Set<Integer> set3 = new HashSet<>();
+        set3.add(23);
+        set3.add(666);
+        map.put(set3, "set3 : " + set3.toString());
+        System.out.println(map);
+        System.out.println("=================");
+        System.out.println(set1.hashCode());
+        System.out.println(set3.hashCode());
+        System.out.println(set1.equals(set3));
+    }
+
+    @Test
+    public void testSet() {
+        int len = 6000000;
+        int[] data = new int[len];
+        Random r = new Random(System.currentTimeMillis());
+        for (int i = 0; i < data.length; i++) {
+            data[i] = r.nextInt(len << 3);
+        }
+        Set<Integer> set1 = new TreeSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < len; i++) {
+            set1.add(data[i]);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("Tree Set Insertion Duration : " + (end - start));
+        start = System.currentTimeMillis();
+        for (int i = 0; i < len; i++) {
+            set2.add(data[i]);
+        }
+        end = System.currentTimeMillis();
+        System.out.println("Hash Set Insertion Duration : " + (end - start));
+        int[] testData = new int[len >> 4];
+        for (int i = 0; i < testData.length; i++) {
+            testData[i] = r.nextInt(len << 3);
+        }
+        start = System.currentTimeMillis();
+        for (int i = 0; i < testData.length; i++) {
+            set1.contains(testData[i]);
+        }
+        end = System.currentTimeMillis();
+        System.out.println("TreeSet Contains Duration : " + (end - start));
+        start = System.currentTimeMillis();
+        for (int i = 0; i < testData.length; i++) {
+            set2.contains(testData[i]);
+        }
+        end = System.currentTimeMillis();
+        System.out.println("HashSet Contains Duration : " + (end - start));
+        System.out.println("=========== 遍历 ===========");
+        start = System.currentTimeMillis();
+        set1.forEach(t -> {
+        });
+        end = System.currentTimeMillis();
+        System.out.println("TreeSet Traverse Duration : " + (end - start));
+        start = System.currentTimeMillis();
+        set2.forEach(t -> {
+        });
+        end = System.currentTimeMillis();
+        System.out.println("HashSet Traverse Duration : " + (end - start));
+    }
+
+    @Test
+    public void testHashSetEquality() {
+        int len = 100;
+        int[] data = new int[len];
+        Random r = new Random(System.currentTimeMillis());
+        for (int i = 0; i < data.length; i++) {
+            data[i] = r.nextInt();
+        }
+        HashSet<Integer> set1 = new HashSet<>();
+        for (int i = data.length - 1; i >= 0; i--) {
+            set1.add(data[i]);
+        }
+        HashSet<Integer> set2 = new HashSet<>();
+        for (int i = 0; i < data.length; i++) {
+            set2.add(data[i]);
+        }
+        System.out.println(set1.hashCode());
+        System.out.println(set2.hashCode());
+        System.out.println(set1.equals(set2));
+        HashMap<HashSet<Integer>, Double> map = new HashMap<>();
+        map.put(set1, 100.);
+        map.put(set2, 0.001);
+        System.out.println(map);
+    }
 }

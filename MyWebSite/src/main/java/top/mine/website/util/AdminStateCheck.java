@@ -19,6 +19,6 @@ public class AdminStateCheck {
     public static void setLogIn(HttpServletRequest req, String name) {
         HttpSession session = req.getSession();
         session.setAttribute("adminname", name);
-        session.setMaxInactiveInterval(1800);
+        session.setMaxInactiveInterval(900);
     }
 }

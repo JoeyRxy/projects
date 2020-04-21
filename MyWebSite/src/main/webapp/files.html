@@ -23,7 +23,7 @@
                 for (let i = 0; i < files.length; i++) {
                     $filesname.append(
                         '文件名：<input type="text" required id="filename' + i + '" value="' + files[i]
-                        .name + '"><br>'
+                            .name + '"><br>'
                     );
                 }
             });
@@ -74,7 +74,7 @@
         }
 
         function del($e) {
-            var $filename = $e.siblings('span')[0];
+            var $filename = $e.parent('td').siblings('td')[0];
             var json = {
                 filename: $filename.innerText
             };
@@ -82,24 +82,25 @@
         }
 
         function download($e) {
-            var $filename = $e.siblings('span')[0];
+            var $filename = $e.parent('td').siblings('td')[0];
             window.open("download?filename=" + $filename.innerText);
         }
 
         function getfiles() {
-            var $files = $("#files");
+            var $files = $("#tbody");
             $files.html('');
             $.post("allfile", res => {
-                res.data.forEach(filename => {
-                    $files.append('<div><span>' + filename +
-                        '</span><button onclick="download($(this))">下载</button><button onclick="del($(this))">删除</button></div>'
+                res.data.forEach(file => {
+                    $files.append(
+                        '<tr>' +
+                        '<td>' + file.fileName + '</td>' +
+                        '<td>' + file.fileLength + '</td>' +
+                        '<td><button onclick="download($(this))">下载</button></td>' +
+                        '<td><button onclick="del($(this))">删除</button></td>' +
+                        '</tr>'
                     );
                 });
             }, 'json')
-        }
-
-        function uploadfiles() {
-            $()
         }
     </script>
 
@@ -156,9 +157,21 @@
         </header>
     </div>
 
-    <div class="list-group" id="files">
+    <div><span>加密传输，不支持在线</span></div>
 
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <td>名称</td>
+                <td>大小（Byte）</td>
+                <td>操作1</td>
+                <td>操作2</td>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
 
     <div class="col-6">
         <button class="btn btn-sm mt-0" onclick="getfiles()">获取你的文件</button>

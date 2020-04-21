@@ -19,6 +19,6 @@ public class LogStateCheck {
     public static void setLogIn(HttpServletRequest req, String name) {
         HttpSession session = req.getSession();
         session.setAttribute("name", name);
-        session.setMaxInactiveInterval(1800);
+        session.setMaxInactiveInterval(7200);
     }
 }

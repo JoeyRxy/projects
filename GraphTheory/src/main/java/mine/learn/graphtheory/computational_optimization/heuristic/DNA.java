@@ -27,6 +27,12 @@ public class DNA implements Comparable<DNA> {
         calc();
     }
 
+    public DNA(DNA dna) {
+        this.genes = dna.genes.clone();
+        this.g = dna.g;
+        fitness = dna.fitness;
+    }
+
     private void calc() {
         fitness = 0;
         for (int i = 0; i < genes.length - 1; i++) {

@@ -9,7 +9,7 @@ import java.util.*;
 public class EdgeWeightedDiGraph implements Graph, SymbolGraphAPI, RealMapGraph {
 
     private int V; // number of vertices in this digraph
-    private List<WeightedDirectedEdge>[] adj; // adj[v] = adjacency list for vertex v
+    private Set<WeightedDirectedEdge>[] adj; // adj[v] = adjacency list for vertex v
     private int[] indegree; // indegree[v] = indegree of vertex v
     private List<WeightedDirectedEdge> edges;
 
@@ -25,11 +25,11 @@ public class EdgeWeightedDiGraph implements Graph, SymbolGraphAPI, RealMapGraph 
         nameOf = new String[V];
         indexOf = new HashMap<>();
         edges = new LinkedList<>();
-        adj = (List<WeightedDirectedEdge>[]) new List[V];
+        adj = (Set<WeightedDirectedEdge>[]) new HashSet[V];
         coordinations = new Coordination[V];
 
         for (int v = 0; v < V; v++)
-            adj[v] = new LinkedList<>();
+            adj[v] = new HashSet<>();
 
     }
 

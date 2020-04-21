@@ -56,11 +56,11 @@ public class DeleteUserService extends HttpServlet {
         boolean delete = UserDAO.delete(name);
         if (!delete) {
             try {
-                List<String> filesList = UserDAO.filesList(name);
-                for (String filename : filesList) {
-                    MyfileDAO.delete(new Myfile(UserDAO.getUserId(name), filename));
-                    File file = new File(fileRoot + "/" + name, filename);
-                    file.delete();
+                List<Myfile> filesList = UserDAO.filesList(name);
+                for (Myfile file : filesList) {
+                    MyfileDAO.delete(file);
+                    File _file = new File(fileRoot + "/" + name, file.getFileName());
+                    _file.delete();
                 }
                 UserDAO.delete(name);
                 resp.getWriter().write("{\"data\":" + true + "}");

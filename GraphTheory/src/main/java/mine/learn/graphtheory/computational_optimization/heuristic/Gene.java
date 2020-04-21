@@ -42,7 +42,7 @@ public class Gene implements Comparable<Gene> {
 
     public Gene(Random r, int[] order, double[][] g) {
         this.r = r;
-        this.order = Arrays.copyOf(order, order.length);
+        this.order = order.clone();
         this.g = g;
     }
 

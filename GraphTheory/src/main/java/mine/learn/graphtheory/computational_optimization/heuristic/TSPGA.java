@@ -26,6 +26,7 @@ public class TSPGA {
     private DNA[] population;
     private Random r;
     private double[][] g;
+    private int V;
 
     public TSPGA(EdgeWeightedDiGraph graph, int[] set, int pSize, int gen, double pc, double pm) {
         this.set = set;
@@ -39,7 +40,7 @@ public class TSPGA {
         scc = null;
         spt = new FloydWarshall(graph);
         graph = null;
-        int V = set.length;
+        V = set.length;
         g = new double[V][V];
         for (int i = 0; i < V; i++)
             for (int j = 0; j < V; j++)
@@ -54,14 +55,14 @@ public class TSPGA {
         population = new DNA[pSize];
         int[] greedyOrder = getGreedyOrder();
         population[0] = new DNA(greedyOrder, g);
-        for (int i = 1; i < pSize; i++)
+        for (int i = 0; i < pSize; i++)
             population[i] = new DNA(shuffle(greedyOrder), g);
         Arrays.sort(population);
     }
 
     private int[] shuffle(int[] initGenes) {
         int len = set.length;
-        int[] genes = Arrays.copyOf(initGenes, len);
+        int[] genes = initGenes.clone();
         for (int l = len >> 1; l != len; l++) {// n/2次？
             int i = r.nextInt(len);
             int j = r.nextInt(len);
@@ -128,9 +129,9 @@ public class TSPGA {
     }
 
     private float g(float x) {
-        float y = x * x;
-        y *= y;
-        return y;
+        x = x * x;
+        x = x * x;
+        return x;
     }
 
     private int select() {
@@ -139,10 +140,12 @@ public class TSPGA {
 
     private void newGen() {
         DNA[] newPopulation = new DNA[pSize];
-        newPopulation[0] = population[0];
+        newPopulation[0] = new DNA(population[0]);
         for (int i = 1; i < pSize; i++) {
-            DNA t = population[select()];
-            crossover_mutate(t);
+            int selected = select();
+            DNA t = population[selected];
+            // crossover_mutate(t);
+            genNewOrder(t);
             newPopulation[i] = t;
         }
         population = newPopulation;
@@ -172,6 +175,48 @@ public class TSPGA {
         dna.changed();
     }
 
+    private void swap(int[] order, int i, int j, int k) {
+        int[] tmp = Arrays.copyOfRange(order, i, j);
+        while (j < k)
+            order[i++] = order[j++];
+        j = 0;
+        while (i < k)
+            order[i++] = tmp[j++];
+    }
+
+    private void sort3(int[] seg) {
+        int j = seg[1] < seg[2] ? 1 : 2;
+        int t;
+        if (seg[0] > seg[j]) {
+            t = seg[0];
+            seg[0] = seg[j];
+            seg[j] = t;
+        }
+        if (seg[1] > seg[2]) {
+            t = seg[1];
+            seg[1] = seg[2];
+            seg[2] = t;
+        }
+    }
+
+    private void genNewOrder(DNA dna) {
+        int[] seg = new int[3];
+        seg[0] = r.nextInt(V);
+        seg[1] = r.nextInt(V);
+        int[] order = dna.getGenes();
+        while (seg[1] == seg[0]) {
+            seg[1] = r.nextInt(V);
+        }
+        if (Math.random() < 0.5) {// 交换两点
+            swap(order, seg[0], seg[1]);
+        } else {// 交换两段
+            seg[2] = r.nextInt(V);
+            sort3(seg);
+            swap(order, seg[0], seg[1], seg[2]);
+        }
+        dna.changed();
+    }
+
     public double getBestDist() {
         return population[0].getFitness();
     }
@@ -188,7 +233,9 @@ public class TSPGA {
     }
 
     public static void main(String[] args) throws IOException {
-        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/ch130.json"), null);
+        int best[] = { -1 };
+        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/ch130.json"), best);
+        System.out.println(best[0]);
         int[] set = new int[graph.V()];
         for (int i = 0; i < set.length; i++) {
             set[i] = i;

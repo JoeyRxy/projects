@@ -71,7 +71,7 @@ public class TSP4 {
             Gene peek = genes.peek();
             if (peek.dist < distRecord) {
                 distRecord = peek.dist;
-                orderRecord = Arrays.copyOf(peek.order, V);
+                orderRecord = peek.order.clone();
             }
         }
     }

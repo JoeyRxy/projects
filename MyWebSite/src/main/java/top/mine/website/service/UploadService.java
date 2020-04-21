@@ -23,6 +23,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import top.mine.website.dao.MyfileDAO;
 import top.mine.website.dao.UserDAO;
 import top.mine.website.entity.Myfile;
+import top.mine.website.util.LogStateCheck;
 
 /**
  * UploadService
@@ -55,6 +56,8 @@ public class UploadService extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
+        if (!LogStateCheck.checkLogState(req))
+            return;
         if (ServletFileUpload.isMultipartContent(req)) {
             DiskFileItemFactory factory = new DiskFileItemFactory();
             factory.setSizeThreshold(resource.getInteger("threshold"));
@@ -86,7 +89,7 @@ public class UploadService extends HttpServlet {
                 File file = new File(fileRoot, filename);
                 upload.setFileSizeMax(resource.getInteger("fileSizeMax"));
                 FileOutputStream os = new FileOutputStream(file);
-                byte[] key = UserDAO.password(userName).getBytes();
+                byte[] key = UserDAO.password(userName).substring(7, 10).getBytes();
                 int len;
                 byte[] b = new byte[10240];
                 while ((len = in.read(b)) != -1) {
@@ -97,7 +100,7 @@ public class UploadService extends HttpServlet {
                 }
                 os.close();
                 in.close();
-                MyfileDAO.insert(new Myfile(UserDAO.getUserId(userName), filename));
+                MyfileDAO.insert(new Myfile(UserDAO.getUserId(userName), filename, file.length()));
                 // resp.sendRedirect("files.html");
             } catch (FileUploadException e) {
                 e.printStackTrace();

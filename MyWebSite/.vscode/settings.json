@@ -1,19 +1,20 @@
 {
     "sqltools.autoOpenSessionFiles": false,
-    "sqltools.connections": [{
-        "connectionTimeout": 15,
-        "database": "mysite",
-        "dialect": "MySQL",
-        "name": "mysite",
-        "password": "73699rxy",
-        "port": 33060,
-        "server": "localhost",
-        "username": "root",
-        "mysqlOptions": {
-            "authProtocol": "xprotocol"
+    "sqltools.connections": [
+        {
+            "connectionTimeout": 15,
+            "database": "mysite",
+            "dialect": "MySQL",
+            "name": "mysite",
+            "password": "73699rxy",
+            "port": 33060,
+            "server": "localhost",
+            "username": "root",
+            "mysqlOptions": {
+                "authProtocol": "xprotocol"
+            }
         }
-    }
-],
-"java.configuration.updateBuildConfiguration": "automatic",
-"liveServer.settings.port": 5501
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "liveServer.settings.port": 5501
 }

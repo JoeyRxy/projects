@@ -7,16 +7,16 @@
             "label": "package",
             "type": "shell",
             "command": "${workspaceRoot}/deploy.ps1",
-            "group": "build"
+            "group": {
+                "isDefault": true,
+                "kind": "build"
+            }
         },
         {
             "label": "mvn",
             "type": "shell",
             "command": "mvn clean package -DskipTests",
-            "group": {
-                "isDefault": true,
-                "kind": "build"
-            }
+            "group": "build"
         }
     ]
 }

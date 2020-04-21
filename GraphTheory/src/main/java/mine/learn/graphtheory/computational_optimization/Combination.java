@@ -29,7 +29,7 @@ public class Combination {
 
     private void dfs(int depth, int prev) {
         if (depth == k) {
-            res.add(Arrays.copyOf(tmp, tmp.length));
+            res.add(tmp.clone());
             return;
         }
         for (int i = prev; i < set.length; i++) {

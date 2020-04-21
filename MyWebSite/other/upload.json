@@ -1,0 +1,7 @@
+{
+    "threshold": 1024000,
+    "tempRoot": "/home/rxy/tmp",
+    "fileRoot": "/home/rxy/files",
+    "fileSizeMax": 1024000000,
+    "tspfiles": "/home/rxy/files/.tsp"
+}

@@ -40,19 +40,14 @@ public class AppTest {
         System.out.println(check);
     }
 
-    @Test
-    public void testFileDAO() throws SQLException {
-        MyfileDAO.insert(new Myfile(UserDAO.getUserId("rxy"), "lkjnbgar"));
-        MyfileDAO.insert(new Myfile(UserDAO.getUserId("zs"), "thytrsh"));
-    }
 
-    @Test
-    public void testListFile() throws SQLException {
-        List<String> list = UserDAO.filesList("zs");
-        for (String filename : list) {
-            System.out.println(filename);
-        }
-    }
+    // @Test
+    // public void testListFile() throws SQLException {
+    //     List<String> list = UserDAO.filesList("zs");
+    //     for (String filename : list) {
+    //         System.out.println(filename);
+    //     }
+    // }
 
     @Test
     public void testAlias() {

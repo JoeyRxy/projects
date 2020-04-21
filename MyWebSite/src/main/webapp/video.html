@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script>
+        $(() => {
+            $.ajax({
+                url: "loginstate",
+                method: 'post',
+                dataType: "json",
+                success: start,
+                error: error
+            });
+
+        });
+
+        function getVideo() {
+            $.post('video', { videoname: 'ornhub.com.mp4' }, res => {
+                $('#video').attr('src', res);
+            }, 'text');
+        }
+
+
+        function start(res) {
+            if (!res.data) {
+                alert("未登录，请登录！");
+                window.location.href = "login.html";
+            } else {
+                var $change = $("#change");
+                $change.html(
+                    '<li>' + $.cookie("name") +
+                    '</li><li><a href="signoff" class="dropdown">注销</a></li>'
+                );
+            }
+        }
+
+        function error(_, status, __) {
+            console.log(status);
+            alert("出错！代码：" + status);
+            window.location.href = "login.html";
+        }
+
+    </script>
+</head>
+
+<body>
+    <video id="video" src="" controls>
+
+    </video>
+    <br><button onclick="getVideo()">Get Video</button>
+</body>
+
+</html>

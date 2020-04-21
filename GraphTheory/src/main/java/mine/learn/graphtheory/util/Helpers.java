@@ -137,4 +137,7 @@ public class Helpers {
         return g;
     }
 
+    public static void main(String[] args) throws IOException {
+        xml2json("src/main/resources/att48.xml", "src/main/resources/att48.json");
+    }
 }

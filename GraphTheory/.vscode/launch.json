@@ -6,16 +6,16 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - TSP5",
+            "name": "CodeLens (Launch) - SubPath",
             "request": "launch",
-            "mainClass": "mine.learn.graphtheory.computational_optimization.heuristic.TSP5",
+            "mainClass": "mine.learn.graphtheory.vrp.SubPath",
             "projectName": "RoutePlanning"
         },
         {
             "type": "java",
-            "name": "CodeLens (Launch) - GA",
+            "name": "CodeLens (Launch) - TSPSA",
             "request": "launch",
-            "mainClass": "mine.learn.graphtheory.util.ga.GA",
+            "mainClass": "mine.learn.graphtheory.computational_optimization.heuristic.TSPSA",
             "projectName": "RoutePlanning"
         },
         {
@@ -31,6 +31,7 @@
             "request": "launch",
             "mainClass": "${file}",
             "console": "internalConsole",
+            "vmArgs": "-ea",
             "stepFilters": {
                 "classNameFilters": [
                     "java.*",

@@ -10,36 +10,36 @@ Warning--empty journal in kopardekar2016unmanned
 Warning--empty journal in tsptheory
 You've used 25 entries,
             4281 wiz_defined-function locations,
-            1022 strings with 9819 characters,
-and the built_in function-call counts, 101391 in all, are:
+            1022 strings with 9817 characters,
+and the built_in function-call counts, 101345 in all, are:
 = -- 2211
-> -- 11388
-< -- 14258
-+ -- 4045
+> -- 11382
+< -- 14250
++ -- 4043
 - -- 881
 * -- 695
-:= -- 14112
+:= -- 14106
 add.period$ -- 79
 call.type$ -- 25
 change.case$ -- 83
-chr.to.int$ -- 3617
+chr.to.int$ -- 3615
 cite$ -- 28
 duplicate$ -- 452
 empty$ -- 1237
 format.name$ -- 284
-if$ -- 26408
+if$ -- 26396
 int.to.chr$ -- 2
 int.to.str$ -- 26
 missing$ -- 0
 newline$ -- 140
 num.names$ -- 75
-pop$ -- 5066
+pop$ -- 5062
 preamble$ -- 1
 purify$ -- 25
 quote$ -- 0
-skip$ -- 10284
+skip$ -- 10280
 stack$ -- 0
-substring$ -- 4808
+substring$ -- 4806
 swap$ -- 51
 text.length$ -- 202
 text.prefix$ -- 0

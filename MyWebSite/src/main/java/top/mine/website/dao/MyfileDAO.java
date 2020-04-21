@@ -34,10 +34,11 @@ public class MyfileDAO {
     public static void insert(Myfile myfile) throws SQLException {
         if (exist(myfile))
             return;
-        String sql = "INSERT INTO myfile(user_id,filename) VALUES(?,?)";
+        String sql = "INSERT INTO myfile(user_id, filename, fileLength) VALUES(?,?,?)";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, myfile.getUserId());
         ps.setString(2, myfile.getFileName());
+        ps.setLong(3, myfile.getFileLength());
         ps.execute();
         ps.close();
     }
@@ -64,6 +65,7 @@ public class MyfileDAO {
         for (Myfile myfile : myfiles) {
             ps.setInt(1, myfile.getUserId());
             ps.setString(2, myfile.getFileName());
+            ps.setLong(3, myfile.getFileLength());
             ps.execute();
         }
         ps.close();

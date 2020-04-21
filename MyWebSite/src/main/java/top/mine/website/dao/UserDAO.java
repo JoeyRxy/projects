@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
+import top.mine.website.entity.Myfile;
 import top.mine.website.entity.User;
 import top.mine.website.util.BCrypt;
 
@@ -190,15 +191,15 @@ public class UserDAO {
      * @return a list of file path
      * @throws SQLException
      */
-    public static List<String> filesList(String name) throws SQLException {
+    public static List<Myfile> filesList(String name) throws SQLException {
         int user_id = getUserId(name);
-        String sql = "SELECT filename FROM myfile WHERE user_id=?";
+        String sql = "SELECT filename, fileLength FROM myfile WHERE user_id=?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, user_id);
         ResultSet rs = ps.executeQuery();
-        List<String> list = new LinkedList<>();
+        List<Myfile> list = new LinkedList<>();
         while (rs.next()) {
-            list.add(rs.getString(1));
+            list.add(new Myfile(user_id, rs.getString(1), rs.getLong(2)));
         }
         rs.close();
         ps.close();
