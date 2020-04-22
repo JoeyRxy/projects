@@ -193,10 +193,17 @@ public class AppTest2 {
         set0.add(2);
         map.put(set0, set0.hashCode());
         set0.remove(9);
-        System.out.println(map.get(set0.clone()));
-        map.put((TreeSet) set0.clone(), set0.hashCode());
-        System.out.println(map.get(set0.clone()));
+        System.out.println(map.get(set0));
+        map.put(set0, set0.hashCode());
+        System.out.println(map.get(set0));
         set0.add(9);
-        System.out.println(map.get(set0.clone()));
+        System.out.println(map.get(set0));
+        System.out.println("=================");
+        TreeSet<Integer> set1 = new TreeSet<>();
+        set1.add(5);
+        set1.add(10);
+        set1.add(8);
+        set1.add(3);
+        System.out.println(map.get(set1));
     }
 }

@@ -413,7 +413,7 @@ public class AppTest {
         EdgeWeightedDiGraph gg = new EdgeWeightedDiGraph(g);
         System.out.println("图中有" + gg.V() + "个节点");
         System.out.println("图中有" + gg.edges().size() + "条边.");
-        int[] SETS = { 5, 9, 13, 36, 86, 47, 55, 66, 77, 88, 99, 111, 123, 146, 132, 167, 189, 112, 98 };
+        int[] SETS = { 5, 9, 13, 36, 86, 47, 55, 66, 77, 88, 99, 111, 10, 123, 146, 90, 132, 167, 189, 112, 98 };
         System.out.println("需经过点集集合的长度：" + SETS.length);
         TSPDP tsp = new TSPDP(gg, SETS);
         long start = System.currentTimeMillis();

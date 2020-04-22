@@ -6,24 +6,32 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - SubPath",
+            "name": "CodeLens (Launch) - VRPProcessor",
             "request": "launch",
-            "mainClass": "mine.learn.graphtheory.vrp.SubPath",
+            "mainClass": "mine.learn.graphtheory.util.VRPProcessor",
             "projectName": "RoutePlanning"
         },
         {
             "type": "java",
-            "name": "CodeLens (Launch) - TSPSA",
+            "name": "CodeLens (Launch) - VRPSA",
             "request": "launch",
-            "mainClass": "mine.learn.graphtheory.computational_optimization.heuristic.TSPSA",
-            "projectName": "RoutePlanning"
-        },
-        {
-            "name": "Python: 当前文件",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "externalTerminal"
+            "mainClass": "mine.learn.graphtheory.vrp.VRPSA",
+            "projectName": "RoutePlanning",
+            "console": "internalConsole",
+            "vmArgs": "-ea",
+            "stepFilters": {
+                "classNameFilters": [
+                    "java.*",
+                    "javax.*",
+                    "com.sun.*",
+                    "sun.*",
+                    "sunw.*",
+                    "org.omg.*"
+                ],
+                "skipSynthetics": false,
+                "skipStaticInitializers": false,
+                "skipConstructors": false
+            }
         },
         {
             "type": "java",
@@ -31,7 +39,6 @@
             "request": "launch",
             "mainClass": "${file}",
             "console": "internalConsole",
-            "vmArgs": "-ea",
             "stepFilters": {
                 "classNameFilters": [
                     "java.*",

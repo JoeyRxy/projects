@@ -71,8 +71,8 @@ public class TSPSA {
         series1Data = new LinkedList<>();
         r.setSeed(System.currentTimeMillis());
         for (double t = t0; t >= tf; t *= a) {
-            xAxisData.add(count);
-            series1Data.add(bestDist);
+            // xAxisData.add(count);
+            // series1Data.add(bestDist);
             count++;
             // System.out.println("第" + (count) + "轮 : " + bestDist);
             for (int i = 0; i < markov; i++) {
@@ -225,7 +225,7 @@ public class TSPSA {
 
     public static void main(String[] args) throws IOException {
         int best[] = { -1 };
-        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/kroB200.json"), best);
+        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/pcb1173.json"), best);
         // EdgeWeightedDiGraph graph = Helpers.parseJSON(new
         // File("src/main/resources/ch130.json"), best);
         System.out.println("best : " + best[0]);
@@ -233,7 +233,7 @@ public class TSPSA {
         for (int i = 0; i < set.length; i++) {
             set[i] = i;
         }
-        TSPSA tsp = new TSPSA(graph, set, 1000, 10, 0.999, 2000, 0.5);
+        TSPSA tsp = new TSPSA(graph, set, 1000, 0.001, 0.99999, 10000, 0.5);
         double bestDist = tsp.getBestDist();
         System.out.println(bestDist);
         // List<WeightedDirectedEdge> path = tsp.getPath();

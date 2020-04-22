@@ -1,25 +1,24 @@
 package mine.learn.graphtheory.vrp;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * <code>source</code> -> v1 -> v2 ...
  */
 public class SubPath {
     private int[] path;
-    private HashMap<HashSet<Integer>, Double>[] memos;
-    private HashMap<HashSet<Integer>, Integer>[] pathFrom;
+    // private HashMap<HashSet<Integer>, Double>[] memos;
+    // private HashMap<HashSet<Integer>, Integer>[] pathFrom;
+    private double[][] memo;
+    private int[][] pathFrom;
 
     private int hashCode;
     private double minDist;
     private int[] minPath;
+    private int V;
 
     private boolean isSorted() {
-        if (path[0] != 0)
-            return false;
-        for (int i = 1; i < memos.length; i++) {
+        for (int i = 1; i < V; i++) {
             if (path[i] <= path[i - 1])
                 return false;
         }
@@ -28,7 +27,9 @@ public class SubPath {
 
     public SubPath(int[] path) {
         this.path = path;
+        assert path[0] == 0 : "源节点必须为0";
         assert isSorted() : "没有排序的路径！";
+        this.V = path.length;
         final int prime = 31;
         hashCode = 1;
         hashCode = prime * hashCode + Arrays.hashCode(path);
@@ -72,65 +73,119 @@ public class SubPath {
      */
     public void setPath(int[] path) {
         this.path = path;
+        assert path[0] == 0 : "源节点必须为0";
         assert isSorted() : "没有排序的路径！";
         final int prime = 31;
         hashCode = 1;
         hashCode = prime * hashCode + Arrays.hashCode(path);
     }
 
-    @SuppressWarnings("unchecked")
+    // /** 这个方法太慢了 */
+    // @SuppressWarnings("unchecked")
+    // private void tspdp() {
+    // memos = new HashMap[V];
+    // pathFrom = new HashMap[V];
+    // for (int i = 0; i < memos.length; i++) {
+    // memos[i] = new HashMap<>();
+    // memos[i].put(null, VRPSA.g[path[i]][path[0]]);
+    // pathFrom[i] = new HashMap<>();
+    // pathFrom[i].put(null, path[0]);
+    // }
+    // HashSet<Integer> S0 = new HashSet<>(V - 1);
+    // for (int i = 1; i < V; i++) {// 不包括源节点0
+    // S0.add(path[i]);
+    // }
+    // minDist = memoDFS(path[0], S0);
+    // minPath = new int[V];
+    // minPath[0] = path[0];
+    // for (int i = 1; i < V; i++) {
+    // minPath[i] = pathFrom[minPath[i - 1]].get(S0);
+    // S0.remove(minPath[i]);
+    // }
+    // }
+
+    // // @SuppressWarnings("unchecked")
+    // private double memoDFS(int u, HashSet<Integer> S) {
+    // Double _t = memos[u].get(S.size() == 0 ? null : S);
+    // if (_t != null)
+    // return _t.doubleValue();
+    // double ret;
+    // double min = Double.POSITIVE_INFINITY;
+    // int w = -1;
+    // for (Integer v : S) {
+    // if (Double.isInfinite(VRPSA.g[u][v]))
+    // continue;
+    // HashSet<Integer> tmp = (HashSet<Integer>) S.clone();
+    // tmp.remove(v);
+    // ret = VRPSA.g[u][v] + memoDFS(v, tmp);
+    // // S.add(v);
+    // if (min > ret) {
+    // min = ret;
+    // w = v;
+    // }
+    // }
+    // // 不需要Clone
+    // // memos[u].put((HashSet<Integer>) S.clone(), min);
+    // // pathFrom[u].put((HashSet<Integer>) S.clone(), w);
+    // memos[u].put(S, min);
+    // pathFrom[u].put(S, w);
+    // return min;
+    // }
+
     private void tspdp() {
-        memos = new HashMap[path.length];
-        pathFrom = new HashMap[path.length];
-        for (int i = 0; i < memos.length; i++) {
-            memos[i] = new HashMap<>();
-            memos[i].put(null, VRPSA.g[path[i]][path[0]]);
-            pathFrom[i] = new HashMap<>();
-            pathFrom[i].put(null, path[0]);
+        memo = new double[V][1 << V];
+        pathFrom = new int[V][1 << V];
+        int S0 = (1 << V) - 2;
+        // init
+        for (int v = 0; v < V; v++) {
+            memo[v][0] = VRPSA.g[path[v]][0];
+            pathFrom[v][0] = 0;
         }
-        HashSet<Integer> init = new HashSet<>(path.length);
-        for (int i = 1; i < path.length; i++) {
-            init.add(path[i]);
+        minDist = memoDFS(0, S0);
+        minPath = new int[V];
+        for (int i = 1; i < V; i++) {
+            minPath[i] = pathFrom[minPath[i - 1]][S0];
+            S0 &= (~(1 << minPath[i]));
         }
-        minDist = memoDFS(path[0], init);
-        minPath = new int[path.length];
-        minPath[0] = path[0];
-        for (int i = 1; i < path.length; i++) {
-            minPath[i] = pathFrom[minPath[i - 1]].get(init);
-            init.remove(minPath[i]);
+        for (int i = 1; i < V; i++) {
+            minPath[i] = path[minPath[i]];
         }
     }
 
-    // @SuppressWarnings("unchecked")
-    private double memoDFS(int u, HashSet<Integer> S) {
-        Double _t = memos[u].get(S.size() == 0 ? null : S);
-        if (_t != null)
-            return _t.doubleValue();
+    private double memoDFS(int u, int S) {
+        if (memo[u][S] > 0) {
+            return memo[u][S];
+        }
         double ret;
+        int t = ~1, x = 1;
         double min = Double.POSITIVE_INFINITY;
         int w = -1;
-        for (Integer v : S) {
-            if (Double.isFinite(VRPSA.g[u][v]))
+        for (int i = 0; i < V; i++, x <<= 1, t = (t << 1) | (t >>> -1)) {
+            if (Double.isInfinite(VRPSA.g[path[u]][path[i]]))
                 continue;
-            S.remove(v);
-            ret = VRPSA.g[u][v] + memoDFS(v, S);
-            S.add(v);
-            if (min > ret) {
-                min = ret;
-                w = v;
+            if ((S & x) > 0) {// 遍历S中的节点
+                ret = VRPSA.g[path[u]][path[i]] + memoDFS(i, S & t);
+                if (min > ret) {
+                    min = ret;
+                    w = i;
+                }
             }
         }
-        // 不需要Clone
-        // memos[u].put((HashSet<Integer>) S.clone(), min);
-        // pathFrom[u].put((HashSet<Integer>) S.clone(), w);
-        memos[u].put(S, min);
-        pathFrom[u].put(S, w);
+        memo[u][S] = min;
+        pathFrom[u][S] = w;
         return min;
     }
 
     public DistAssociatedWithPath getMinDistAndPath() {
         tspdp();
+        memo = null;
+        pathFrom = null;
         return new DistAssociatedWithPath(minDist, minPath);
+    }
+
+    @Override
+    public String toString() {
+        return "SubPath [path=" + Arrays.toString(path) + "]";
     }
 
 }
