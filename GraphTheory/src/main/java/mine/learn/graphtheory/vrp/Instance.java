@@ -47,7 +47,7 @@ public class Instance {
             s = 0;
             _t = --i;
             n = 0;
-            while (s <= VRPSA.vihicleCapacity && n < 18) {
+            while (s <= VRPSA.vihicleCapacity && n < 20) {
                 s += VRPSA.demands[order[i]];
                 i++;
                 if (i == order.length)

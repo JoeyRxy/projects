@@ -29,13 +29,15 @@ public class VRPTEST {
         }
         BufferedWriter writer = new BufferedWriter(
                 new FileWriter(new File("vrp/VRPSA-" + vrpFile.getName() + System.currentTimeMillis() + ".csv")));
-        VRPSA vrpsa = new VRPSA(info.graph, depots, info.demands, info.capacity, 4, 4);
+        VRPSA vrpsa = new VRPSA(info.graph, depots, info.demands, info.capacity, 5, 4, 13);
         long start = System.currentTimeMillis();
         vrpsa.calculate(0.993, 10, 1, 100);
         long end = System.currentTimeMillis();
         // writer.write("best dist," + vrpsa.getBestDist());
         writer.write("Test File Info : " + vrpFile.getName() + "\n");
-        writer.write("calculating duration," + (end - start) + " ms\n");
+        writer.write(",\nHistory Best Dist,trucks\n");
+        writer.write(info.bestDist + "," + info.trucks);
+        writer.write("\ncalculating duration," + (end - start) + " ms\n");
         int i = 0;
         List<List<WeightedDirectedEdge>> finalBestPaths = vrpsa.getBestPaths();
         Double[] vehicleLoads = vrpsa.getVehicleLoads();
@@ -47,8 +49,7 @@ public class VRPTEST {
                     + vehicleLoads[i] + "\n");
             i++;
         }
-        writer.write(",\nHistory Best Dist,trucks\n");
-        writer.write(info.bestDist + "," + info.trucks);
+
         writer.flush();
         writer.write("\n,\n,\nCalculating Log in Each Thread\n");
         LogInfo[] logInfos = vrpsa.getLogInfos();
@@ -105,26 +106,27 @@ public class VRPTEST {
         }
         BufferedWriter writer = new BufferedWriter(
                 new FileWriter(new File("vrp/VRPSA-" + vrpFile.getName() + System.currentTimeMillis() + ".csv")));
-        VRPSA vrpsa = new VRPSA(info.graph, depots, info.demands, info.capacity, 8);
+        VRPSA vrpsa = new VRPSA(info.graph, depots, info.demands, info.capacity, 10);
         long start = System.currentTimeMillis();
         vrpsa.calculate(0.993, 10, 1, 100);
         long end = System.currentTimeMillis();
         // writer.write("best dist," + vrpsa.getBestDist());
         writer.write("Test File Info : " + vrpFile.getName() + "\n");
-        writer.write("calculating duration," + (end - start) + " ms\n");
+        writer.write(",\nHistory Best Dist,trucks\n");
+        writer.write(info.bestDist + "," + info.trucks);
+        writer.write("\ncalculating duration," + (end - start) + " ms\n");
         int i = 0;
         List<List<WeightedDirectedEdge>> finalBestPaths = vrpsa.getBestPaths();
         Double[] vehicleLoads = vrpsa.getVehicleLoads();
 
         writer.write("Best Dist," + vrpsa.getBestDist() + "\n");
-        writer.write("Best Path:\n,subRouteDist,subRoute,vehicleLoad\n");
+        writer.write("Best Path:\n,subRouteDist,subRoute,vehicleNum,vehicleLoad\n");
         for (List<WeightedDirectedEdge> subPath : finalBestPaths) {
             writer.write("Route #" + i + "," + VRPSA.helperForSubPathDist(subPath) + ",\"" + subPath + "\","
-                    + vehicleLoads[i] + "\n");
+                    + subPath.size() + "," + vehicleLoads[i] + "\n");
             i++;
         }
-        writer.write(",\nHistory Best Dist,trucks\n");
-        writer.write(info.bestDist + "," + info.trucks);
+
         writer.flush();
         writer.write("\n,\n,\nCalculating Log in Each Thread\n");
         LogInfo[] logInfos = vrpsa.getLogInfos();
@@ -181,13 +183,15 @@ public class VRPTEST {
         }
         BufferedWriter writer = new BufferedWriter(
                 new FileWriter(new File("vrp/VRPSA-" + vrpFile.getName() + System.currentTimeMillis() + ".csv")));
-        VRPSA vrpsa = new VRPSA(info.graph, depots, info.demands, info.capacity, 8);
+        VRPSA vrpsa = new VRPSA(info.graph, depots, info.demands, info.capacity, 3, 3, 12);
         long start = System.currentTimeMillis();
         vrpsa.calculate(0.993, 10, 1, 100);
         long end = System.currentTimeMillis();
         // writer.write("best dist," + vrpsa.getBestDist());
         writer.write("Test File Info : " + vrpFile.getName() + "\n");
-        writer.write("calculating duration," + (end - start) + " ms\n");
+        writer.write(",\nHistory Best Dist,trucks\n");
+        writer.write(info.bestDist + "," + info.trucks);
+        writer.write("\ncalculating duration," + (end - start) + " ms\n");
         int i = 0;
         List<List<WeightedDirectedEdge>> finalBestPaths = vrpsa.getBestPaths();
         Double[] vehicleLoads = vrpsa.getVehicleLoads();
@@ -199,8 +203,6 @@ public class VRPTEST {
                     + vehicleLoads[i] + "\n");
             i++;
         }
-        writer.write(",\nHistory Best Dist,trucks\n");
-        writer.write(info.bestDist + "," + info.trucks);
         writer.flush();
         writer.write("\n,\n,\nCalculating Log in Each Thread\n");
         LogInfo[] logInfos = vrpsa.getLogInfos();

@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import mine.learn.graphtheory.FloydWarshall;
 import mine.learn.graphtheory.bean.Coordination;
@@ -25,7 +26,9 @@ import mine.learn.graphtheory.util.VRPProcessor;
 
 public class VRPSA {
 
-    /** 连续多少个相同数据则退出计算 , 0 则不退出知道计算结束 */
+    /**
+     * 连续多少个相同数据则退出计算 , 0 则不退出知道计算结束
+     */
     public static int breakNum = 15;
     private int GROUP_NUMBER = 4;
     private int offset = 0;
@@ -55,17 +58,18 @@ public class VRPSA {
      * path : 包括0号的一整条可行路径
      * <p>
      * order : 不包括0号的未通过装载容量划分的访问“顺序”
-     * 
+     *
      * @param graph           一个有向图
      * @param depots          一系列仓库节点，其中0号仓库所对应的节点为配送站
      * @param demands         与depots对应，表示每个仓库的需求量，其中0号仓库（配送站）需求为0
      * @param vihicleCapacity 运输工具的容量
-     * @param a               SA参数
-     * @param t0              SA参数
-     * @param tf              SA参数
-     * @param markov          SA参数
-     * @throws IOException
-     * @throws CloneNotSupportedException
+     * @param params          可选参数
+     *                        <ul>
+     *                                               <li>params[0] 分几组</li>
+     *                                               <li>params[1] coreThreadNum</li>
+     *                                               <li>params[2] 分组开始的offset</li>
+     *                                               <li>params[3] breakNum 退出计算，当连续出现breakNum个相同计算结果时</li>
+     *                        </ul>
      */
     public VRPSA(EdgeWeightedDiGraph graph, int[] depots, double[] demands, double vihicleCapacity, Object... params)
             throws IOException {
@@ -81,11 +85,13 @@ public class VRPSA {
                 GROUP_NUMBER = (int) params[0];
                 coreThreadNum = (int) params[1];
                 offset = (int) params[2];
+                break;
             case 4:
                 GROUP_NUMBER = (int) params[0];
                 coreThreadNum = (int) params[1];
                 offset = (int) params[2];
                 breakNum = (int) params[3];
+                break;
             default:
                 break;
         }
@@ -108,7 +114,9 @@ public class VRPSA {
         split();
     }
 
-    /** 以源节点为相对坐标系的原点，按照角度划分 */
+    /**
+     * 以源节点为相对坐标系的原点，按照角度划分
+     */
     @SuppressWarnings("unchecked")
     private void split() {
         // 源节点外的所有节点
@@ -129,22 +137,17 @@ public class VRPSA {
             }
 
         });
-        int groupSize = coordinations.length / GROUP_NUMBER;
+        int groupSize = V / GROUP_NUMBER;
         groups = new ArrayList[GROUP_NUMBER];
         int idx = 0, end;
         for (int i = 0; i < GROUP_NUMBER; i++) {
             groups[i] = new ArrayList<>(groupSize + 2);
             groups[i].add(depots[0]);
             end = groupSize * (i + 1);
-            while (idx != end) {
+            while (idx != end && idx < coordinations.length) {
                 groups[i].add(graph.vertexOf(_map.get(coordinations[(idx + offset) % coordinations.length])));
                 idx++;
             }
-        }
-        while (idx < coordinations.length) {
-            groups[GROUP_NUMBER - 1]
-                    .add(graph.vertexOf(_map.get(coordinations[(idx + offset) % coordinations.length])));
-            idx++;
         }
         for (int i = 0; i < coordinations.length; i++) {
             coordinations[i] = null;
@@ -176,6 +179,13 @@ public class VRPSA {
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+        // try {
+        // while (!threadPool.awaitTermination(1, TimeUnit.MILLISECONDS)) {
+        // threadPool.shutdownNow();
+        // }
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
         logInfos = new LogInfo[GROUP_NUMBER];
         for (int i = 0; i < GROUP_NUMBER; i++) {
             logInfos[i] = new LogInfo();
@@ -251,9 +261,9 @@ public class VRPSA {
     }
 
     public static void main(String[] args) throws IOException {
-        File[] vrpFiles = new File[] { new File("vrp/A-n48-k7.vrp"), new File("vrp/A-n80-k10.vrp"),
+        File[] vrpFiles = new File[]{new File("vrp/A-n48-k7.vrp"), new File("vrp/A-n80-k10.vrp"),
                 new File("vrp/M-n101-k10.vrp"), new File("vrp/E076-07s.dat"), new File("vrp/E101-10c.dat"),
-                new File("vrp/E200-17b.dat") };
+                new File("vrp/E200-17b.dat")};
 
         for (File vrpFile : vrpFiles) {
             VRPFileInfo info = VRPProcessor.process(vrpFile);
