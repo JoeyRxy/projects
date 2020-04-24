@@ -38,7 +38,7 @@ public class VRPProcessor {
         Coordination[] coordinations = new Coordination[V];
         for (int j = 0; j < V; j++) {
             String splits[] = (" " + reader.readLine()).split(" +");
-            coordinations[j] = new Coordination(Double.parseDouble(splits[1]), Double.parseDouble(splits[2]));
+            coordinations[j] = new Coordination(Double.parseDouble(splits[2]), Double.parseDouble(splits[3]));
             graph.setCoordinationOf(j, coordinations[j]);
         }
         for (int j = 0; j < V; j++) {
@@ -59,9 +59,13 @@ public class VRPProcessor {
     }
 
     public static void main(String[] args) throws IOException {
-        VRPFileInfo info = VRPProcessor.process(new File("src/main/resources/M-n200-k17.vrp"));
-        System.out.println(Arrays.toString(info.demands));
-        System.out.println(info.capacity);
+        File[] vrpFiles = new File[] { new File("A-n48-k7.vrp"), new File("A-n80-k10.vrp"), new File("M-n101-k10.vrp"),
+                new File("E076-07s.dat"), new File("E101-10c.dat"), new File("E200-17b.dat") };
+        for (File file : vrpFiles) {
+            VRPFileInfo info = VRPProcessor.process(file);
+            System.out.println(Arrays.toString(info.demands));
+            System.out.println(info.capacity);
+        }
         // System.out.println(info.graph);
     }
 }

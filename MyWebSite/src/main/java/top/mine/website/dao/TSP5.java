@@ -98,7 +98,7 @@ public class TSP5 {
                     dist = dist_new;
                     order = order_new;
                 }
-                order_new = Arrays.copyOf(order, V);
+                order_new = order.clone();
             }
         }
         xAxisData.add(count);

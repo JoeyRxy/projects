@@ -1,6 +1,7 @@
 package mine.learn.graphtheory.vrp;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Instance {
     private double dist;
     private LinkedList<int[]> decodePath;
 
-    public Instance(int[] order) {
+    public Instance(int[] order, HashMap<SubPath, DistAssociatedWithPath> memo) {
         this.order = order;
         genSubPath();
         assert checkVehicleLoad() : "超载了！";
@@ -20,22 +21,17 @@ public class Instance {
         int idx = 0;
         decodePath = new LinkedList<>();
         for (SubPath subPath : subPaths) {
-            DistAssociatedWithPath _distaAssociatedWithPath = VRPSA.memo.get(subPath);
-            if (_distaAssociatedWithPath != null) {
-                dist += _distaAssociatedWithPath.getDist();
-                int[] _path = _distaAssociatedWithPath.getPath();
-                decodePath.add(_path);
-                copy(_path, path, 0, _path.length, idx);
-                idx += _path.length;
-            } else {
-                DistAssociatedWithPath minDistAndPath = subPath.getMinDistAndPath();
-                VRPSA.memo.put(subPath, minDistAndPath);
-                dist += minDistAndPath.getDist();
-                int[] _path = minDistAndPath.getPath();
-                decodePath.add(_path);
-                copy(_path, path, 0, _path.length, idx);
-                idx += _path.length;
+            DistAssociatedWithPath _distaAssociatedWithPath = memo.get(subPath);
+            if (_distaAssociatedWithPath == null) {
+                _distaAssociatedWithPath = subPath.getMinDistAndPath();
+                memo.put(subPath, _distaAssociatedWithPath);
             }
+            dist += _distaAssociatedWithPath.getDist();
+            int[] _path = _distaAssociatedWithPath.getPath();
+            decodePath.add(_path);
+            copy(_path, path, 0, _path.length, idx);
+            idx += _path.length;
+            subPath = null;
         }
     }
 
@@ -51,7 +47,7 @@ public class Instance {
             s = 0;
             _t = --i;
             n = 0;
-            while (s <= VRPSA.vihicleCapacity && n < 20) {
+            while (s <= VRPSA.vihicleCapacity && n < 18) {
                 s += VRPSA.demands[order[i]];
                 i++;
                 if (i == order.length)

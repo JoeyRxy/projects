@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Coordination
  */
-public class Coordination implements Comparable<Coordination> {
+public class Coordination {
 
     private double x, y;
     private double r, phi;
@@ -14,7 +14,7 @@ public class Coordination implements Comparable<Coordination> {
         this.x = x;
         this.y = y;
         r = Math.sqrt(x * x + y * y);
-        phi = Math.atan2(x, y);
+        phi = Math.atan2(y, x);
     }
 
     public double getX() {
@@ -24,7 +24,7 @@ public class Coordination implements Comparable<Coordination> {
     public void setX(double x) {
         this.x = x;
         r = Math.sqrt(x * x + y * y);
-        phi = Math.atan2(x, y);
+        phi = Math.atan2(y, x);
     }
 
     public double getY() {
@@ -34,7 +34,7 @@ public class Coordination implements Comparable<Coordination> {
     public void setY(double y) {
         this.y = y;
         r = Math.sqrt(x * x + y * y);
-        phi = Math.atan2(x, y);
+        phi = Math.atan2(y, x);
     }
 
     public double getR() {
@@ -45,16 +45,37 @@ public class Coordination implements Comparable<Coordination> {
         return phi;
     }
 
-    @Override
-    public int compareTo(Coordination o) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
     public double dist(Coordination goal) {
         double _x = x - goal.x;
         double _y = y - goal.y;
         return Math.sqrt(_x * _x + _y * _y);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Coordination other = (Coordination) obj;
+        return Double.doubleToLongBits(x) == Double.doubleToLongBits(other.x)
+                && Double.doubleToLongBits(y) == Double.doubleToLongBits(other.y);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Polar(%5.2f, %5.2f PI), Cartesian(%5.2f, %5.2f)", r, phi / Math.PI, x, y);
+    }
+
+    public Coordination relativeCoordinationOf(Coordination coordination) {
+        return new Coordination(x - coordination.x, y - coordination.y);
     }
 
 }

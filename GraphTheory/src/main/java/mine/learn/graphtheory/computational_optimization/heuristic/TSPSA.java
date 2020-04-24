@@ -85,7 +85,7 @@ public class TSPSA {
                         bestDist = dist_new;
                         bestOrder = order_new.clone();
                     }
-                } else if (Math.random() < Math.exp((dist - dist_new) / t)) { // 即使不比原来短，有概率也会更新
+                } else if (Math.random() < Math.exp((dist - dist_new) / t)) {
                     dist = dist_new;
                     order = order_new;
                 }
@@ -225,15 +225,15 @@ public class TSPSA {
 
     public static void main(String[] args) throws IOException {
         int best[] = { -1 };
-        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/pcb1173.json"), best);
         // EdgeWeightedDiGraph graph = Helpers.parseJSON(new
-        // File("src/main/resources/ch130.json"), best);
+        // File("src/main/resources/pcb1173.json"), best);
+        EdgeWeightedDiGraph graph = Helpers.parseJSON(new File("src/main/resources/kroB200.json"), best);
         System.out.println("best : " + best[0]);
         int[] set = new int[graph.V()];
         for (int i = 0; i < set.length; i++) {
             set[i] = i;
         }
-        TSPSA tsp = new TSPSA(graph, set, 1000, 0.001, 0.99999, 10000, 0.5);
+        TSPSA tsp = new TSPSA(graph, set, 100, 0.01, 0.9995, 5000, 0.5);
         double bestDist = tsp.getBestDist();
         System.out.println(bestDist);
         // List<WeightedDirectedEdge> path = tsp.getPath();
